@@ -1,0 +1,48 @@
+/* ============================================================
+   main.css — design tokens e variáveis estritamente globais
+   ============================================================ */
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+:root {
+  --nn-navbar-bg: #0d1f3c;
+  --nn-sidebar-width: 220px;
+  --nn-accent: #2563eb;
+  --nn-accent-subtle: rgba(37, 99, 235, 0.08);
+  --nn-card-read-opacity: 0.6;
+  --nn-transition-fast: 0.18s ease;
+  --nn-transition-med: 0.28s cubic-bezier(.25, .46, .45, .94);
+  --bs-primary: #2563eb;
+  --bs-primary-rgb: 37, 99, 235;
+}
+
+[data-bs-theme="dark"] {
+  --nn-accent: #3b82f6;
+  --nn-accent-subtle: rgba(59, 130, 246, 0.15);
+  --nn-card-read-opacity: 0.45;
+  --bs-primary: #3b82f6;
+  --bs-primary-rgb: 59, 130, 246;
+  --bs-body-bg: #0b1120;
+  --bs-body-color: #f1f5f9;
+  --bs-tertiary-bg: #1e293b;
+}
+
+/* Scrollbar global */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #334155;
+}

@@ -1,0 +1,25 @@
+/* Minimal custom CSS leveraging Bootstrap 5 native variables */
+
+.navbar {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.input-group .form-control:focus {
+  box-shadow: none;
+}
+
+.dropdown-menu {
+  animation: navbarFadeIn 0.15s ease-in-out;
+}
+
+@keyframes navbarFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -68,10 +68,7 @@ export function useNewsFeed({ navSelectedCategory, searchQuery, bookmarkedArticl
         if (signal?.aborted) return
 
         if (res.success) {
-          let list = res.data
-          if (isSavedTabActive) {
-            list = list.filter((a) => bookmarkedArticleIds.has(a.id))
-          }
+          const list = res.data
 
           setArticlesList((prev) => (isLoadMore ? [...prev, ...list] : list))
           setPage(targetPage)
@@ -94,7 +91,7 @@ export function useNewsFeed({ navSelectedCategory, searchQuery, bookmarkedArticl
         }
       }
     },
-    [effectiveCategory, cleanQuery, isSavedTabActive, bookmarkedArticleIds, isDefaultFeed]
+    [effectiveCategory, cleanQuery, isSavedTabActive, isDefaultFeed]
   )
 
   useEffect(() => {
@@ -103,19 +100,26 @@ export function useNewsFeed({ navSelectedCategory, searchQuery, bookmarkedArticl
     return () => controller.abort()
   }, [fetchArticlesPage])
 
+  const displayArticles = useMemo(() => {
+    if (isSavedTabActive) {
+      return articlesList.filter((a) => bookmarkedArticleIds.has(a.id))
+    }
+    return articlesList
+  }, [articlesList, isSavedTabActive, bookmarkedArticleIds])
+
   const shouldShowHero = Boolean(isDefaultFeed && heroArticle)
 
   const gridArticles = useMemo(
-    () => (shouldShowHero ? articlesList.filter((a) => a.id !== heroArticle.id) : articlesList),
-    [articlesList, heroArticle, shouldShowHero]
+    () => (shouldShowHero ? displayArticles.filter((a) => a.id !== heroArticle.id) : displayArticles),
+    [displayArticles, heroArticle, shouldShowHero]
   )
 
   const searchResultsSummary = useMemo(() => {
-    const count = articlesList.length
+    const count = displayArticles.length
     if (cleanQuery) return `${count} resultado${count !== 1 ? 's' : ''} para "${cleanQuery}"`
     if (isSavedTabActive) return `${count} artigo${count !== 1 ? 's' : ''} salvo${count !== 1 ? 's' : ''}`
     return null
-  }, [cleanQuery, isSavedTabActive, articlesList.length])
+  }, [cleanQuery, isSavedTabActive, displayArticles.length])
 
   return {
     categories,

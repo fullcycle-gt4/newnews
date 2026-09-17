@@ -1,23 +1,5 @@
+import { IconBookmark, IconBookmarkFilled, IconClock, IconChevronRight } from '@tabler/icons-react'
 import './NewsCard.css'
-
-// Reusable SVG Icons
-const BookmarkIcon = ({ isActive }) => (
-  <svg width="15" height="15" fill={isActive ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-  </svg>
-)
-
-const ClockIcon = () => (
-  <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-)
-
-const ArrowIcon = () => (
-  <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" className="ms-1">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-  </svg>
-)
 
 export default function NewsCard({ article, isRead, isBookmarked, onSelectArticle, onToggleBookmark }) {
   if (!article) return null
@@ -48,7 +30,7 @@ export default function NewsCard({ article, isRead, isBookmarked, onSelectArticl
           aria-label={bookmarkLabel}
           title={bookmarkLabel}
         >
-          <BookmarkIcon isActive={isBookmarked} />
+          {isBookmarked ? <IconBookmarkFilled size={15} /> : <IconBookmark size={15} />}
         </button>
         <img src={article.image} alt={article.title} className="news-card-img w-100 h-100 object-fit-cover" loading="lazy" />
       </div>
@@ -64,11 +46,11 @@ export default function NewsCard({ article, isRead, isBookmarked, onSelectArticl
 
         <div className="d-flex align-items-center justify-content-between mt-auto">
           <div className="d-flex align-items-center gap-1 text-secondary news-card-time">
-            <ClockIcon />
+            <IconClock size={13} />
             <span>{article.publishedTimeAgo || 'Recente'}</span>
           </div>
           <span className="btn btn-link btn-sm news-card-action p-0">
-            Ler mais <ArrowIcon />
+            Ler mais <IconChevronRight size={12} className="ms-1" />
           </span>
         </div>
       </div>
@@ -123,13 +105,13 @@ export function NewsSkeleton({ skeletonCount = 6, shouldShowHero = false }) {
   return (
     <>
       {shouldShowHero && (
-        <div className="hero-card rounded-4 overflow-hidden mb-4 p-4 border d-flex flex-column justify-content-end">
-          <div className="nn-skeleton-box mb-2 skeleton-badge" />
-          <div className="nn-skeleton-box mb-2 skeleton-title" />
-          <div className="nn-skeleton-box mb-3 skeleton-sub" />
+        <div className="hero-card rounded-4 overflow-hidden mb-4 p-4 border d-flex flex-column justify-content-end placeholder-glow">
+          <span className="placeholder col-2 rounded-pill mb-2" style={{ height: 20 }} />
+          <span className="placeholder col-8 rounded mb-2" style={{ height: 32 }} />
+          <span className="placeholder col-6 rounded mb-3" style={{ height: 18 }} />
           <div className="d-flex align-items-center gap-3">
-            <div className="nn-skeleton-box skeleton-time" />
-            <div className="nn-skeleton-box skeleton-btn" />
+            <span className="placeholder col-2 rounded" style={{ height: 16 }} />
+            <span className="placeholder col-3 rounded-pill" style={{ height: 32 }} />
           </div>
         </div>
       )}
@@ -137,15 +119,15 @@ export function NewsSkeleton({ skeletonCount = 6, shouldShowHero = false }) {
       <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
         {Array.from({ length: skeletonCount }, (_, index) => (
           <div key={index} className="col">
-            <div className="card h-100 border shadow-sm">
-              <div className="nn-skeleton-box w-100 skeleton-img" />
+            <div className="card h-100 border shadow-sm placeholder-glow">
+              <div className="placeholder w-100 rounded-top" style={{ height: 176 }} />
               <div className="card-body d-flex flex-column p-3">
-                <div className="nn-skeleton-box mb-2 skeleton-badge" />
-                <div className="nn-skeleton-box mb-2 skeleton-title-sm" />
-                <div className="nn-skeleton-box mb-3 skeleton-text" />
+                <span className="placeholder col-3 rounded-pill mb-2" style={{ height: 20 }} />
+                <span className="placeholder col-10 rounded mb-2" style={{ height: 20 }} />
+                <span className="placeholder col-8 rounded mb-3" style={{ height: 16 }} />
                 <div className="mt-auto d-flex justify-content-between align-items-center">
-                  <div className="nn-skeleton-box skeleton-meta" />
-                  <div className="nn-skeleton-box skeleton-meta" />
+                  <span className="placeholder col-3 rounded" style={{ height: 14 }} />
+                  <span className="placeholder col-3 rounded" style={{ height: 14 }} />
                 </div>
               </div>
             </div>

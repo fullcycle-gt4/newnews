@@ -6,18 +6,18 @@
 import { APP_CONFIG } from '../utils/config.js'
 
 export const NAVIGATION_ITEMS = [
-  { icon: '🏠', label: 'Início',         id: 'inicio',         category: null },
-  { icon: '⚽', label: 'Futebol',        id: 'futebol',        category: 'Futebol' },
-  { icon: '🏅', label: 'Esportes',       id: 'esportes',       category: 'Esportes' },
-  { icon: '💻', label: 'Tecnologia',     id: 'tecnologia',     category: 'Tecnologia' },
-  { icon: '🎮', label: 'Games',          id: 'games',          category: 'Games' },
-  { icon: '🍔', label: 'Comida',         id: 'comida',         category: 'Comida' },
+  { icon: '🏠', label: 'Início', id: 'inicio', category: null },
+  { icon: '⚽', label: 'Futebol', id: 'futebol', category: 'Futebol' },
+  { icon: '🏅', label: 'Esportes', id: 'esportes', category: 'Esportes' },
+  { icon: '💻', label: 'Tecnologia', id: 'tecnologia', category: 'Tecnologia' },
+  { icon: '🎮', label: 'Games', id: 'games', category: 'Games' },
+  { icon: '🍔', label: 'Comida', id: 'comida', category: 'Comida' },
   { icon: '🎬', label: 'Entretenimento', id: 'entretenimento', category: 'Entretenimento' },
-  { icon: '🎵', label: 'Música',         id: 'musica',         category: 'Música' },
-  { icon: '🏛️', label: 'Política',       id: 'politica',       category: 'Política' },
-  { icon: '📈', label: 'Economia',       id: 'economia',       category: 'Economia' },
-  { icon: '🇧🇷', label: 'Brasil',        id: 'brasil',         category: 'Brasil' },
-  { icon: '🌍', label: 'Mundo',          id: 'mundo',          category: 'Mundo' },
+  { icon: '🎵', label: 'Música', id: 'musica', category: 'Música' },
+  { icon: '🏛️', label: 'Política', id: 'politica', category: 'Política' },
+  { icon: '📈', label: 'Economia', id: 'economia', category: 'Economia' },
+  { icon: '🇧🇷', label: 'Brasil', id: 'brasil', category: 'Brasil' },
+  { icon: '🌍', label: 'Mundo', id: 'mundo', category: 'Mundo' },
 ]
 
 export const NEWS_CATEGORIES = [

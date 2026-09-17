@@ -1,6 +1,46 @@
+import { useNavigation } from '../../context/NavigationContext.jsx'
+import { useBookmarks } from '../../context/BookmarksContext.jsx'
 import './Sidebar.css'
 
-export default function Sidebar({ navigationItems = [], activeNavId, onSelectNavItem, bookmarkedArticlesCount = 0 }) {
+function SidebarNavItems({ items, activeNavId, onSelectNavItem, isOffcanvas = false }) {
+  return items.map((item) => (
+    <button
+      key={item.id}
+      id={`nav-${item.id}`}
+      {...(isOffcanvas ? { 'data-bs-dismiss': 'offcanvas' } : {})}
+      onClick={() => onSelectNavItem?.(item.id)}
+      className={`sidebar-item btn btn-link w-100 text-start d-flex align-items-center gap-2 rounded-3 px-3 py-2 mb-1 text-decoration-none fw-medium ${
+        activeNavId === item.id ? 'active bg-primary text-white' : 'text-secondary'
+      }`}
+    >
+      <span style={{ fontSize: '1rem', width: 20, textAlign: 'center' }}>{item.icon}</span>
+      <span style={{ fontSize: '0.875rem' }}>{item.label}</span>
+      {item.badge > 0 && (
+        <span className={`badge ms-auto ${activeNavId === item.id ? 'text-bg-light' : 'text-bg-primary'}`} style={{ fontSize: '0.7rem' }}>
+          {item.badge}
+        </span>
+      )}
+      {!isOffcanvas && activeNavId === item.id && !item.badge && (
+        <span className="ms-auto sidebar-indicator rounded-pill bg-white opacity-75" />
+      )}
+    </button>
+  ))
+}
+
+export default function Sidebar({
+  navigationItems: propsNavItems,
+  activeNavId: propsActiveNavId,
+  onSelectNavItem: propsOnSelectNavItem,
+  bookmarkedArticlesCount: propsBookmarkedCount,
+}) {
+  const navCtx = useNavigation()
+  const bookmarkCtx = useBookmarks()
+
+  const navigationItems = propsNavItems ?? navCtx?.navigationItems ?? []
+  const activeNavId = propsActiveNavId ?? navCtx?.activeNavId ?? 'inicio'
+  const onSelectNavItem = propsOnSelectNavItem ?? navCtx?.setActiveNavId
+  const bookmarkedArticlesCount = propsBookmarkedCount ?? bookmarkCtx?.bookmarkedCount ?? 0
+
   const mainNavItems = navigationItems.filter(
     (item) => item.id !== 'salvos' && item.id !== 'favoritos'
   )
@@ -22,57 +62,32 @@ export default function Sidebar({ navigationItems = [], activeNavId, onSelectNav
         Menu Principal
       </p>
 
-      {/* Internal scroll area strictly bounded by sidebar-nav-scroll */}
       <nav className="sidebar-nav-scroll px-2 pb-2">
-        {mainNavItems.map((item) => (
-          <button
-            key={item.id}
-            id={`nav-${item.id}`}
-            onClick={() => onSelectNavItem?.(item.id)}
-            className={`sidebar-item btn btn-link w-100 text-start d-flex align-items-center gap-2 rounded-3 px-3 py-2 mb-1 text-decoration-none fw-medium ${
-              activeNavId === item.id ? 'active bg-primary text-white' : 'text-secondary'
-            }`}
-          >
-            <span style={{ fontSize: '1rem', width: 20, textAlign: 'center' }}>{item.icon}</span>
-            <span style={{ fontSize: '0.875rem' }}>{item.label}</span>
-            {item.badge > 0 && (
-              <span className={`badge ms-auto ${activeNavId === item.id ? 'text-bg-light' : 'text-bg-primary'}`} style={{ fontSize: '0.7rem' }}>
-                {item.badge}
-              </span>
-            )}
-            {activeNavId === item.id && !item.badge && <span className="ms-auto sidebar-indicator rounded-pill bg-white opacity-75" />}
-          </button>
-        ))}
+        <SidebarNavItems items={mainNavItems} activeNavId={activeNavId} onSelectNavItem={onSelectNavItem} />
       </nav>
 
-      {/* Fixed bottom section */}
       <div className="sidebar-bottom-section px-2 mt-auto flex-shrink-0">
         <div className="sidebar-divider mx-2 my-2" />
-        {bottomNavItems.map((item) => (
-          <button
-            key={item.id}
-            id={`nav-${item.id}`}
-            onClick={() => onSelectNavItem?.(item.id)}
-            className={`sidebar-item btn btn-link w-100 text-start d-flex align-items-center gap-2 rounded-3 px-3 py-2 mb-1 text-decoration-none fw-medium ${
-              activeNavId === item.id ? 'active bg-primary text-white' : 'text-secondary'
-            }`}
-          >
-            <span style={{ fontSize: '1rem', width: 20, textAlign: 'center' }}>{item.icon}</span>
-            <span style={{ fontSize: '0.875rem' }}>{item.label}</span>
-            {item.badge > 0 && (
-              <span className={`badge ms-auto ${activeNavId === item.id ? 'text-bg-light' : 'text-bg-primary'}`} style={{ fontSize: '0.7rem' }}>
-                {item.badge}
-              </span>
-            )}
-            {activeNavId === item.id && !item.badge && <span className="ms-auto sidebar-indicator rounded-pill bg-white opacity-75" />}
-          </button>
-        ))}
+        <SidebarNavItems items={bottomNavItems} activeNavId={activeNavId} onSelectNavItem={onSelectNavItem} />
       </div>
     </aside>
   )
 }
 
-export function SidebarOffcanvas({ navigationItems = [], activeNavId, onSelectNavItem, bookmarkedArticlesCount = 0 }) {
+export function SidebarOffcanvas({
+  navigationItems: propsNavItems,
+  activeNavId: propsActiveNavId,
+  onSelectNavItem: propsOnSelectNavItem,
+  bookmarkedArticlesCount: propsBookmarkedCount,
+}) {
+  const navCtx = useNavigation()
+  const bookmarkCtx = useBookmarks()
+
+  const navigationItems = propsNavItems ?? navCtx?.navigationItems ?? []
+  const activeNavId = propsActiveNavId ?? navCtx?.activeNavId ?? 'inicio'
+  const onSelectNavItem = propsOnSelectNavItem ?? navCtx?.setActiveNavId
+  const bookmarkedArticlesCount = propsBookmarkedCount ?? bookmarkCtx?.bookmarkedCount ?? 0
+
   const mainNavItems = navigationItems.filter(
     (item) => item.id !== 'salvos' && item.id !== 'favoritos'
   )
@@ -110,46 +125,12 @@ export function SidebarOffcanvas({ navigationItems = [], activeNavId, onSelectNa
           Menu Principal
         </p>
         <nav className="sidebar-nav-scroll px-2 pb-2">
-          {mainNavItems.map((item) => (
-            <button
-              key={item.id}
-              data-bs-dismiss="offcanvas"
-              onClick={() => onSelectNavItem?.(item.id)}
-              className={`btn btn-link w-100 text-start d-flex align-items-center gap-2 rounded-3 px-3 py-2 mb-1 text-decoration-none fw-medium ${
-                activeNavId === item.id ? 'bg-primary text-white' : 'text-secondary'
-              }`}
-            >
-              <span style={{ fontSize: '1rem', width: 20, textAlign: 'center' }}>{item.icon}</span>
-              <span style={{ fontSize: '0.875rem' }}>{item.label}</span>
-              {item.badge > 0 && (
-                <span className={`badge ms-auto ${activeNavId === item.id ? 'text-bg-light' : 'text-bg-primary'}`} style={{ fontSize: '0.7rem' }}>
-                  {item.badge}
-                </span>
-              )}
-            </button>
-          ))}
+          <SidebarNavItems items={mainNavItems} activeNavId={activeNavId} onSelectNavItem={onSelectNavItem} isOffcanvas />
         </nav>
 
         <div className="sidebar-bottom-section flex-shrink-0">
           <div className="sidebar-divider mx-2 my-2" />
-          {bottomNavItems.map((item) => (
-            <button
-              key={item.id}
-              data-bs-dismiss="offcanvas"
-              onClick={() => onSelectNavItem?.(item.id)}
-              className={`btn btn-link w-100 text-start d-flex align-items-center gap-2 rounded-3 px-3 py-2 mb-1 text-decoration-none fw-medium ${
-                activeNavId === item.id ? 'bg-primary text-white' : 'text-secondary'
-              }`}
-            >
-              <span style={{ fontSize: '1rem', width: 20, textAlign: 'center' }}>{item.icon}</span>
-              <span style={{ fontSize: '0.875rem' }}>{item.label}</span>
-              {item.badge > 0 && (
-                <span className={`badge ms-auto ${activeNavId === item.id ? 'text-bg-light' : 'text-bg-primary'}`} style={{ fontSize: '0.7rem' }}>
-                  {item.badge}
-                </span>
-              )}
-            </button>
-          ))}
+          <SidebarNavItems items={bottomNavItems} activeNavId={activeNavId} onSelectNavItem={onSelectNavItem} isOffcanvas />
         </div>
       </div>
     </div>

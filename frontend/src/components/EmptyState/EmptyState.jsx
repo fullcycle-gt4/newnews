@@ -19,15 +19,15 @@ export default function EmptyState({ searchQuery, isSavedTabActive, category, on
         {isSavedTabActive
           ? 'Nenhum artigo salvo ainda'
           : hasActiveSearch
-          ? `Nenhum resultado para "${searchQuery}"`
-          : `Sem notícias em ${category}`}
+            ? `Nenhum resultado para "${searchQuery}"`
+            : `Sem notícias em ${category}`}
       </p>
       <p className="text-secondary mx-auto mb-3" style={{ maxWidth: 420, fontSize: '0.9rem' }}>
         {isSavedTabActive
           ? 'Clique no ícone de marcador nas notícias para salvá-las aqui e ler mais tarde.'
           : hasActiveSearch
-          ? 'Tente palavras-chave diferentes ou verifique a ortografia.'
-          : 'Ainda não temos manchetes nesta categoria. Explore outros tópicos.'}
+            ? 'Tente palavras-chave diferentes ou verifique a ortografia.'
+            : 'Ainda não temos manchetes nesta categoria. Explore outros tópicos.'}
       </p>
       {hasActiveSearch && (
         <button className="btn btn-outline-primary btn-sm rounded-pill px-3" onClick={onClearSearch}>

@@ -1,16 +1,33 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
+import {
+  IconBookmark,
+  IconBookmarkFilled,
+  IconShare,
+  IconX,
+  IconExternalLink,
+} from '@tabler/icons-react'
 import './ArticleModal.css'
 
 export default function ArticleModal({ article, isBookmarked, onToggleBookmark, onClose, onShare }) {
+  const closeButtonRef = useRef(null)
+
   useEffect(() => {
+    const previouslyFocusedElement = document.activeElement
+    closeButtonRef.current?.focus()
+
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose?.()
     }
+
     window.addEventListener('keydown', handleKeyDown)
     document.body.style.overflow = 'hidden'
+
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
       document.body.style.overflow = ''
+      if (previouslyFocusedElement && typeof previouslyFocusedElement.focus === 'function') {
+        previouslyFocusedElement.focus()
+      }
     }
   }, [onClose])
 
@@ -21,10 +38,12 @@ export default function ArticleModal({ article, isBookmarked, onToggleBookmark, 
 
   if (!article) return null
 
-  const contentParagraphs = Array.isArray(article.content) ? article.content : [article.content || article.summary]
+  const contentParagraphs = Array.isArray(article.content)
+    ? article.content
+    : [article.content || article.summary]
 
   return (
-    <div className="nn-modal-backdrop" onClick={onClose} role="dialog" aria-modal="true">
+    <div className="nn-modal-backdrop" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="modal-article-title">
       <div className="nn-article-modal" onClick={(e) => e.stopPropagation()}>
         <div className="nn-modal-header">
           <div className="d-flex align-items-center gap-2">
@@ -35,35 +54,41 @@ export default function ArticleModal({ article, isBookmarked, onToggleBookmark, 
           </div>
           <div className="d-flex align-items-center gap-2">
             <button
+              type="button"
               className="btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center"
               style={{ width: 34, height: 34 }}
               onClick={() => onToggleBookmark?.(article.id)}
               title={isBookmarked ? 'Remover dos favoritos' : 'Salvar nos favoritos'}
               aria-label="Favoritar"
             >
-              <svg width="16" height="16" fill={isBookmarked ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-              </svg>
+              {isBookmarked ? <IconBookmarkFilled size={16} /> : <IconBookmark size={16} />}
             </button>
             <button
+              type="button"
               className="btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center"
               style={{ width: 34, height: 34 }}
               onClick={() => onShare?.(article)}
               title="Compartilhar notícia"
               aria-label="Compartilhar"
             >
-              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-              </svg>
+              <IconShare size={16} />
             </button>
-            <button className="btn-close ms-2" onClick={onClose} aria-label="Fechar modal" />
+            <button
+              ref={closeButtonRef}
+              type="button"
+              className="btn-close ms-2"
+              onClick={onClose}
+              aria-label="Fechar modal"
+            />
           </div>
         </div>
 
         <div className="nn-modal-body">
           {article.image && <img src={article.image} alt={article.title} className="nn-modal-cover" />}
 
-          <h1 className="nn-modal-title">{article.title}</h1>
+          <h1 id="modal-article-title" className="nn-modal-title">
+            {article.title}
+          </h1>
 
           <div className="d-flex align-items-center gap-3 mb-3 text-secondary" style={{ fontSize: '0.8rem' }}>
             <span>✍️ {article.author || 'Redação New News'}</span>
@@ -79,7 +104,7 @@ export default function ArticleModal({ article, isBookmarked, onToggleBookmark, 
 
           <div className="article-full-text">
             {contentParagraphs.map((paragraph, index) => (
-              <p key={index} className="nn-modal-paragraph">
+              <p key={`${index}-${paragraph.slice(0, 15)}`} className="nn-modal-paragraph">
                 {paragraph}
               </p>
             ))}
@@ -89,20 +114,24 @@ export default function ArticleModal({ article, isBookmarked, onToggleBookmark, 
             <span className="text-secondary" style={{ fontSize: '0.75rem' }}>
               Publicado em {formattedPublishedDate}
             </span>
-            <a
-              href={article.url || '#'}
-              target={article.url ? '_blank' : '_self'}
-              rel="noopener noreferrer"
-              onClick={(e) => {
-                if (!article.url) {
-                  e.preventDefault()
-                  onShare?.(article)
-                }
-              }}
-              className="btn btn-primary btn-sm rounded-pill px-3"
-            >
-              Ler fonte original ↗
-            </a>
+            {article.url ? (
+              <a
+                href={article.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary btn-sm rounded-pill px-3 d-inline-flex align-items-center gap-1"
+              >
+                Ler fonte original <IconExternalLink size={14} />
+              </a>
+            ) : (
+              <button
+                type="button"
+                className="btn btn-primary btn-sm rounded-pill px-3 d-inline-flex align-items-center gap-1"
+                onClick={() => onShare?.(article)}
+              >
+                Compartilhar matéria <IconShare size={14} />
+              </button>
+            )}
           </div>
         </div>
       </div>

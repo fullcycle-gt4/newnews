@@ -1,6 +1,12 @@
+import { useToast } from '../../context/ToastContext.jsx'
 import './Toast.css'
 
-export default function ToastContainer({ toastNotifications = [], onDismissToast }) {
+export default function ToastContainer({ toastNotifications: propsNotifications, onDismissToast: propsDismiss }) {
+  const toastCtx = useToast()
+
+  const toastNotifications = propsNotifications ?? toastCtx?.toastNotifications ?? []
+  const onDismissToast = propsDismiss ?? toastCtx?.dismissToast
+
   if (!toastNotifications.length) return null
 
   return (

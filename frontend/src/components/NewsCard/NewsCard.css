@@ -56,9 +56,10 @@
 }
 
 .news-card-title {
-  font-family: 'Source Serif 4', Georgia, serif;
-  font-size: 0.9rem;
+  font-family: var(--nn-font-serif);
+  font-size: 0.95rem;
   line-height: 1.4;
+  font-weight: 700;
 }
 
 .news-card-summary {
@@ -87,20 +88,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: rgba(15, 23, 42, 0.6);
   backdrop-filter: blur(4px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
   transition: all 0.2s ease;
-
-  &:hover {
-    background: rgba(15, 23, 42, 0.85);
-    transform: scale(1.1);
-    color: #fbbf24;
-  }
 
   &.is-active {
     background: #fff;
@@ -111,6 +106,24 @@
       background: #1e293b;
       color: #fbbf24;
     }
+  }
+}
+
+/* Otimização de Alvo de Toque Mobile (WCAG 2.1 - 2.5.5 / Impeccable Adapt) */
+@media (pointer: coarse) {
+  .news-card-bookmark-btn {
+    width: 44px;
+    height: 44px;
+    top: 8px;
+    right: 8px;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .news-card-bookmark-btn:hover {
+    background: rgba(15, 23, 42, 0.85);
+    transform: scale(1.1);
+    color: #fbbf24;
   }
 }
 
@@ -131,10 +144,23 @@
   height: 360px;
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
 
-  &:hover {
+@media (hover: hover) and (pointer: fine) {
+  .hero-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25) !important;
+  }
+}
+
+@media (pointer: coarse) {
+  .hero-card {
+    height: clamp(280px, 45vh, 360px);
+  }
+
+  .news-card:active,
+  .hero-card:active {
+    transform: scale(0.985);
   }
 }
 
@@ -143,8 +169,8 @@
 }
 
 .hero-card-title {
-  font-family: 'Source Serif 4', Georgia, serif;
-  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-family: var(--nn-font-serif);
+  font-size: clamp(1.15rem, 2.5vw, 1.6rem);
   line-height: 1.3;
 }
 

@@ -8,7 +8,10 @@ export default function CategoryFilter({ categories = ['Todos'], activeCategory,
             key={category}
             id={`category-${category.toLowerCase()}`}
             onClick={() => onSelectCategory?.(category)}
-            className={`btn btn-sm rounded-pill fw-medium ${isActive ? 'btn-primary' : 'btn-outline-secondary'}`}
+            className={`btn btn-sm rounded-pill fw-medium px-3 py-2 d-inline-flex align-items-center justify-content-center ${
+              isActive ? 'btn-primary shadow-sm' : 'btn-outline-secondary'
+            }`}
+            style={{ minHeight: 40 }}
             aria-pressed={isActive}
           >
             {category}

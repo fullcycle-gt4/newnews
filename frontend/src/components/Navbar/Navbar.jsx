@@ -98,6 +98,7 @@ export default function Navbar({ onToggleMobileSidebar }) {
               type="text"
               className="form-control bg-transparent border-0 shadow-none ps-2 py-2"
               placeholder="Buscar notícias, assuntos, categorias..."
+              aria-label="Buscar notícias, assuntos ou categorias"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -121,6 +122,7 @@ export default function Navbar({ onToggleMobileSidebar }) {
             type="button"
             className="btn btn-outline-secondary btn-sm rounded-pill d-flex align-items-center gap-1 px-3 py-1.5"
             onClick={handleToggleTheme}
+            aria-label={isDarkMode ? 'Alternar para modo claro' : 'Alternar para modo escuro'}
             title={isDarkMode ? 'Modo claro' : 'Modo escuro'}
           >
             {isDarkMode ? <IconSun size={16} /> : <IconMoon size={16} />}
@@ -134,6 +136,7 @@ export default function Navbar({ onToggleMobileSidebar }) {
               className="btn btn-light rounded-circle p-2 position-relative d-flex align-items-center justify-content-center"
               style={{ width: 38, height: 38 }}
               aria-label="Notificações"
+              aria-expanded={isNotificationDropdownOpen}
               onClick={() => setIsNotificationDropdownOpen((prev) => !prev)}
             >
               <IconBell size={18} />
@@ -180,15 +183,7 @@ export default function Navbar({ onToggleMobileSidebar }) {
           </div>
 
           {/* User Profile Dropdown */}
-          <div
-            className="position-relative"
-            ref={userContainerRef}
-            style={{
-              boxShadow: '0 2px 8px rgba(225, 220, 220, 0.10)',
-              transition: 'box-shadow 0.2s ease-in-out',
-              borderRadius: '90px',
-            }}
-          >
+          <div className="position-relative navbar-user-dropdown-wrapper" ref={userContainerRef}>
             <button
               id="btn-user-dropdown"
               type="button"

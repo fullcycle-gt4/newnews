@@ -1,15 +1,17 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import {
   IconBookmark,
   IconBookmarkFilled,
   IconShare,
   IconX,
   IconExternalLink,
+  IconNews,
 } from '@tabler/icons-react'
 import './ArticleModal.css'
 
 export default function ArticleModal({ article, isBookmarked, onToggleBookmark, onClose, onShare }) {
   const closeButtonRef = useRef(null)
+  const [imageError, setImageError] = useState(false)
 
   useEffect(() => {
     const previouslyFocusedElement = document.activeElement
@@ -84,9 +86,20 @@ export default function ArticleModal({ article, isBookmarked, onToggleBookmark, 
         </div>
 
         <div className="nn-modal-body">
-          {article.image && <img src={article.image} alt={article.title} className="nn-modal-cover" />}
+          {article.image && !imageError ? (
+            <img
+              src={article.image}
+              alt={article.title}
+              className="nn-modal-cover"
+              onError={() => setImageError(true)}
+            />
+          ) : article.image && imageError ? (
+            <div className="w-100 rounded-3 bg-secondary-subtle p-4 text-center text-muted mb-3">
+              <IconNews size={48} opacity={0.5} />
+            </div>
+          ) : null}
 
-          <h1 id="modal-article-title" className="nn-modal-title">
+          <h1 id="modal-article-title" className="nn-modal-title text-break-word">
             {article.title}
           </h1>
 

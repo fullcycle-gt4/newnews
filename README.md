@@ -4,52 +4,40 @@ O **New News** centraliza notícias de diversas plataformas em um único lugar, 
 
 ---
 
-## 📂 Estrutura do Projeto
+## 📂 Estrutura do Repositório
+
+Este projeto segue uma arquitetura de **monorepo**: cada módulo é completamente independente em sua própria pasta, com suas próprias dependências e configurações.
 
 ```text
 newnews/
-├── compose.yaml        # Orquestração da aplicação via Docker Compose
-└── frontend/           # Aplicação web frontend (React + Vite + Caddy)
+├── compose.yaml   # Orquestração de todos os serviços via Docker Compose
+├── frontend/      # Aplicação web (React + Vite) → veja frontend/README.md
+└── backend/       # API e integração de notícias → veja backend/README.md (em breve)
 ```
 
-> ℹ️ **Nota:** O projeto futuramente contará com um módulo dedicado de **backend** para gerenciamento e integração de notícias.
+> Para entender a arquitetura, regras e como trabalhar em cada módulo, acesse o **README da pasta correspondente**.
 
 ---
 
-## 🚀 Como Executar o Projeto
+## 🚀 Executando com Docker
 
-> **Nota:** Certifique-se de executar todos os comandos a partir da **raiz do projeto**.
-
-### Opção 1: Via Docker (Ambiente Containerizado)
-
-Inicie a aplicação utilizando Docker Compose:
+A forma recomendada para rodar toda a aplicação é via Docker Compose, a partir da **raiz do projeto**:
 
 ```bash
 docker compose up --build
 ```
 
-Após a inicialização, acesse [http://localhost:8080](http://localhost:8080) no seu navegador.
-
-### Opção 2: Desenvolvimento Local (via npm)
-
-Rode o servidor de desenvolvimento do frontend localmente com o Vite:
-
-```bash
-# Acesse a pasta do frontend e instale as dependências
-cd frontend
-npm install
-
-# Inicie o servidor de desenvolvimento
-npm run dev
-```
-
-Após a inicialização, acesse o endereço informado no terminal (geralmente [http://localhost:5173](http://localhost:5173)).
+| Serviço  | URL                   |
+| -------- | --------------------- |
+| Frontend | http://localhost:8080 |
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Desenvolvimento Local
 
-- **Frontend:** React, JavaScript e Vite
-- **Servidor Web:** Caddy
-- **Containerização:** Docker e Docker Compose
-- **Qualidade de Código:** Oxlint
+Para trabalhar em um módulo isoladamente, **abra a pasta do módulo diretamente na sua IDE** — e não o repositório raiz. Isso garante que o ambiente de linguagem, linting e extensões funcionem corretamente para aquele contexto.
+
+| Módulo   | Pasta a abrir  | README com instruções    |
+| -------- | -------------- | ------------------------ |
+| Frontend | `frontend/`    | `frontend/README.md`     |
+| Backend  | `backend/`     | `backend/README.md`      |

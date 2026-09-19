@@ -1,5 +1,5 @@
 :8080 {
-    root * /app/dist
-    try_files {path} {path}/ /index.html
-    file_server
+	root * /app/dist
+	try_files {path} {path}/ /index.html
+	file_server
 }

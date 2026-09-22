@@ -109,9 +109,6 @@ function RegistrationForm({ onSubmit }) {
                     className="registration-form"
                     onSubmit={handleSubmit}
                 >
-                    <div className="form-decoration">
-                        NEW NEWS
-                    </div>
 
                     <h2>Criar conta</h2>
 

@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import ErrorBoundary from '@/components/ErrorBoundary';
 import ConfigPage from '@/pages/Config';
-import HomePage from '@/pages/Home';
-import { useUserStore, useNavigationStore } from '@/stores';
+import ErrorBoundary from "@/components/ErrorBoundary";
+import HomePage from "@/pages/Home";
+import RegisterPage from "@/pages/RegistePage";
+import { useUserStore, useNavigationStore } from "@/stores";
 
 export default function App() {
   const loadUserData = useUserStore((state) => state.loadUserData);
@@ -20,6 +21,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/config" element={<ConfigPage />} />
+          <Route path="/register" element={<RegisterPage />} />
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>

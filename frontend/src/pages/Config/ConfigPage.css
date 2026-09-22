@@ -1,0 +1,15 @@
+#config-page {
+  width: 100%;
+  max-width: 920px;
+  margin-inline: auto;
+}
+
+.config-sidebar-link {
+  width: 100%;
+}
+
+@media (max-width: 575.98px) {
+  #config-page {
+    padding: 1rem !important;
+  }
+}

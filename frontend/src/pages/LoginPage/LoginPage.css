@@ -69,11 +69,13 @@
   right: 10px;
   background: none;
   border: none;
-  color: #666666;
+  color: #000000;
   font-size: 0.85rem;
   cursor: pointer;
-  padding: 4px;
+  padding: 8px;
   font-weight: bold;
+  background-color: gray;
+  border-radius: 8px;
 }
 
 .toggle-password-btn:hover {
@@ -86,6 +88,19 @@
   padding: 12px;
   background-color: #357ABD; /* Azul mais claro que o box */
   color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 10px;
+}
+.login-buttonC{
+   width: 100%;
+  padding: 12px;
+  background-color: #ffffff; /* Azul mais claro que o box */
+  color: #357ABD;
   border: none;
   border-radius: 6px;
   font-size: 1rem;

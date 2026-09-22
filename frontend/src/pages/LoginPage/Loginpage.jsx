@@ -41,6 +41,9 @@ export default function LoginPage() {
           <button type="submit" className="login-button">
             Login
           </button>
+          <button className='login-buttonC'>
+            Cadastrar
+          </button>
         </form>
       </div>
     </div>

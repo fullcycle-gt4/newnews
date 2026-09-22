@@ -2,25 +2,25 @@
  * Serviço de Usuário e Notificações (Facade).
  */
 
-import { APP_CONFIG } from '../utils/config.js'
-import { mockAdapter } from './mockData.js'
+import axios from 'axios'
+import { APP_CONFIG } from '@/utils'
+import { mockAdapter } from '@/mocks'
 
-async function fetchApi(endpoint) {
-  const res = await fetch(`${APP_CONFIG.API_BASE_URL}${endpoint}`, { headers: { Accept: 'application/json' } })
-  if (!res.ok) throw new Error(`Erro na API (${res.status})`)
-  return res.json()
-}
+const api = axios.create({
+  baseURL: APP_CONFIG.API_BASE_URL,
+  headers: { Accept: 'application/json' },
+})
 
 export const userService = {
   async getUserProfile() {
     if (APP_CONFIG.IS_MOCK_MODE) return mockAdapter.getUserProfile()
-    const res = await fetchApi('/user/profile')
+    const { data: res } = await api.get('/user/profile')
     return { success: true, data: res.data ?? res }
   },
 
   async getUserNotifications() {
     if (APP_CONFIG.IS_MOCK_MODE) return mockAdapter.getUserNotifications()
-    const res = await fetchApi('/user/notifications')
+    const { data: res } = await api.get('/user/notifications')
     return { success: true, data: res.data ?? res }
   },
 }

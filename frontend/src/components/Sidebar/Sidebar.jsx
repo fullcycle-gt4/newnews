@@ -1,5 +1,4 @@
-import { useNavigation } from '../../context/NavigationContext.jsx'
-import { useBookmarks } from '../../context/BookmarksContext.jsx'
+import { useNavigationStore, useBookmarksStore } from '@/stores'
 import './Sidebar.css'
 
 function SidebarNavItems({ items, activeNavId, onSelectNavItem, isOffcanvas = false }) {
@@ -33,13 +32,15 @@ export default function Sidebar({
   onSelectNavItem: propsOnSelectNavItem,
   bookmarkedArticlesCount: propsBookmarkedCount,
 }) {
-  const navCtx = useNavigation()
-  const bookmarkCtx = useBookmarks()
+  const storeNavigationItems = useNavigationStore((state) => state.navigationItems)
+  const storeActiveNavId = useNavigationStore((state) => state.activeNavId)
+  const storeSetActiveNavId = useNavigationStore((state) => state.setActiveNavId)
+  const storeBookmarkedCount = useBookmarksStore((state) => state.bookmarkedArticleIds.size)
 
-  const navigationItems = propsNavItems ?? navCtx?.navigationItems ?? []
-  const activeNavId = propsActiveNavId ?? navCtx?.activeNavId ?? 'inicio'
-  const onSelectNavItem = propsOnSelectNavItem ?? navCtx?.setActiveNavId
-  const bookmarkedArticlesCount = propsBookmarkedCount ?? bookmarkCtx?.bookmarkedCount ?? 0
+  const navigationItems = propsNavItems ?? storeNavigationItems ?? []
+  const activeNavId = propsActiveNavId ?? storeActiveNavId ?? 'inicio'
+  const onSelectNavItem = propsOnSelectNavItem ?? storeSetActiveNavId
+  const bookmarkedArticlesCount = propsBookmarkedCount ?? storeBookmarkedCount ?? 0
 
   const mainNavItems = navigationItems.filter(
     (item) => item.id !== 'salvos' && item.id !== 'favoritos'
@@ -80,13 +81,15 @@ export function SidebarOffcanvas({
   onSelectNavItem: propsOnSelectNavItem,
   bookmarkedArticlesCount: propsBookmarkedCount,
 }) {
-  const navCtx = useNavigation()
-  const bookmarkCtx = useBookmarks()
+  const storeNavigationItems = useNavigationStore((state) => state.navigationItems)
+  const storeActiveNavId = useNavigationStore((state) => state.activeNavId)
+  const storeSetActiveNavId = useNavigationStore((state) => state.setActiveNavId)
+  const storeBookmarkedCount = useBookmarksStore((state) => state.bookmarkedArticleIds.size)
 
-  const navigationItems = propsNavItems ?? navCtx?.navigationItems ?? []
-  const activeNavId = propsActiveNavId ?? navCtx?.activeNavId ?? 'inicio'
-  const onSelectNavItem = propsOnSelectNavItem ?? navCtx?.setActiveNavId
-  const bookmarkedArticlesCount = propsBookmarkedCount ?? bookmarkCtx?.bookmarkedCount ?? 0
+  const navigationItems = propsNavItems ?? storeNavigationItems ?? []
+  const activeNavId = propsActiveNavId ?? storeActiveNavId ?? 'inicio'
+  const onSelectNavItem = propsOnSelectNavItem ?? storeSetActiveNavId
+  const bookmarkedArticlesCount = propsBookmarkedCount ?? storeBookmarkedCount ?? 0
 
   const mainNavItems = navigationItems.filter(
     (item) => item.id !== 'salvos' && item.id !== 'favoritos'

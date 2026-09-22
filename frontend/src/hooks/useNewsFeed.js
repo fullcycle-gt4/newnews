@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
-import { newsService } from '../services/newsService.js'
-import { APP_CONFIG } from '../utils/config.js'
+import { newsService } from '@/services'
+import { APP_CONFIG } from '@/utils'
 
 export function useNewsFeed({ navSelectedCategory, searchQuery, bookmarkedArticleIds }) {
   const [categories, setCategories] = useState(['Todos'])

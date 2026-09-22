@@ -12,18 +12,18 @@ import {
   IconDoorExit,
   IconX,
 } from '@tabler/icons-react'
-import { useUser } from '../../context/UserContext.jsx'
-import { useTheme } from '../../context/ThemeContext.jsx'
-import { useNavigation } from '../../context/NavigationContext.jsx'
-import { useToast } from '../../context/ToastContext.jsx'
-import { TOAST_MESSAGES } from '../../utils/config.js'
+import { useUserStore, useThemeStore, useNavigationStore, useToastStore } from '@/stores'
+import { TOAST_MESSAGES } from '@/utils'
 import './Navbar.css'
 
 export default function Navbar({ onToggleMobileSidebar }) {
-  const { user, notifications } = useUser()
-  const { isDarkMode, toggleDarkMode } = useTheme()
-  const { searchQuery, setSearchQuery } = useNavigation()
-  const { showToastNotification } = useToast()
+  const user = useUserStore((state) => state.user)
+  const notifications = useUserStore((state) => state.notifications)
+  const isDarkMode = useThemeStore((state) => state.isDarkMode)
+  const toggleDarkMode = useThemeStore((state) => state.toggleDarkMode)
+  const searchQuery = useNavigationStore((state) => state.searchQuery)
+  const setSearchQuery = useNavigationStore((state) => state.setSearchQuery)
+  const showToastNotification = useToastStore((state) => state.showToastNotification)
 
   const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] = useState(false)
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false)

@@ -1,25 +1,25 @@
-import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.jsx'
-import { UserProvider } from './context/UserContext.jsx'
-import { ThemeProvider } from './context/ThemeContext.jsx'
-import { ToastProvider } from './context/ToastContext.jsx'
-import { NavigationProvider } from './context/NavigationContext.jsx'
-import { BookmarksProvider } from './context/BookmarksContext.jsx'
-import HomePage from './pages/Home/HomePage.jsx'
+import { useEffect } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import ErrorBoundary from '@/components/ErrorBoundary'
+import HomePage from '@/pages/Home'
+import { useUserStore, useNavigationStore } from '@/stores'
 
 export default function App() {
+  const loadUserData = useUserStore((state) => state.loadUserData)
+  const loadNavigation = useNavigationStore((state) => state.loadNavigation)
+
+  useEffect(() => {
+    loadUserData()
+    loadNavigation()
+  }, [])
+
   return (
     <ErrorBoundary>
-      <UserProvider>
-        <ThemeProvider>
-          <ToastProvider>
-            <NavigationProvider>
-              <BookmarksProvider>
-                <HomePage />
-              </BookmarksProvider>
-            </NavigationProvider>
-          </ToastProvider>
-        </ThemeProvider>
-      </UserProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </BrowserRouter>
     </ErrorBoundary>
   )
 }

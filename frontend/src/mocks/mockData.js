@@ -3,7 +3,7 @@
  * Fica estritamente contido na camada de serviços.
  */
 
-import { APP_CONFIG } from '../utils/config.js'
+import { APP_CONFIG } from '@/utils'
 
 export const NAVIGATION_ITEMS = [
   { icon: '🏠', label: 'Início', id: 'inicio', category: null },

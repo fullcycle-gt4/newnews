@@ -1,11 +1,12 @@
-import { useToast } from '../../context/ToastContext.jsx'
+import { useToastStore } from '@/stores'
 import './Toast.css'
 
 export default function ToastContainer({ toastNotifications: propsNotifications, onDismissToast: propsDismiss }) {
-  const toastCtx = useToast()
+  const storeToastNotifications = useToastStore((state) => state.toastNotifications)
+  const storeDismissToast = useToastStore((state) => state.dismissToast)
 
-  const toastNotifications = propsNotifications ?? toastCtx?.toastNotifications ?? []
-  const onDismissToast = propsDismiss ?? toastCtx?.dismissToast
+  const toastNotifications = propsNotifications ?? storeToastNotifications ?? []
+  const onDismissToast = propsDismiss ?? storeDismissToast
 
   if (!toastNotifications.length) return null
 

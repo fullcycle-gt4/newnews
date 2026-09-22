@@ -1,24 +1,25 @@
 import { useState } from 'react'
-import Navbar from '../../components/Navbar/Navbar.jsx'
-import Sidebar, { SidebarOffcanvas } from '../../components/Sidebar/Sidebar.jsx'
-import ToastContainer from '../../components/ToastContainer/ToastContainer.jsx'
-import { useNewsFeed } from '../../hooks/useNewsFeed.js'
-import { useUser } from '../../context/UserContext.jsx'
-import { useNavigation } from '../../context/NavigationContext.jsx'
-import { useBookmarks } from '../../context/BookmarksContext.jsx'
-import { useToast } from '../../context/ToastContext.jsx'
-import CategoryFilter from '../../components/CategoryFilter/CategoryFilter.jsx'
-import NewsCard, { HeroCard, NewsSkeleton } from '../../components/NewsCard/NewsCard.jsx'
-import ArticleModal from '../../components/ArticleModal/ArticleModal.jsx'
-import EmptyState from '../../components/EmptyState/EmptyState.jsx'
-import { getTimeBasedGreeting, formatCurrentDateTime } from '../../utils/dateUtils.js'
+import Navbar from '@/components/Navbar'
+import Sidebar, { SidebarOffcanvas } from '@/components/Sidebar'
+import ToastContainer from '@/components/ToastContainer'
+import NewsCard, { HeroCard, NewsSkeleton } from '@/components/NewsCard'
+import ArticleModal from '@/components/ArticleModal'
+import EmptyState from '@/components/EmptyState'
+import { useNewsFeed } from '@/hooks'
+import { useUserStore, useNavigationStore, useBookmarksStore, useToastStore, selectNavCategory } from '@/stores'
+import { getTimeBasedGreeting, formatCurrentDateTime } from '@/utils'
 import './HomePage.css'
 
 export default function HomePage() {
-  const { user } = useUser()
-  const { navSelectedCategory, debouncedSearchQuery, clearSearch } = useNavigation()
-  const { readArticleIds, bookmarkedArticleIds, markArticleAsRead, toggleArticleBookmark } = useBookmarks()
-  const { showToastNotification } = useToast()
+  const user = useUserStore((state) => state.user)
+  const navSelectedCategory = useNavigationStore(selectNavCategory)
+  const debouncedSearchQuery = useNavigationStore((state) => state.debouncedSearchQuery)
+  const clearSearch = useNavigationStore((state) => state.clearSearch)
+  const readArticleIds = useBookmarksStore((state) => state.readArticleIds)
+  const bookmarkedArticleIds = useBookmarksStore((state) => state.bookmarkedArticleIds)
+  const markArticleAsRead = useBookmarksStore((state) => state.markArticleAsRead)
+  const toggleArticleBookmark = useBookmarksStore((state) => state.toggleArticleBookmark)
+  const showToastNotification = useToastStore((state) => state.showToastNotification)
 
   const [selectedArticleDetail, setSelectedArticleDetail] = useState(null)
 
@@ -78,12 +79,7 @@ export default function HomePage() {
             <p className="text-secondary mb-0 small">
               {formatCurrentDateTime()} • Confira o que está acontecendo hoje
             </p>
-          </header>
-
-          {/* Category Filter */}
-          {!isSavedTabActive && (
-            <CategoryFilter categories={categories} activeCategory={effectiveCategory} onSelectCategory={setActiveCategory} />
-          )}
+          </header> 
 
           {/* Search Results Summary */}
           {searchResultsSummary && (

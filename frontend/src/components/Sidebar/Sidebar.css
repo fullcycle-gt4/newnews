@@ -1,0 +1,43 @@
+#sidebar-desktop {
+  height: 100%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.sidebar-nav-scroll {
+  flex: 1 1 0%;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.sidebar-item {
+  transition:
+    background-color var(--nn-transition-fast),
+    color var(--nn-transition-fast) !important;
+}
+
+.sidebar-item:hover:not(.active) {
+  background-color: var(--bs-gray-200);
+  color: var(--bs-dark) !important;
+}
+
+[data-bs-theme='dark'] .sidebar-item:hover:not(.active) {
+  background-color: var(--bs-gray-800);
+  color: var(--bs-light) !important;
+}
+
+.sidebar-indicator {
+  width: 6px;
+  height: 20px;
+  display: block;
+  transition: opacity var(--nn-transition-fast);
+}
+
+.sidebar-divider {
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-bs-theme='dark'] .sidebar-divider {
+  background-color: rgba(255, 255, 255, 0.12);
+}

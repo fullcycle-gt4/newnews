@@ -1,0 +1,228 @@
+/* Container que ocupa a página inteira */
+.login-page-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(69, 139, 255, 0.35),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(0, 98, 255, 0.25),
+      transparent 35%
+    ),
+    linear-gradient(
+      135deg,
+      #071b49 0%,
+      #0a2f73 50%,
+      #071b49 100%
+    );
+  font-family: Arial, sans-serif;
+}
+
+/* Corpo principal do formulário */
+.login-body {
+  width: 100%;
+  max-width: 440px;
+  box-sizing: border-box;
+
+  position: relative;
+  z-index: 2;
+
+  padding: 38px 42px 32px;
+  border-radius: 24px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(40, 105, 200, 0.72),
+    rgba(7, 42, 101, 0.86)
+  );
+
+  border: 1px solid rgba(92, 169, 255, 0.8);
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.12);
+
+  backdrop-filter: blur(14px);
+  color: white;
+  text-align: center;
+}
+
+.login-body h2 {
+  margin: 0 0 24px 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 38px;
+  color: white;
+}
+
+/* Container de cada grupo de input */
+.login-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 22px;
+  box-sizing: border-box;
+}
+
+/* Ícones de email e senha */
+.login-icon {
+  position: absolute;
+  left: 14px;
+  color: #9bb9e8;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Inputs de email e senha (com bordas simétricas de 13px) */
+.login-input {
+  width: 100%;
+  height: 58px;
+  box-sizing: border-box;
+
+  padding: 0 16px 0 46px;
+
+  border-radius: 13px;
+  border: 1.5px solid rgba(116, 179, 255, 0.75);
+  background-color: rgba(7, 45, 105, 0.55);
+
+  color: white;
+  font-size: 16px;
+  outline: none;
+
+  transition: 0.25s ease;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.login-input::placeholder {
+  color: #9bb9e8;
+}
+
+.login-input:focus {
+  border-color: #65adff;
+  box-shadow:
+    0 0 0 3px rgba(76, 155, 255, 0.15),
+    0 0 20px rgba(52, 139, 255, 0.12);
+}
+
+/* Campo de senha ganha espaço extra à direita pro botão do olho */
+.login-password-group .login-input {
+  padding-right: 48px;
+}
+
+/* Botão de alternar visibilidade da senha */
+.toggle-password-button {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+  border: none;
+  color: #9fc6ff;
+
+  cursor: pointer;
+  padding: 4px;
+  z-index: 2;
+
+  transition: color 0.2s ease;
+}
+
+.toggle-password-button:hover {
+  color: white;
+}
+
+/* Botão de Login */
+.login-button {
+  width: 100%;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 10px;
+
+  border: none;
+  border-radius: 13px;
+
+  background: linear-gradient(
+    135deg,
+    #3d9cff,
+    #1261f3
+  );
+
+  color: white;
+  font-size: 17px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 10px 25px rgba(25, 108, 255, 0.35);
+
+  transition: 0.25s ease;
+}
+
+.login-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(25, 108, 255, 0.45);
+}
+
+/* Divisor "ou" */
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 27px 0 20px;
+}
+
+.login-divider span {
+  flex: 1;
+  height: 1px;
+  background: rgba(159, 198, 255, 0.35);
+}
+
+.login-divider p {
+  margin: 0;
+  color: #a8c8f8;
+  font-size: 14px;
+}
+
+/* Link para registrar */
+.login-register-link {
+  margin: 0;
+  text-align: center;
+  color: #bdd3f5;
+  font-size: 15px;
+}
+
+.login-register-link a {
+  color: #52a7ff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.login-register-link a:hover {
+  color: #8bc7ff;
+  text-decoration: underline;
+}

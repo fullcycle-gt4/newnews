@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './LoginPage.css';
+import './style.css';
+import { IconMail, IconLock, IconEye, IconEyeOff } from '@tabler/icons-react';
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -9,13 +10,15 @@ export default function LoginPage() {
   };
 
   return (
-    /* Envolto em login-page-wrapper para isolar o fundo e o layout de login */
     <div className="login-page-wrapper">
+      {/* O corpo principal do formulário */}
       <div className="login-body">
         <h2>Login</h2>
-        
+
         <form onSubmit={(e) => e.preventDefault()}>
-          <div className="input-group">
+          {/* Grupo de input do Email */}
+          <div className="login-input-group">
+            <IconMail className="login-icon" size={20} />
             <input
               type="email"
               className="login-input"
@@ -23,7 +26,9 @@ export default function LoginPage() {
             />
           </div>
 
-          <div className="input-group password-group">
+          {/* Grupo de input da Senha */}
+          <div className="login-input-group login-password-group">
+            <IconLock className="login-icon" size={20} />
             <input
               type={showPassword ? 'text' : 'password'}
               className="login-input"
@@ -31,19 +36,30 @@ export default function LoginPage() {
             />
             <button
               type="button"
-              className="toggle-password-btn"
+              className="toggle-password-button"
               onClick={togglePasswordVisibility}
             >
-              {showPassword ? 'Ocultar' : 'Mostrar'}
+              {showPassword ? <IconEyeOff size={20} /> : <IconEye size={20} />}
             </button>
           </div>
 
+          {/* Botão de envio */}
           <button type="submit" className="login-button">
             Login
           </button>
-          <button className='login-buttonC'>
-            Cadastrar
-          </button>
+
+          {/* Divisor "ou" */}
+          <div className="login-divider">
+            <span></span>
+            <p>ou</p>
+            <span></span>
+          </div>
+
+          {/* Link para o cadastro */}
+          <p className="login-register-link">
+            Não tem uma conta ?{" "}
+            <a href="/register">Registre-se</a>
+          </p>
         </form>
       </div>
     </div>

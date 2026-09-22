@@ -1,0 +1,603 @@
+.registration-container {
+    min-height: 100vh;
+    width: 100%;
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 20px;
+
+    position: relative;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(69, 139, 255, 0.35),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(0, 98, 255, 0.25),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #071b49 0%,
+            #0a2f73 50%,
+            #071b49 100%
+        );
+}
+
+
+.registration-content {
+    width: 100%;
+    max-width: 560px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    position: relative;
+    z-index: 2;
+}
+
+
+.news-logo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    margin-bottom: 28px;
+
+    color: white;
+}
+
+.logo-box {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        135deg,
+        #4b9cff,
+        #1764ed
+    );
+
+    color: white;
+    font-size: 22px;
+    font-weight: 800;
+
+    box-shadow:
+        0 8px 25px rgba(31, 112, 255, 0.4);
+}
+
+.news-logo h1 {
+    margin: 0;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 32px;
+    letter-spacing: 2px;
+
+    color: white;
+}
+
+.news-logo span {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 11px;
+    letter-spacing: 4px;
+
+    color: #a8c8ff;
+}
+
+
+.registration-form {
+    width: 100%;
+    box-sizing: border-box;
+
+    position: relative;
+    overflow: hidden;
+
+    padding: 38px 42px 32px;
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(40, 105, 200, 0.72),
+            rgba(7, 42, 101, 0.86)
+        );
+
+    border: 1px solid rgba(92, 169, 255, 0.8);
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.12);
+
+    backdrop-filter: blur(14px);
+}
+
+
+.form-decoration {
+    width: fit-content;
+
+    margin: 0 auto 16px;
+
+    padding: 8px 20px;
+
+    border-radius: 30px;
+
+    background: rgba(40, 133, 255, 0.55);
+
+    border: 1px solid rgba(117, 188, 255, 0.6);
+
+    color: white;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+}
+
+
+.registration-form h2 {
+    margin: 0;
+
+    text-align: center;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 42px;
+
+    color: white;
+}
+
+.form-description {
+    margin: 10px 0 32px;
+
+    text-align: center;
+
+    color: #b9d3ff;
+
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin-bottom: 9px;
+
+    color: white;
+
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.form-group label svg {
+    color: #a8ceff;
+}
+
+
+.input-container {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    height: 58px;
+
+    box-sizing: border-box;
+
+    padding: 0 16px;
+
+    border-radius: 13px;
+
+    border: 1.5px solid rgba(116, 179, 255, 0.75);
+
+    background: rgba(7, 45, 105, 0.55);
+
+    transition: 0.25s ease;
+}
+
+.input-container svg {
+    flex-shrink: 0;
+
+    color: #9fc6ff;
+}
+
+.input-container input {
+    width: 100%;
+
+    margin-left: 13px;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 16px;
+}
+
+.input-container input::placeholder {
+    color: #9bb9e8;
+}
+
+.input-container:focus-within {
+    border-color: #65adff;
+
+    box-shadow:
+        0 0 0 3px rgba(76, 155, 255, 0.15),
+        0 0 20px rgba(52, 139, 255, 0.12);
+}
+
+
+.password-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 4px;
+
+    border: none;
+    background: transparent;
+
+    color: #9fc6ff;
+
+    cursor: pointer;
+}
+
+.password-button:hover {
+    color: white;
+}
+
+
+.error {
+    display: block;
+
+    margin-top: 6px;
+
+    color: #ffb4b4;
+
+    font-size: 13px;
+}
+
+
+.register-button {
+    width: 100%;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    margin-top: 8px;
+
+    border: none;
+    border-radius: 13px;
+
+    background: linear-gradient(
+        135deg,
+        #3d9cff,
+        #1261f3
+    );
+
+    color: white;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 25px rgba(25, 108, 255, 0.35);
+
+    transition: 0.25s ease;
+}
+
+.register-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 14px 30px rgba(25, 108, 255, 0.45);
+}
+
+.register-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    margin: 27px 0 20px;
+}
+
+.divider span {
+    flex: 1;
+
+    height: 1px;
+
+    background: rgba(159, 198, 255, 0.35);
+}
+
+.divider p {
+    margin: 0;
+
+    color: #a8c8f8;
+
+    font-size: 14px;
+}
+
+
+.login-link {
+    margin: 0;
+
+    text-align: center;
+
+    color: #bdd3f5;
+
+    font-size: 15px;
+}
+
+.login-link a {
+    color: #52a7ff;
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    color: #8bc7ff;
+    text-decoration: underline;
+}
+
+
+.globo {
+    position: absolute;
+
+    border: 1px solid rgba(72, 159, 255, 0.25);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+.globo-one {
+    width: 560px;
+    height: 560px;
+
+    right: -280px;
+    bottom: -160px;
+}
+
+.globo-two {
+    width: 320px;
+    height: 320px;
+
+    left: -180px;
+    top: 45%;
+
+    opacity: 0.55;
+}
+
+.globo-line {
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+
+    border-left: 1px solid rgba(72, 159, 255, 0.2);
+
+    border-radius: 50%;
+}
+
+.line-one {
+    left: 25%;
+    width: 50%;
+}
+
+.line-two {
+    left: 40%;
+    width: 20%;
+}
+
+.globo-horizontal {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    border-top: 1px solid rgba(72, 159, 255, 0.2);
+
+    border-radius: 50%;
+}
+
+.horizontal-one {
+    top: 30%;
+    height: 40%;
+}
+
+.horizontal-two {
+    top: 48%;
+    height: 10%;
+}
+
+
+@media (max-width: 700px) {
+
+    .registration-container {
+        padding: 30px 16px;
+    }
+
+    .news-logo {
+        margin-bottom: 22px;
+    }
+
+    .news-logo h1 {
+        font-size: 27px;
+    }
+
+    .news-logo span {
+        font-size: 9px;
+        letter-spacing: 3px;
+    }
+
+    .logo-box {
+        width: 52px;
+        height: 52px;
+
+        font-size: 19px;
+    }
+
+    .registration-form {
+        padding: 32px 28px 28px;
+    }
+
+    .registration-form h2 {
+        font-size: 36px;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .registration-container {
+        min-height: 100svh;
+
+        padding: 24px 12px;
+    }
+
+    .news-logo {
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .logo-box {
+        width: 44px;
+        height: 44px;
+
+        font-size: 16px;
+    }
+
+    .news-logo h1 {
+        font-size: 22px;
+        letter-spacing: 1px;
+    }
+
+    .news-logo span {
+        font-size: 7px;
+        letter-spacing: 2px;
+    }
+
+    .registration-form {
+        padding: 27px 20px 24px;
+
+        border-radius: 19px;
+    }
+
+    .form-decoration {
+        font-size: 12px;
+        padding: 7px 16px;
+    }
+
+    .registration-form h2 {
+        font-size: 31px;
+    }
+
+    .form-description {
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+    }
+
+    .input-container {
+        height: 54px;
+        padding: 0 13px;
+    }
+
+    .input-container input {
+        font-size: 16px;
+    }
+
+    .register-button {
+        height: 54px;
+        font-size: 16px;
+    }
+
+    .globe-one {
+        width: 350px;
+        height: 350px;
+
+        right: -220px;
+        bottom: -80px;
+    }
+
+    .globe-two {
+        width: 220px;
+        height: 220px;
+
+        left: -150px;
+    }
+}
+
+
+
+@media (max-width: 360px) {
+
+    .registration-container {
+        padding: 18px 10px;
+    }
+
+    .registration-form {
+        padding: 23px 16px 20px;
+    }
+
+    .news-logo h1 {
+        font-size: 19px;
+    }
+
+    .news-logo span {
+        font-size: 6px;
+    }
+
+    .registration-form h2 {
+        font-size: 27px;
+    }
+
+    .form-description {
+        font-size: 13px;
+    }
+}

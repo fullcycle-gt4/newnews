@@ -5,15 +5,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-
-# Compartilha os arquivos do frontend com o container
-# Assim, alterações feitas no computador aparecem dentro do container      
     volumes:
       - ./frontend:/app
       - /app/node_modules
-
-# Configura o monitoramento dos arquivos
-# para detectar alterações mesmo usando Docker no Windows  
     environment:
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true

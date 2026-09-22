@@ -1,4 +1,6 @@
-/* Container que ocupa a página inteira */
+/* ==========================================
+   LAYOUT GERAL E FUNDO DA PÁGINA
+   ========================================== */
 .login-page-wrapper {
   min-height: 100vh;
   width: 100%;
@@ -32,7 +34,9 @@
   font-family: Arial, sans-serif;
 }
 
-/* Corpo principal do formulário */
+/* ==========================================
+   CARD DO FORMULÁRIO (LOGIN BODY)
+   ========================================== */
 .login-body {
   width: 100%;
   max-width: 440px;
@@ -58,60 +62,75 @@
 
   backdrop-filter: blur(14px);
   color: white;
-  text-align: center;
+  text-align: left; /* Alinha labels à esquerda */
 }
 
 .login-body h2 {
-  margin: 0 0 24px 0;
+  margin: 0 0 28px 0;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 38px;
   color: white;
+  text-align: center;
 }
 
-/* Container de cada grupo de input */
+/* ==========================================
+   GRUPOS DE INPUT, LABELS E ÍCONES
+   ========================================== */
 .login-input-group {
-  position: relative;
+  display: flex;
+  flex-direction: column; /* Coloca o label em cima e o input embaixo */
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+/* Label acima do input com o ícone e o texto lado a lado */
+.login-label {
   display: flex;
   align-items: center;
-  width: 100%;
-  margin-bottom: 22px;
-  box-sizing: border-box;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: #dbe8ff;
+  font-size: 14px;
+  font-weight: 600;
 }
 
-/* Ícones de email e senha */
 .login-icon {
-  position: absolute;
-  left: 14px;
   color: #9bb9e8;
-  pointer-events: none;
-  z-index: 2;
 }
 
-/* Inputs de email e senha (com bordas simétricas de 13px) */
+/* Wrapper para posicionar o botão do olho dentro do input de senha */
+.login-password-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* ==========================================
+   INPUTS (BORDAS IGUAIS E CURVAS)
+   ========================================== */
 .login-input {
   width: 100%;
-  height: 58px;
+  height: 52px;
   box-sizing: border-box;
 
-  padding: 0 16px 0 46px;
+  padding: 0 16px;
 
   border-radius: 13px;
   border: 1.5px solid rgba(116, 179, 255, 0.75);
   background-color: rgba(7, 45, 105, 0.55);
 
   color: white;
-  font-size: 16px;
+  font-size: 15px;
   outline: none;
 
   transition: 0.25s ease;
-
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
 }
 
 .login-input::placeholder {
-  color: #9bb9e8;
+  color: #7a9ccf;
 }
 
 .login-input:focus {
@@ -121,12 +140,12 @@
     0 0 20px rgba(52, 139, 255, 0.12);
 }
 
-/* Campo de senha ganha espaço extra à direita pro botão do olho */
-.login-password-group .login-input {
+/* Espaço extra à direita do campo de senha para não cobrir o texto com o olho */
+.login-password-wrapper .login-input {
   padding-right: 48px;
 }
 
-/* Botão de alternar visibilidade da senha */
+/* Botão de Mostrar/Ocultar Senha */
 .toggle-password-button {
   position: absolute;
   right: 12px;
@@ -152,10 +171,12 @@
   color: white;
 }
 
-/* Botão de Login */
+/* ==========================================
+   BOTÃO DE SUBMIT, DIVISOR E LINK DE CADASTRO
+   ========================================== */
 .login-button {
   width: 100%;
-  height: 58px;
+  height: 54px;
 
   display: flex;
   align-items: center;
@@ -188,12 +209,11 @@
   box-shadow: 0 14px 30px rgba(25, 108, 255, 0.45);
 }
 
-/* Divisor "ou" */
 .login-divider {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin: 27px 0 20px;
+  margin: 26px 0 20px;
 }
 
 .login-divider span {
@@ -208,7 +228,6 @@
   font-size: 14px;
 }
 
-/* Link para registrar */
 .login-register-link {
   margin: 0;
   text-align: center;

@@ -11,39 +11,48 @@ export default function LoginPage() {
 
   return (
     <div className="login-page-wrapper">
-      {/* O corpo principal do formulário */}
       <div className="login-body">
         <h2>Login</h2>
 
         <form onSubmit={(e) => e.preventDefault()}>
-          {/* Grupo de input do Email */}
+          {/* Email */}
           <div className="login-input-group">
-            <IconMail className="login-icon" size={20} />
+            <label className="login-label">
+              <IconMail className="login-icon" size={20} />
+              <span>Email</span>
+            </label>
             <input
               type="email"
               className="login-input"
-              placeholder="email"
+              placeholder="Joaomaria@exemplo.com"
             />
           </div>
 
-          {/* Grupo de input da Senha */}
-          <div className="login-input-group login-password-group">
-            <IconLock className="login-icon" size={20} />
-            <input
-              type={showPassword ? 'text' : 'password'}
-              className="login-input"
-              placeholder="senha"
-            />
-            <button
-              type="button"
-              className="toggle-password-button"
-              onClick={togglePasswordVisibility}
-            >
-              {showPassword ? <IconEyeOff size={20} /> : <IconEye size={20} />}
-            </button>
+          {/* Senha */}
+          <div className="login-input-group">
+            <label className="login-label">
+              <IconLock className="login-icon" size={20} />
+              <span>Senha</span>
+            </label>
+            
+            <div className="login-password-wrapper">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                className="login-input"
+                placeholder="xxxxxxxx"
+                maxLength={8}
+              />
+              <button
+                type="button"
+                className="toggle-password-button"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? <IconEyeOff size={20} /> : <IconEye size={20} />}
+              </button>
+            </div>
           </div>
 
-          {/* Botão de envio */}
+          {/* Botão de Envio */}
           <button type="submit" className="login-button">
             Login
           </button>
@@ -55,7 +64,7 @@ export default function LoginPage() {
             <span></span>
           </div>
 
-          {/* Link para o cadastro */}
+          {/* Link para Cadastro */}
           <p className="login-register-link">
             Não tem uma conta ?{" "}
             <a href="/register">Registre-se</a>

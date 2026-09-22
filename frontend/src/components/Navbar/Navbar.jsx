@@ -20,8 +20,10 @@ import {
 } from '@/stores';
 import { TOAST_MESSAGES } from '@/utils';
 import './Navbar.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function Navbar({ onToggleMobileSidebar }) {
+  const navigate = useNavigate();
   const user = useUserStore((state) => state.user);
   const notifications = useUserStore((state) => state.notifications);
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
@@ -82,14 +84,23 @@ export default function Navbar({ onToggleMobileSidebar }) {
         {/* Left Section: Mobile Toggle & Brand */}
         <div className="d-flex align-items-center gap-2">
           <button
+            type="button"
             className="btn btn-outline-secondary d-md-none border-0 p-2"
             onClick={onToggleMobileSidebar}
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebarOffcanvas"
+            aria-controls="sidebarOffcanvas"
             aria-label="Abrir menu"
           >
             <IconMenu2 size={20} />
           </button>
 
-          <div className="navbar-brand d-flex align-items-center gap-2 m-0 fw-bold">
+          <button
+            type="button"
+            className="navbar-brand btn btn-link d-flex align-items-center gap-2 m-0 p-0 text-body text-decoration-none fw-bold"
+            onClick={() => navigate('/')}
+            aria-label="Ir para a página inicial do New News"
+          >
             <div
               className="d-flex align-items-center justify-content-center rounded-3 bg-primary text-white shadow-sm"
               style={{ width: 36, height: 36, flexShrink: 0 }}
@@ -99,7 +110,7 @@ export default function Navbar({ onToggleMobileSidebar }) {
             <span className="fs-5 tracking-tight">
               NEW <span className="text-primary">NEWS</span>
             </span>
-          </div>
+          </button>
         </div>
 
         {/* Center Search Bar */}
@@ -285,7 +296,10 @@ export default function Navbar({ onToggleMobileSidebar }) {
                   <button
                     type="button"
                     className="dropdown-item d-flex align-items-center gap-2 py-2 small"
-                    onClick={() => setIsUserDropdownOpen(false)}
+                    onClick={() => {
+                      setIsUserDropdownOpen(false);
+                      navigate('/config?section=profile');
+                    }}
                   >
                     <IconUser size={16} /> Meu Perfil
                   </button>
@@ -294,7 +308,10 @@ export default function Navbar({ onToggleMobileSidebar }) {
                   <button
                     type="button"
                     className="dropdown-item d-flex align-items-center gap-2 py-2 small"
-                    onClick={() => setIsUserDropdownOpen(false)}
+                    onClick={() => {
+                      setIsUserDropdownOpen(false);
+                      navigate('/config?section=settings');
+                    }}
                   >
                     <IconSettings size={16} /> Configurações
                   </button>

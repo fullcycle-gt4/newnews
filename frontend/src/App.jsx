@@ -1,5 +1,6 @@
-import { useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ConfigPage from '@/pages/Config';
 import ErrorBoundary from "@/components/ErrorBoundary";
 import HomePage from "@/pages/Home";
 import RegisterPage from "@/pages/RegistePage";
@@ -19,6 +20,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/config" element={<ConfigPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Routes>
       </BrowserRouter>

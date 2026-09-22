@@ -92,7 +92,6 @@ function RegistrationForm({ onSubmit }) {
 
             <div className="registration-content">
 
-                {/* Logo */}
                 <div className="news-logo">
                     <div className="logo-box">
                         NN
@@ -126,13 +125,12 @@ function RegistrationForm({ onSubmit }) {
                         </label>
 
                         <div className="input-container">
-                            <IconUser size={21} />
 
                             <input
                                 type="text"
                                 id="fullName"
                                 name="fullName"
-                                placeholder="Digite seu nome completo"
+                                placeholder="João Maria da Silva"
                                 value={formData.fullName}
                                 onChange={handleChange}
                             />
@@ -153,13 +151,12 @@ function RegistrationForm({ onSubmit }) {
                         </label>
 
                         <div className="input-container">
-                            <IconMail size={21} />
 
                             <input
                                 type="email"
                                 id="email"
                                 name="email"
-                                placeholder="Digite seu e-mail"
+                                placeholder="joaomaria@exemplo.com"
                                 value={formData.email}
                                 onChange={handleChange}
                             />
@@ -180,7 +177,6 @@ function RegistrationForm({ onSubmit }) {
                         </label>
 
                         <div className="input-container">
-                            <IconLock size={21} />
 
                             <input
                                 type={
@@ -190,7 +186,7 @@ function RegistrationForm({ onSubmit }) {
                                 }
                                 id="password"
                                 name="password"
-                                placeholder="Digite uma senha"
+                                placeholder="xxxxxxxx"
                                 value={formData.password}
                                 onChange={handleChange}
                             />

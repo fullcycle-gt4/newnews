@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react';
 import {
   IconBookmark,
   IconBookmarkFilled,
@@ -6,50 +6,67 @@ import {
   IconX,
   IconExternalLink,
   IconNews,
-} from '@tabler/icons-react'
-import './ArticleModal.css'
+} from '@tabler/icons-react';
+import './ArticleModal.css';
 
-export default function ArticleModal({ article, isBookmarked, onToggleBookmark, onClose, onShare }) {
-  const closeButtonRef = useRef(null)
-  const [imageError, setImageError] = useState(false)
+export default function ArticleModal({
+  article,
+  isBookmarked,
+  onToggleBookmark,
+  onClose,
+  onShare,
+}) {
+  const closeButtonRef = useRef(null);
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
-    const previouslyFocusedElement = document.activeElement
-    closeButtonRef.current?.focus()
+    const previouslyFocusedElement = document.activeElement;
+    closeButtonRef.current?.focus();
 
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape') onClose?.()
-    }
+      if (e.key === 'Escape') onClose?.();
+    };
 
-    window.addEventListener('keydown', handleKeyDown)
-    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown)
-      document.body.style.overflow = ''
-      if (previouslyFocusedElement && typeof previouslyFocusedElement.focus === 'function') {
-        previouslyFocusedElement.focus()
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+      if (
+        previouslyFocusedElement &&
+        typeof previouslyFocusedElement.focus === 'function'
+      ) {
+        previouslyFocusedElement.focus();
       }
-    }
-  }, [onClose])
+    };
+  }, [onClose]);
 
   const formattedPublishedDate = useMemo(() => {
-    if (!article?.publishedAt) return new Date().toLocaleDateString('pt-BR')
-    return new Date(article.publishedAt).toLocaleDateString('pt-BR')
-  }, [article])
+    if (!article?.publishedAt) return new Date().toLocaleDateString('pt-BR');
+    return new Date(article.publishedAt).toLocaleDateString('pt-BR');
+  }, [article]);
 
-  if (!article) return null
+  if (!article) return null;
 
   const contentParagraphs = Array.isArray(article.content)
     ? article.content
-    : [article.content || article.summary]
+    : [article.content || article.summary];
 
   return (
-    <div className="nn-modal-backdrop" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="modal-article-title">
+    <div
+      className="nn-modal-backdrop"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-article-title"
+    >
       <div className="nn-article-modal" onClick={(e) => e.stopPropagation()}>
         <div className="nn-modal-header">
           <div className="d-flex align-items-center gap-2">
-            <span className={`badge text-bg-${article.badgeBg || 'primary'}`}>{article.category}</span>
+            <span className={`badge text-bg-${article.badgeBg || 'primary'}`}>
+              {article.category}
+            </span>
             <span className="text-secondary" style={{ fontSize: '0.8rem' }}>
               {article.publishedTimeAgo || 'Recente'}
             </span>
@@ -60,10 +77,16 @@ export default function ArticleModal({ article, isBookmarked, onToggleBookmark, 
               className="btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center"
               style={{ width: 34, height: 34 }}
               onClick={() => onToggleBookmark?.(article.id)}
-              title={isBookmarked ? 'Remover dos favoritos' : 'Salvar nos favoritos'}
+              title={
+                isBookmarked ? 'Remover dos favoritos' : 'Salvar nos favoritos'
+              }
               aria-label="Favoritar"
             >
-              {isBookmarked ? <IconBookmarkFilled size={16} /> : <IconBookmark size={16} />}
+              {isBookmarked ? (
+                <IconBookmarkFilled size={16} />
+              ) : (
+                <IconBookmark size={16} />
+              )}
             </button>
             <button
               type="button"
@@ -99,25 +122,37 @@ export default function ArticleModal({ article, isBookmarked, onToggleBookmark, 
             </div>
           ) : null}
 
-          <h1 id="modal-article-title" className="nn-modal-title text-break-word">
+          <h1
+            id="modal-article-title"
+            className="nn-modal-title text-break-word"
+          >
             {article.title}
           </h1>
 
-          <div className="d-flex align-items-center gap-3 mb-3 text-secondary" style={{ fontSize: '0.8rem' }}>
+          <div
+            className="d-flex align-items-center gap-3 mb-3 text-secondary"
+            style={{ fontSize: '0.8rem' }}
+          >
             <span>✍️ {article.author || 'Redação New News'}</span>
             <span>•</span>
             <span>🌐 {article.source || 'Portal New News'}</span>
           </div>
 
           <div className="border-top border-bottom py-3 mb-4">
-            <p className="fw-medium mb-0" style={{ fontSize: '0.95rem', lineHeight: 1.5, opacity: 0.9 }}>
+            <p
+              className="fw-medium mb-0"
+              style={{ fontSize: '0.95rem', lineHeight: 1.5, opacity: 0.9 }}
+            >
               {article.summary}
             </p>
           </div>
 
           <div className="article-full-text">
             {contentParagraphs.map((paragraph, index) => (
-              <p key={`${index}-${paragraph.slice(0, 15)}`} className="nn-modal-paragraph">
+              <p
+                key={`${index}-${paragraph.slice(0, 15)}`}
+                className="nn-modal-paragraph"
+              >
                 {paragraph}
               </p>
             ))}
@@ -149,5 +184,5 @@ export default function ArticleModal({ article, isBookmarked, onToggleBookmark, 
         </div>
       </div>
     </div>
-  )
+  );
 }

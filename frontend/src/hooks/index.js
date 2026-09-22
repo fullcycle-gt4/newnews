@@ -1,1 +1,1 @@
-export * from "./useNewsFeed.js"
+export * from './useNewsFeed.js';

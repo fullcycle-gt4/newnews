@@ -1,17 +1,17 @@
-import { useEffect } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import ErrorBoundary from '@/components/ErrorBoundary'
-import HomePage from '@/pages/Home'
-import { useUserStore, useNavigationStore } from '@/stores'
+import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ErrorBoundary from '@/components/ErrorBoundary';
+import HomePage from '@/pages/Home';
+import { useUserStore, useNavigationStore } from '@/stores';
 
 export default function App() {
-  const loadUserData = useUserStore((state) => state.loadUserData)
-  const loadNavigation = useNavigationStore((state) => state.loadNavigation)
+  const loadUserData = useUserStore((state) => state.loadUserData);
+  const loadNavigation = useNavigationStore((state) => state.loadNavigation);
 
   useEffect(() => {
-    loadUserData()
-    loadNavigation()
-  }, [])
+    loadUserData();
+    loadNavigation();
+  }, []);
 
   return (
     <ErrorBoundary>
@@ -21,5 +21,5 @@ export default function App() {
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>
-  )
+  );
 }

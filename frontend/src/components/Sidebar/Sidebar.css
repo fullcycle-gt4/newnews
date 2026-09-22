@@ -1,20 +1,19 @@
-/* Sidebar.css — Fixed viewport height with strictly contained inner scrolling */
-
 #sidebar-desktop {
   height: 100%;
   overflow: hidden;
   flex-shrink: 0;
 }
 
-/* Scrollable flex item fix: min-height: 0 allows flex container to shrink below its content size */
 .sidebar-nav-scroll {
   flex: 1 1 0%;
-  min-height: 0; 
+  min-height: 0;
   overflow-y: auto;
 }
 
 .sidebar-item {
-  transition: background-color var(--nn-transition-fast), color var(--nn-transition-fast) !important;
+  transition:
+    background-color var(--nn-transition-fast),
+    color var(--nn-transition-fast) !important;
 }
 
 .sidebar-item:hover:not(.active) {
@@ -22,7 +21,7 @@
   color: var(--bs-dark) !important;
 }
 
-[data-bs-theme="dark"] .sidebar-item:hover:not(.active) {
+[data-bs-theme='dark'] .sidebar-item:hover:not(.active) {
   background-color: var(--bs-gray-800);
   color: var(--bs-light) !important;
 }
@@ -39,6 +38,6 @@
   background-color: rgba(0, 0, 0, 0.08);
 }
 
-[data-bs-theme="dark"] .sidebar-divider {
+[data-bs-theme='dark'] .sidebar-divider {
   background-color: rgba(255, 255, 255, 0.12);
 }

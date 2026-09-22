@@ -1,19 +1,29 @@
-import { useToastStore } from '@/stores'
-import './Toast.css'
+import { useToastStore } from '@/stores';
+import './Toast.css';
 
-export default function ToastContainer({ toastNotifications: propsNotifications, onDismissToast: propsDismiss }) {
-  const storeToastNotifications = useToastStore((state) => state.toastNotifications)
-  const storeDismissToast = useToastStore((state) => state.dismissToast)
+export default function ToastContainer({
+  toastNotifications: propsNotifications,
+  onDismissToast: propsDismiss,
+}) {
+  const storeToastNotifications = useToastStore(
+    (state) => state.toastNotifications,
+  );
+  const storeDismissToast = useToastStore((state) => state.dismissToast);
 
-  const toastNotifications = propsNotifications ?? storeToastNotifications ?? []
-  const onDismissToast = propsDismiss ?? storeDismissToast
+  const toastNotifications =
+    propsNotifications ?? storeToastNotifications ?? [];
+  const onDismissToast = propsDismiss ?? storeDismissToast;
 
-  if (!toastNotifications.length) return null
+  if (!toastNotifications.length) return null;
 
   return (
     <div className="nn-toast-container" aria-live="polite" aria-atomic="true">
       {toastNotifications.map((toast) => (
-        <div key={toast.id} className={`nn-toast nn-toast--${toast.type || 'info'}`} role="status">
+        <div
+          key={toast.id}
+          className={`nn-toast nn-toast--${toast.type || 'info'}`}
+          role="status"
+        >
           <span className="nn-toast__icon" style={{ fontSize: '1.1rem' }}>
             {toast.icon || (toast.type === 'success' ? '✓' : 'ℹ️')}
           </span>
@@ -30,5 +40,5 @@ export default function ToastContainer({ toastNotifications: propsNotifications,
         </div>
       ))}
     </div>
-  )
+  );
 }

@@ -17,13 +17,13 @@ npm run dev   # inicia o servidor em http://localhost:5173
 
 ## 🧰 Scripts
 
-| Script            | O que faz                              |
-| ----------------- | -------------------------------------- |
-| `npm run dev`     | Servidor de desenvolvimento (Vite)     |
-| `npm run build`   | Build de produção em `dist/`           |
-| `npm run preview` | Pré-visualiza o build localmente       |
-| `npm run lint`    | Verifica problemas de código (Oxlint)  |
-| `npm run format`  | Formata o código (Prettier)            |
+| Script            | O que faz                             |
+| ----------------- | ------------------------------------- |
+| `npm run dev`     | Servidor de desenvolvimento (Vite)    |
+| `npm run build`   | Build de produção em `dist/`          |
+| `npm run preview` | Pré-visualiza o build localmente      |
+| `npm run lint`    | Verifica problemas de código (Oxlint) |
+| `npm run format`  | Formata o código (Prettier)           |
 
 ---
 
@@ -47,11 +47,11 @@ npm run dev   # inicia o servidor em http://localhost:5173
 
 Crie um arquivo `.env` na raiz de `frontend/` se precisar sobrescrever os padrões:
 
-| Variável             | Padrão  | Descrição                                              |
-| -------------------- | ------- | ------------------------------------------------------ |
-| `VITE_API_BASE_URL`  | `/api`  | URL base da API backend                                |
-| `VITE_USE_MOCK`      | `true`  | `false` desativa o modo mock e usa a API real          |
-| `VITE_MOCK_DELAY_MS` | `250`   | Delay artificial das respostas mock (em milissegundos) |
+| Variável             | Padrão | Descrição                                              |
+| -------------------- | ------ | ------------------------------------------------------ |
+| `VITE_API_BASE_URL`  | `/api` | URL base da API backend                                |
+| `VITE_USE_MOCK`      | `true` | `false` desativa o modo mock e usa a API real          |
+| `VITE_MOCK_DELAY_MS` | `250`  | Delay artificial das respostas mock (em milissegundos) |
 
 > Por padrão, o app roda em **modo mock** — sem precisar de um backend em execução.
 
@@ -86,15 +86,15 @@ Use sempre o alias `@/` no lugar de caminhos relativos. Para importações **ent
 
 ```js
 // ✅ correto — cross-module via barrel
-import { useNavigationStore } from '@/stores'
-import Navbar from '@/components/Navbar'
+import { useNavigationStore } from '@/stores';
+import Navbar from '@/components/Navbar';
 
 // ✅ correto — intra-módulo (dentro da mesma pasta)
-import { useToastStore } from './toastStore.js'
+import { useToastStore } from './toastStore.js';
 
 // ❌ evitar — cross-module sem barrel
-import { useNavigationStore } from '@/stores/navigationStore.js'
-import Navbar from '@/components/Navbar/Navbar.jsx'
+import { useNavigationStore } from '@/stores/navigationStore.js';
+import Navbar from '@/components/Navbar/Navbar.jsx';
 ```
 
 ### Nomenclatura

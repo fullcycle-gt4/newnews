@@ -17,13 +17,17 @@
   border-radius: 0.75rem;
   background: var(--bs-body-bg, #ffffff);
   color: var(--bs-body-color, #212529);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.15),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
   border: 1px solid var(--bs-border-color, #e9ecef);
   display: flex;
   align-items: center;
   gap: 0.75rem;
   animation: nn-toast-slide-in 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 [data-bs-theme='dark'] .nn-toast {

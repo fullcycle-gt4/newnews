@@ -1,25 +1,16 @@
-# --- Stage 1: Build ---
-FROM node:20-alpine AS builder
+FROM node:20-alpine
 
 WORKDIR /app
 
 COPY package*.json ./
+
 RUN npm ci
 
 COPY . .
 
-RUN npm run build
-
-
-# --- Stage 2: Production ---
-FROM node:20-alpine AS production
-
-WORKDIR /app
-
-RUN npm install -g serve
-
-COPY --from=builder /app/dist ./dist
-
 EXPOSE 8080
 
-CMD ["serve", "-s", "dist", "-l", "8080"]
+# Inicia o Vite em modo desenvolvimento
+# --host 0.0.0.0 permite acessar o projeto pelo localhost
+# --port 8080 faz o Vite funcionar na porta 8080
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "8080"]

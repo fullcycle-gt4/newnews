@@ -1,13 +1,25 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.jsx'
+import { UserProvider } from './context/UserContext.jsx'
+import { ThemeProvider } from './context/ThemeContext.jsx'
+import { ToastProvider } from './context/ToastContext.jsx'
+import { NavigationProvider } from './context/NavigationContext.jsx'
+import { BookmarksProvider } from './context/BookmarksContext.jsx'
+import HomePage from './pages/Home/HomePage.jsx'
 
-function App() {
+export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<div>New News</div>} />
-      </Routes>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <UserProvider>
+        <ThemeProvider>
+          <ToastProvider>
+            <NavigationProvider>
+              <BookmarksProvider>
+                <HomePage />
+              </BookmarksProvider>
+            </NavigationProvider>
+          </ToastProvider>
+        </ThemeProvider>
+      </UserProvider>
+    </ErrorBoundary>
   )
 }
-
-export default App

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './style.css';
 import { IconMail, IconLock, IconEye, IconEyeOff } from '@tabler/icons-react';
 
-export default function LoginPage() {
+export default function LoginPage({ isModal = false, titleId }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -10,9 +10,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="login-page-wrapper">
+    <div className={`login-page-wrapper${isModal ? ' login-modal-form-wrapper' : ''}`}>
       <div className="login-body">
-        <h2>Login</h2>
+        <h2 id={titleId}>Login</h2>
 
         <form onSubmit={(e) => e.preventDefault()}>
           {/* Email */}

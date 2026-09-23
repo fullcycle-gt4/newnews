@@ -21,6 +21,7 @@ import {
 import { TOAST_MESSAGES } from '@/utils';
 import './Navbar.css';
 import { useNavigate } from 'react-router-dom';
+import LoginForm from '@/components/LoginForm';
 
 export default function Navbar({ onToggleMobileSidebar }) {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ export default function Navbar({ onToggleMobileSidebar }) {
   const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] =
     useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   const notificationContainerRef = useRef(null);
   const userContainerRef = useRef(null);
@@ -60,6 +62,22 @@ export default function Navbar({ onToggleMobileSidebar }) {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (!isLoginModalOpen) return undefined;
+
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') setIsLoginModalOpen(false);
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = '';
+    };
+  }, [isLoginModalOpen]);
 
   const handleToggleTheme = () => {
     const nextMode = !isDarkMode;
@@ -350,7 +368,7 @@ export default function Navbar({ onToggleMobileSidebar }) {
               <button
                 type="button"
                 className="btn btn-outline-light btn-sm rounded-pill px-3 py-2"
-                onClick={() => navigate('/login')}
+                onClick={() => setIsLoginModalOpen(true)}
               >
                 Fazer Login
               </button>
@@ -358,6 +376,35 @@ export default function Navbar({ onToggleMobileSidebar }) {
           )}
         </div>
       </div>
+
+      {isLoginModalOpen && (
+        <div
+          className="login-modal-backdrop"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              setIsLoginModalOpen(false);
+            }
+          }}
+        >
+          <div
+            className="login-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="login-modal-title"
+          >
+            <button
+              type="button"
+              className="login-modal-close"
+              aria-label="Fechar login"
+              onClick={() => setIsLoginModalOpen(false)}
+            >
+              <IconX size={22} />
+            </button>
+            <LoginForm isModal titleId="login-modal-title" />
+          </div>
+        </div>
+      )}
     </nav>
   );
 }

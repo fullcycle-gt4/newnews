@@ -34,6 +34,20 @@
   font-family: Arial, sans-serif;
 }
 
+.login-modal-form-wrapper {
+  min-height: 0;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+}
+
+.login-modal-form-wrapper .login-body {
+  max-width: 440px;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
 /* ==========================================
    CARD DO FORMULÁRIO (LOGIN BODY)
    ========================================== */

@@ -21,7 +21,7 @@ import {
 import { TOAST_MESSAGES } from '@/utils';
 import './Navbar.css';
 import { useNavigate } from 'react-router-dom';
-import LoginForm from '@/components/LoginForm';
+import LoginFormModal from '@/components/LoginFormModal';
 
 export default function Navbar({ onToggleMobileSidebar }) {
   const navigate = useNavigate();
@@ -401,7 +401,12 @@ export default function Navbar({ onToggleMobileSidebar }) {
             >
               <IconX size={22} />
             </button>
-            <LoginForm isModal titleId="login-modal-title" />
+            <LoginFormModal
+              titleId="login-modal-title"
+              onRegister={() => {
+                setIsLoginModalOpen(false);
+              }}
+            />
           </div>
         </div>
       )}

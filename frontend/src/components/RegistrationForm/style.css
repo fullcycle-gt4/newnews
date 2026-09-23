@@ -8,7 +8,6 @@
     padding: 20px 15px;
     position: relative;
     overflow: hidden;
-
     background:
         radial-gradient(
             circle at 15% 20%,
@@ -65,18 +64,15 @@
         #4b9cff,
         #1764ed
     );
-
     color: white;
     font-size: 19px;
     font-weight: 800;
-
     box-shadow:
         0 8px 25px rgba(31, 112, 255, 0.4);
 }
 
 .news-logo h1 {
     margin: 0;
-
     font-family: Georgia, "Times New Roman", serif;
 
     font-size: 27px;
@@ -101,7 +97,6 @@
 .registration-form {
     width: 100%;
     box-sizing: border-box;
-
     position: relative;
     overflow: hidden;
 
@@ -117,7 +112,6 @@
         );
 
     border: 1px solid rgba(92, 169, 255, 0.8);
-
     box-shadow:
         0 20px 55px rgba(0, 0, 0, 0.35),
         inset 0 1px 1px rgba(255, 255, 255, 0.12);
@@ -129,9 +123,7 @@
 /* TÍTULO */
 .registration-form h2 {
     margin: 0;
-
     text-align: center;
-
     font-family: Georgia, "Times New Roman", serif;
 
     font-size: 34px;
@@ -145,7 +137,6 @@
     margin: 8px 0 23px;
 
     text-align: center;
-
     color: #b9d3ff;
 
     font-size: 14px;
@@ -180,7 +171,6 @@
 .input-container {
     display: flex;
     align-items: center;
-
     width: 100%;
     height: 50px;
 
@@ -191,9 +181,7 @@
     border-radius: 11px;
 
     border: 1.5px solid rgba(116, 179, 255, 0.75);
-
     background: rgba(7, 45, 105, 0.55);
-
     transition: 0.25s ease;
 }
 
@@ -209,9 +197,7 @@
 
     border: none;
     outline: none;
-
     background: transparent;
-
     color: white;
 
     font-size: 14px;
@@ -223,7 +209,6 @@
 
 .input-container:focus-within {
     border-color: #65adff;
-
     box-shadow:
         0 0 0 3px rgba(76, 155, 255, 0.15),
         0 0 20px rgba(52, 139, 255, 0.12);
@@ -235,15 +220,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding: 4px;
-
     border: none;
 
     background: transparent;
-
     color: #9fc6ff;
-
     cursor: pointer;
 }
 
@@ -285,14 +266,11 @@
         #3d9cff,
         #1261f3
     );
-
     color: white;
 
     font-size: 15px;
     font-weight: 700;
-
     cursor: pointer;
-
     box-shadow:
         0 8px 20px rgba(25, 108, 255, 0.35);
 
@@ -301,7 +279,6 @@
 
 .register-button:hover {
     transform: translateY(-2px);
-
     box-shadow:
         0 12px 25px rgba(25, 108, 255, 0.45);
 }
@@ -324,15 +301,12 @@
 
 .divider span {
     flex: 1;
-
     height: 1px;
-
     background: rgba(159, 198, 255, 0.35);
 }
 
 .divider p {
     margin: 0;
-
     color: #a8c8f8;
 
     font-size: 12px;
@@ -342,9 +316,7 @@
 /* LOGIN */
 .login-link {
     margin: 0;
-
     text-align: center;
-
     color: #bdd3f5;
 
     font-size: 13px;
@@ -352,9 +324,7 @@
 
 .login-link a {
     color: #52a7ff;
-
     font-weight: 700;
-
     text-decoration: none;
 }
 
@@ -367,18 +337,14 @@
 /* GLOBO */
 .globo {
     position: absolute;
-
     border: 1px solid rgba(72, 159, 255, 0.25);
-
     border-radius: 50%;
-
     pointer-events: none;
 }
 
 .globo-one {
     width: 560px;
     height: 560px;
-
     right: -280px;
     bottom: -160px;
 }
@@ -386,21 +352,16 @@
 .globo-two {
     width: 320px;
     height: 320px;
-
     left: -180px;
     top: 45%;
-
     opacity: 0.55;
 }
 
 .globo-line {
     position: absolute;
-
     top: 0;
     bottom: 0;
-
     border-left: 1px solid rgba(72, 159, 255, 0.2);
-
     border-radius: 50%;
 }
 
@@ -416,12 +377,9 @@
 
 .globo-horizontal {
     position: absolute;
-
     left: 0;
     right: 0;
-
     border-top: 1px solid rgba(72, 159, 255, 0.2);
-
     border-radius: 50%;
 }
 
@@ -438,7 +396,6 @@
 
 /* TABLET / CELULAR */
 @media (max-width: 700px) {
-
     .registration-container {
         padding: 25px 16px;
     }
@@ -450,11 +407,9 @@
     .news-logo {
         margin-bottom: 18px;
     }
-
     .registration-form {
         padding: 25px 27px 23px;
     }
-
     .registration-form h2 {
         font-size: 31px;
     }

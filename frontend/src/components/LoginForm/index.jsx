@@ -1,0 +1,76 @@
+import React, { useState } from 'react';
+import './style.css';
+import { IconMail, IconLock, IconEye, IconEyeOff } from '@tabler/icons-react';
+
+export default function LoginPage() {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
+
+  return (
+    <div className="login-page-wrapper">
+      <div className="login-body">
+        <h2>Login</h2>
+
+        <form onSubmit={(e) => e.preventDefault()}>
+          {/* Email */}
+          <div className="login-input-group">
+            <label className="login-label">
+              <IconMail className="login-icon" size={20} />
+              <span>Email</span>
+            </label>
+            <input
+              type="email"
+              className="login-input"
+              placeholder="Joaomaria@exemplo.com"
+            />
+          </div>
+
+          {/* Senha */}
+          <div className="login-input-group">
+            <label className="login-label">
+              <IconLock className="login-icon" size={20} />
+              <span>Senha</span>
+            </label>
+            
+            <div className="login-password-wrapper">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                className="login-input"
+                placeholder="xxxxxxxx"
+                maxLength={8}
+              />
+              <button
+                type="button"
+                className="toggle-password-button"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? <IconEyeOff size={20} /> : <IconEye size={20} />}
+              </button>
+            </div>
+          </div>
+
+          {/* Botão de Envio */}
+          <button type="submit" className="login-button">
+            Login
+          </button>
+
+          {/* Divisor "ou" */}
+          <div className="login-divider">
+            <span></span>
+            <p>ou</p>
+            <span></span>
+          </div>
+
+          {/* Link para Cadastro */}
+          <p className="login-register-link">
+            Não tem uma conta ?{" "}
+            <a href="/register">Registre-se</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  );
+}

@@ -4,6 +4,7 @@ import ConfigPage from '@/pages/Config';
 import ErrorBoundary from "@/components/ErrorBoundary";
 import HomePage from "@/pages/Home";
 import RegisterPage from "@/pages/RegistePage";
+import LoginPage from "./components/LoginForm";
 import { useUserStore, useNavigationStore } from "@/stores";
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/config" element={<ConfigPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage/>}/>
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>

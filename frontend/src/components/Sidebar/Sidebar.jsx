@@ -72,8 +72,8 @@ export default function Sidebar({
       icon: '🔖',
       badge: bookmarkedArticlesCount,
     },
-    { id: 'perfil', label: 'Meu perfil', icon: '👤' },
-    { id: 'configuracoes', label: 'Configurações', icon: '⚙️' },
+    // { id: 'perfil', label: 'Meu perfil', icon: '👤' },
+    // { id: 'configuracoes', label: 'Configurações', icon: '⚙️' },
   ];
 
   return (

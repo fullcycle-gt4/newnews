@@ -25,6 +25,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Navbar({ onToggleMobileSidebar }) {
   const navigate = useNavigate();
   const user = useUserStore((state) => state.user);
+  const clearUser = useUserStore((state) => state.clearUser);
   const notifications = useUserStore((state) => state.notifications);
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
   const toggleDarkMode = useThemeStore((state) => state.toggleDarkMode);
@@ -162,6 +163,7 @@ export default function Navbar({ onToggleMobileSidebar }) {
           </button>
 
           {/* Notifications Dropdown */}
+          {user && (
           <div className="position-relative" ref={notificationContainerRef}>
             <button
               type="button"
@@ -235,8 +237,10 @@ export default function Navbar({ onToggleMobileSidebar }) {
               </div>
             )}
           </div>
+          )}
 
           {/* User Profile Dropdown */}
+          {user ? (
           <div
             className="position-relative navbar-user-dropdown-wrapper"
             ref={userContainerRef}
@@ -332,6 +336,7 @@ export default function Navbar({ onToggleMobileSidebar }) {
                         toast.type,
                         toast.icon,
                       );
+                      clearUser();
                     }}
                   >
                     <IconDoorExit size={16} /> Sair
@@ -340,6 +345,17 @@ export default function Navbar({ onToggleMobileSidebar }) {
               </ul>
             )}
           </div>
+          ) : (
+            <div className="d-flex align-items-center gap-2">
+              <button
+                type="button"
+                className="btn btn-outline-light btn-sm rounded-pill px-3 py-2"
+                onClick={() => navigate('/login')}
+              >
+                Fazer Login
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </nav>

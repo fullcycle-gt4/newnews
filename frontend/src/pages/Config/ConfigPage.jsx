@@ -15,7 +15,7 @@ import {
 import Navbar from '@/components/Navbar';
 import NewsCard from '@/components/NewsCard';
 import ToastContainer from '@/components/ToastContainer';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useNewsFeed } from '@/hooks';
 import '@/components/Sidebar/Sidebar.css';
 import {
@@ -113,6 +113,7 @@ function ConfigurationNavItems({ activeSection, onSelect, isOffcanvas = false })
 }
 
 export default function ConfigPage() {
+	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
 	const user = useUserStore((state) => state.user);
 	const bookmarkedArticleIds = useBookmarksStore(
@@ -182,6 +183,7 @@ export default function ConfigPage() {
 	const handleOpenArticle = (article) => {
 		setSelectedArticle(article);
 		markArticleAsRead(article.id);
+		navigate(`/news?id=${article.id}`);
 	};
 
 	return (

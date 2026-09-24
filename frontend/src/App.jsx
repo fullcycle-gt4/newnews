@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ConfigPage from '@/pages/Config';
 import ErrorBoundary from "@/components/ErrorBoundary";
 import HomePage from "@/pages/Home";
+import NewsPage from "@/pages/NewsPage";
 import RegisterPage from "@/pages/RegistePage";
 import LoginPage from "./components/LoginForm";
 import { useUserStore, useNavigationStore } from "@/stores";
@@ -21,6 +22,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/news" element={<NewsPage />} />
           <Route path="/config" element={<ConfigPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage/>}/>

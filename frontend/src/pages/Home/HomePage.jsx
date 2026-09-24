@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Sidebar, { SidebarOffcanvas } from '@/components/Sidebar';
 import ToastContainer from '@/components/ToastContainer';
@@ -16,6 +17,7 @@ import { getTimeBasedGreeting, formatCurrentDateTime } from '@/utils';
 import './HomePage.css';
 
 export default function HomePage() {
+  const navigate = useNavigate();
   const user = useUserStore((state) => state.user);
   const navSelectedCategory = useNavigationStore(selectNavCategory);
   const debouncedSearchQuery = useNavigationStore(
@@ -62,6 +64,7 @@ export default function HomePage() {
   const handleOpenArticleModal = (article) => {
     setSelectedArticleDetail(article);
     markArticleAsRead(article.id);
+    navigate(`/news?id=${article.id}`);
   };
 
   const handleShareArticleLink = (article) => {

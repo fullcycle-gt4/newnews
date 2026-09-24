@@ -13,6 +13,12 @@ import {
 } from '@tabler/icons-react';
 import './NewsPage.css';
 
+/**
+ * Detailed News Article View page component.
+ * Retrieves and renders full article details specified by the URL query string (`id`),
+ * automatically registers read status in bookmarks store, and fetches contextual related
+ * articles scored by category proximity and keyword similarity.
+ */
 export default function NewsPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -40,15 +46,25 @@ export default function NewsPage() {
         setError(null);
 
         const res = await newsService.getNewsById(articleId);
-        setArticle(res.data);
+        const articleData = res.data;
+        setArticle(articleData);
         markArticleAsRead(Number(articleId));
 
-        // Carrega notícias relacionadas
-        const newsListRes = await newsService.getNews({ limit: 4 });
-        const filteredRelated = (newsListRes.data || [])
-          .filter((item) => Number(item.id) !== Number(articleId))
-          .slice(0, 3);
-        setRelatedNews(filteredRelated);
+        // Fetch contextual related articles scored by category, topic, and keyword relevance
+        try {
+          const relatedRes = await newsService.getRelatedNews(articleId, { limit: 3 });
+          setRelatedNews(relatedRes.data || []);
+        } catch {
+          // Graceful fallback strategy: fetch top category articles if related endpoint fails
+          const fallbackRes = await newsService.getNews({
+            category: articleData?.category,
+            limit: 6,
+          });
+          const filtered = (fallbackRes.data || [])
+            .filter((item) => Number(item.id) !== Number(articleId))
+            .slice(0, 3);
+          setRelatedNews(filtered);
+        }
       } catch (err) {
         setError('Não foi possível carregar os detalhes desta notícia.');
       } finally {
@@ -81,7 +97,7 @@ export default function NewsPage() {
       <Navbar />
 
       <main className="container-xl py-4 flex-grow-1">
-        {/* Botão de navegação superior */}
+        {/* Back navigation action returning to main feed view */}
         <button
           onClick={() => navigate('/')}
           className="btn btn-link text-decoration-none text-body p-0 mb-4 d-inline-flex align-items-center gap-2 fw-semibold nav-back-btn"
@@ -90,7 +106,7 @@ export default function NewsPage() {
           <span>Voltar para o feed</span>
         </button>
 
-        {/* Estado de Carregamento */}
+        {/* Async content loading indicator state */}
         {isLoading && (
           <div className="text-center py-5">
             <div className="spinner-border text-primary" role="status">
@@ -99,7 +115,7 @@ export default function NewsPage() {
           </div>
         )}
 
-        {/* Estado de Erro */}
+        {/* Error alert fallback when article data fetch fails */}
         {error && (
           <div className="alert alert-warning text-center my-4 rounded-3 p-4">
             <p className="mb-3 fw-semibold">{error}</p>
@@ -112,12 +128,12 @@ export default function NewsPage() {
           </div>
         )}
 
-        {/* Conteúdo Principal da Notícia */}
+        {/* Main article content and related news layout */}
         {!isLoading && !error && article && (
           <div className="row g-4 lg-g-5">
-            {/* Coluna Principal (Artigo) */}
+            {/* Main article reading column */}
             <article className="col-12 col-lg-8">
-              {/* Imagem de Capa com Badge da Categoria */}
+              {/* Feature image cover with overlay category badge */}
               <div className="position-relative mb-4 overflow-hidden rounded-4 article-cover-wrapper">
                 <img
                   src={article.image}
@@ -131,14 +147,14 @@ export default function NewsPage() {
                 </span>
               </div>
 
-              {/* Cabeçalho da Notícia */}
+              {/* Headline and lead summary header */}
               <header className="mb-4">
                 <h1 className="fw-bold mb-3 article-title">{article.title}</h1>
                 <p className="lead text-secondary mb-3 article-summary">
                   {article.summary}
                 </p>
 
-                {/* Metadados e Ações */}
+                {/* Article publication metadata and user action toolbar */}
                 <div className="d-flex flex-wrap align-items-center justify-content-between py-3 border-top border-bottom gap-3 article-meta-bar">
                   <div className="d-flex flex-wrap align-items-center gap-3 text-secondary small">
                     <span className="d-inline-flex align-items-center gap-1">
@@ -175,7 +191,7 @@ export default function NewsPage() {
                 </div>
               </header>
 
-              {/* Corpo da Notícia */}
+              {/* Main article body content paragraphs */}
               <section className="article-body-content">
                 {Array.isArray(article.content) ? (
                   article.content.map((paragraph, index) => (
@@ -189,7 +205,7 @@ export default function NewsPage() {
               </section>
             </article>
 
-            {/* Coluna Lateral - Notícias Relacionadas */}
+            {/* Sidebar column presenting contextually related news recommendations */}
             <aside className="col-12 col-lg-4">
               <div className="sticky-lg-top" style={{ top: '90px' }}>
                 <h2 className="h5 fw-bold mb-3 pb-2 border-bottom">

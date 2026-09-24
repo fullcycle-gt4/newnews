@@ -112,6 +112,11 @@ function ConfigurationNavItems({ activeSection, onSelect, isOffcanvas = false })
 	));
 }
 
+/**
+ * User configuration and preferences management page.
+ * Handles user profile display, bookmarked articles, preferred news categories, and display preferences.
+ * Preferences are automatically synchronized with localStorage for persistent client state across sessions.
+ */
 export default function ConfigPage() {
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();

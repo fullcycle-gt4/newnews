@@ -1,4 +1,4 @@
-/* NewsPage.css */
+/* News detail page layout styling, typographic constraints, and micro-interactions */
 
 .nav-back-btn {
   transition: transform var(--nn-transition-fast);
@@ -29,7 +29,7 @@
   max-width: 68ch;
 }
 
-/* Related News Sidebar Cards */
+/* Related news sidebar card hover states and elevation micro-animations */
 .related-card {
   transition: transform var(--nn-transition-fast), box-shadow var(--nn-transition-fast);
   cursor: pointer;

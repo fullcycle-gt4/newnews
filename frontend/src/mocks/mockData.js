@@ -249,6 +249,102 @@ export const MOCK_NEWS_ARTICLES = [
     source: 'Esporte Hoje',
     readTime: '4 min de leitura',
   },
+  {
+    id: 13,
+    category: 'Tecnologia',
+    badgeBg: 'primary',
+    title:
+      'Avanço em Inteligência Artificial impulsiona novos modelos de linguagem no mercado',
+    summary:
+      'Plataformas corporativas integram assistentes virtuais para automatizar processos e otimizar produtividade das empresas no setor de tecnologia.',
+    image:
+      'https://images.unsplash.com/photo-1518770660439-4636190af475?w=480&h=260&fit=crop&auto=format',
+    publishedTimeAgo: 'Há 12 horas',
+    publishedAt: new Date(Date.now() - 720 * 60 * 1000).toISOString(),
+    author: 'Tecnologia & Inovação',
+    source: 'Tech Trends',
+    readTime: '4 min de leitura',
+  },
+  {
+    id: 14,
+    category: 'Futebol',
+    badgeBg: 'success',
+    title:
+      'Liga dos Campeões: grandes clubes europeus disputam vaga na próxima fase em rodada decisiva',
+    summary:
+      'Confrontos desta semana definem os classificados para o mata-mata da maior competição de clubes do futebol internacional.',
+    image:
+      'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=480&h=260&fit=crop&auto=format',
+    publishedTimeAgo: 'Há 13 horas',
+    publishedAt: new Date(Date.now() - 780 * 60 * 1000).toISOString(),
+    author: 'Redação Esportes',
+    source: 'Portal New News',
+    readTime: '5 min de leitura',
+  },
+  {
+    id: 15,
+    category: 'Economia',
+    badgeBg: 'success',
+    title:
+      'Aporte de capital em startups e setor financeiro bate recorde no trimestre',
+    summary:
+      'Investimentos no setor produtivo e financeiro aceleram crescimento e geram novas expectativas para o mercado de capitais.',
+    image:
+      'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=480&h=260&fit=crop&auto=format',
+    publishedTimeAgo: 'Há 14 horas',
+    publishedAt: new Date(Date.now() - 840 * 60 * 1000).toISOString(),
+    author: 'Mercado Financeiro',
+    source: 'Valor Hoje',
+    readTime: '4 min de leitura',
+  },
+  {
+    id: 16,
+    category: 'Política',
+    badgeBg: 'danger',
+    title:
+      'Senado aprova projeto focado em incentivos para projetos de infraestrutura',
+    summary:
+      'Nova legislação tramita no Congresso e busca atrair parcerias público-privadas para acelerar obras públicas estaduais e federais.',
+    image:
+      'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=480&h=260&fit=crop&auto=format',
+    publishedTimeAgo: 'Há 15 horas',
+    publishedAt: new Date(Date.now() - 900 * 60 * 1000).toISOString(),
+    author: 'Política Nacional',
+    source: 'New News Brasília',
+    readTime: '3 min de leitura',
+  },
+  {
+    id: 17,
+    category: 'Games',
+    badgeBg: 'secondary',
+    title:
+      'Campeonato mundial de eSports bate recorde de audiência em plataformas digitais',
+    summary:
+      'Milhares de torcedores acompanham as finais de torneios competitivos de jogos eletrônicos com premiações milionárias.',
+    image:
+      'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=480&h=260&fit=crop&auto=format',
+    publishedTimeAgo: 'Há 16 horas',
+    publishedAt: new Date(Date.now() - 960 * 60 * 1000).toISOString(),
+    author: 'Mundo Gamer',
+    source: 'Game World',
+    readTime: '4 min de leitura',
+  },
+  {
+    id: 18,
+    category: 'Entretenimento',
+    badgeBg: 'danger',
+    title:
+      'Festival de cinema destaca novas produções nacionais com salas lotadas',
+    summary:
+      'Mostra exibe curtas e longas-metragens da nova safra de diretores, atraindo grande público e elogios da crítica especializada.',
+    image:
+      'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=480&h=260&fit=crop&auto=format',
+    publishedTimeAgo: 'Há 17 horas',
+    publishedAt: new Date(Date.now() - 1020 * 60 * 1000).toISOString(),
+    author: 'Cinema & Arte',
+    source: 'Cine Journal',
+    readTime: '3 min de leitura',
+  },
 ];
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -304,6 +400,80 @@ export const mockAdapter = {
     return { success: true, data: article };
   },
 
+  /**
+   * Calculates contextually related news articles using a multi-tier relevance scoring model:
+   * 1. Primary Category Match (+100 weight)
+   * 2. Related Domain Proximity (+40 weight for cross-cutting categories like Sports/Soccer, Politics/Economy)
+   * 3. Keyword Overlap (+15 weight per matching non-stopword in title or summary)
+   * 4. Author Continuity (+5 weight)
+   */
+  async getRelatedNews(id, { limit = 3 } = {}) {
+    if (APP_CONFIG.MOCK_DELAY_MS > 0) await delay(APP_CONFIG.MOCK_DELAY_MS);
+    const target = ARTICLES.find((a) => Number(a.id) === Number(id));
+    if (!target) throw new Error(`Notícia id ${id} não encontrada`);
+
+    const stopWords = new Set([
+      'para', 'como', 'mais', 'sobre', 'este', 'esta', 'com', 'dos', 'das',
+      'uma', 'seu', 'sua', 'onde', 'quais', 'pelo', 'pela', 'entre', 'após',
+      'novos', 'nova', 'novo', 'novas', 'com', 'sem', 'que', 'ante', 'para'
+    ]);
+
+    const targetWords = (target.title + ' ' + target.summary)
+      .toLowerCase()
+      .replace(/[^\w\sà-ú]/gi, '')
+      .split(/\s+/)
+      .filter((w) => w.length > 3 && !stopWords.has(w));
+
+    const relatedMap = {
+      futebol: ['esportes'],
+      esportes: ['futebol'],
+      política: ['economia', 'brasil', 'mundo'],
+      economia: ['política', 'brasil', 'mundo'],
+      tecnologia: ['games'],
+      games: ['tecnologia'],
+      música: ['entretenimento'],
+      entretenimento: ['música', 'comida'],
+      brasil: ['política', 'economia', 'mundo'],
+      mundo: ['política', 'economia', 'brasil'],
+    };
+
+    const targetCat = target.category.toLowerCase();
+    const closeCats = relatedMap[targetCat] || [];
+
+    const candidates = ARTICLES.filter(
+      (a) => Number(a.id) !== Number(id),
+    ).map((article) => {
+      let score = 0;
+      const cat = article.category.toLowerCase();
+
+      if (cat === targetCat) {
+        score += 100;
+      } else if (closeCats.includes(cat)) {
+        score += 40;
+      }
+
+      const text = (article.title + ' ' + article.summary).toLowerCase();
+      targetWords.forEach((word) => {
+        if (text.includes(word)) {
+          score += 15;
+        }
+      });
+
+      if (article.author === target.author) {
+        score += 5;
+      }
+
+      return { article, score };
+    });
+
+    candidates.sort(
+      (a, b) => b.score - a.score || Number(b.article.id) - Number(a.article.id),
+    );
+
+    const result = candidates.slice(0, limit).map((c) => c.article);
+    return { success: true, data: result };
+  },
+
   async getCategories() {
     if (APP_CONFIG.MOCK_DELAY_MS > 0) await delay(APP_CONFIG.MOCK_DELAY_MS);
     return { success: true, data: NEWS_CATEGORIES, navItems: NAVIGATION_ITEMS };
@@ -325,3 +495,4 @@ export const mockAdapter = {
     return { success: true, data: MOCK_NOTIFICATIONS };
   },
 };
+

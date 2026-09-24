@@ -8,6 +8,11 @@ import RegisterPage from "@/pages/RegistePage";
 import LoginPage from "./components/LoginForm";
 import { useUserStore, useNavigationStore } from "@/stores";
 
+/**
+ * Root application component.
+ * Bootstraps global application state (user profile and navigation items)
+ * and establishes client-side page routing.
+ */
 export default function App() {
   const loadUserData = useUserStore((state) => state.loadUserData);
   const loadNavigation = useNavigationStore((state) => state.loadNavigation);

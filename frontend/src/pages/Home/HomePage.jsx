@@ -3,7 +3,6 @@ import Navbar from '@/components/Navbar';
 import Sidebar, { SidebarOffcanvas } from '@/components/Sidebar';
 import ToastContainer from '@/components/ToastContainer';
 import NewsCard, { HeroCard, NewsSkeleton } from '@/components/NewsCard';
-import ArticleModal from '@/components/ArticleModal';
 import EmptyState from '@/components/EmptyState';
 import { useNewsFeed } from '@/hooks';
 import {
@@ -186,17 +185,6 @@ export default function HomePage() {
                 </>
               )}
             </section>
-          )}
-
-          {/* Modal */}
-          {selectedArticleDetail && (
-            <ArticleModal
-              article={selectedArticleDetail}
-              isBookmarked={bookmarkedArticleIds.has(selectedArticleDetail.id)}
-              onToggleBookmark={toggleArticleBookmark}
-              onShare={handleShareArticleLink}
-              onClose={() => setSelectedArticleDetail(null)}
-            />
           )}
         </main>
       </div>

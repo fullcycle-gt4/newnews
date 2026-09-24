@@ -131,13 +131,7 @@ export default function HomePage() {
           )}
 
           {/* Main Content */}
-          {selectedArticleDetail ? (
-            <div>
-              <h1>{selectedArticleDetail.title}</h1>
-              <img src={selectedArticleDetail.image} className="nn-modal-cover" alt="" />
-              <p>{selectedArticleDetail.content}</p>
-            </div>
-          ) : isLoading ? (
+          {isLoading ? (
             <NewsSkeleton
               skeletonCount={6}
               shouldShowHero={isDefaultCategory}

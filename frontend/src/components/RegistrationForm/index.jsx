@@ -6,6 +6,7 @@ import {
     IconEye,
     IconEyeOff,
     IconArrowRight,
+    IconArrowLeft,
 } from "@tabler/icons-react";
 import "./style.css";
 
@@ -108,6 +109,13 @@ function RegistrationForm({ onSubmit }) {
                     className="registration-form"
                     onSubmit={handleSubmit}
                 >
+                    <a
+                        href="/"
+                        className="registration-back-home"
+                    >
+                        <IconArrowLeft size={20} />
+                        <span>Voltar para a home</span>
+                    </a>
 
                     <h2>Criar conta</h2>
 

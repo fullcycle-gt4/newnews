@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './style.css';
 import { IconMail, IconLock, IconEye, IconEyeOff, IconArrowLeft,} from '@tabler/icons-react';
 
-export default function LoginPage() {
+export default function LoginPage({ isModal = false, titleId }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -11,37 +11,9 @@ export default function LoginPage() {
 
 
   return (
-    <div className="login-page-wrapper">
-
-      <div className="login-globe">
-              <div className="login-globe-line login-line-one"></div>
-              <div className="login-globe-line login-line-two"></div>
-              <div className="login-globe-horizontal login-horizontal-one"></div>
-              <div className="login-globe-horizontal login-horizontal-two"></div>
-      </div>
-
-      <div className="login-content">
-
-              <div className="login-logo">
-                    <div className="login-logo-box">NN</div>
-
-                    <div>
-                        <h1>NEW NEWS</h1>
-                        <span>SEU PORTAL DE NOTÍCIAS</span>
-                    </div>
-                </div>
-
+    <div className={`login-page-wrapper${isModal ? ' login-modal-form-wrapper' : ''}`}>
       <div className="login-body">
-
-          <a href="/" className="login-back-home">
-              <IconArrowLeft size={20} />
-              <span>Voltar para a Home</span>
-          </a>
-
-          <div className="login-heading">
-                <h2>Bem-vindo de volta!</h2>
-                <p>Faça login para continuar</p>
-          </div>
+        <h2 id={titleId}>Login</h2>
 
         <form onSubmit={(e) => e.preventDefault()}>
 

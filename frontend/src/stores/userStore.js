@@ -23,6 +23,8 @@ export const useUserStore = create((set) => ({
     }
   },
 
+  clearUser: () => set({ user: null }),
+
   dismissNotification: (id) =>
     set((state) => ({
       notifications: state.notifications.filter((n) => n.id !== id),

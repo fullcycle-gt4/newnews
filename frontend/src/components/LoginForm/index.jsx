@@ -73,6 +73,5 @@ export default function LoginPage({ isModal = false, titleId }) {
         </form>
       </div>
     </div>
-  </div>
   );
 }

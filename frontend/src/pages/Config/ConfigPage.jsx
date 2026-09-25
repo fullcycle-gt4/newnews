@@ -13,10 +13,9 @@ import {
 	IconUser,
 } from '@tabler/icons-react';
 import Navbar from '@/components/Navbar';
-import ArticleModal from '@/components/ArticleModal';
 import NewsCard from '@/components/NewsCard';
 import ToastContainer from '@/components/ToastContainer';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useNewsFeed } from '@/hooks';
 import '@/components/Sidebar/Sidebar.css';
 import {
@@ -100,11 +99,10 @@ function ConfigurationNavItems({ activeSection, onSelect, isOffcanvas = false })
 			type="button"
 			{...(isOffcanvas ? { 'data-bs-dismiss': 'offcanvas' } : {})}
 			onClick={() => onSelect(item.id)}
-			className={`sidebar-item btn btn-link w-100 text-start d-flex align-items-center gap-2 rounded-3 px-3 py-2 mb-1 text-decoration-none fw-medium ${
-				activeSection === item.id
+			className={`sidebar-item btn btn-link w-100 text-start d-flex align-items-center gap-2 rounded-3 px-3 py-2 mb-1 text-decoration-none fw-medium ${activeSection === item.id
 					? 'active bg-primary text-white'
 					: 'text-secondary'
-			}`}
+				}`}
 		>
 			<span style={{ fontSize: '1rem', width: 20, textAlign: 'center' }}>
 				{item.icon}
@@ -114,7 +112,13 @@ function ConfigurationNavItems({ activeSection, onSelect, isOffcanvas = false })
 	));
 }
 
+/**
+ * User configuration and preferences management page.
+ * Handles user profile display, bookmarked articles, preferred news categories, and display preferences.
+ * Preferences are automatically synchronized with localStorage for persistent client state across sessions.
+ */
 export default function ConfigPage() {
+	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
 	const user = useUserStore((state) => state.user);
 	const bookmarkedArticleIds = useBookmarksStore(
@@ -184,6 +188,7 @@ export default function ConfigPage() {
 	const handleOpenArticle = (article) => {
 		setSelectedArticle(article);
 		markArticleAsRead(article.id);
+		navigate(`/news?id=${article.id}`);
 	};
 
 	return (
@@ -503,15 +508,6 @@ export default function ConfigPage() {
 							</section>
 						</div>
 					</div>
-
-					{selectedArticle && (
-						<ArticleModal
-							article={selectedArticle}
-							isBookmarked={bookmarkedArticleIds.has(selectedArticle.id)}
-							onToggleBookmark={toggleArticleBookmark}
-							onClose={() => setSelectedArticle(null)}
-						/>
-					)}
 				</main>
 			</div>
 			<ToastContainer />

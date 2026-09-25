@@ -1,9 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Sidebar, { SidebarOffcanvas } from '@/components/Sidebar';
 import ToastContainer from '@/components/ToastContainer';
 import NewsCard, { HeroCard, NewsSkeleton } from '@/components/NewsCard';
-import ArticleModal from '@/components/ArticleModal';
 import EmptyState from '@/components/EmptyState';
 import { useNewsFeed } from '@/hooks';
 import {
@@ -16,7 +16,13 @@ import {
 import { getTimeBasedGreeting, formatCurrentDateTime } from '@/utils';
 import './HomePage.css';
 
+/**
+ * Home Page component representing the main aggregated news feed view.
+ * Synchronizes selected category and debounced search query from navigation stores
+ * to present featured hero spotlight articles alongside paginated news card grids.
+ */
 export default function HomePage() {
+  const navigate = useNavigate();
   const user = useUserStore((state) => state.user);
   const navSelectedCategory = useNavigationStore(selectNavCategory);
   const debouncedSearchQuery = useNavigationStore(
@@ -63,6 +69,7 @@ export default function HomePage() {
   const handleOpenArticleModal = (article) => {
     setSelectedArticleDetail(article);
     markArticleAsRead(article.id);
+    navigate(`/news?id=${article.id}`);
   };
 
   const handleShareArticleLink = (article) => {
@@ -88,7 +95,7 @@ export default function HomePage() {
         <Sidebar />
 
         <main id="home-page" className="flex-grow-1 p-4 overflow-y-auto h-100">
-          {/* Header Section */}
+          {/* Personalized greeting header based on client system time */}
           <header className="mb-4">
             <h1 className="fw-bold mb-1 fs-4">
               {getTimeBasedGreeting()}, {user?.firstName || 'Usuário'}! 👋
@@ -98,7 +105,7 @@ export default function HomePage() {
             </p>
           </header>
 
-          {/* Search Results Summary */}
+          {/* Active search filter contextual banner with reset action */}
           {searchResultsSummary && (
             <p className="text-secondary mb-3 small">
               {searchResultsSummary}
@@ -113,7 +120,7 @@ export default function HomePage() {
             </p>
           )}
 
-          {/* Error State */}
+          {/* Network API failure state with manual retry fallback */}
           {error && (
             <div
               className="alert alert-danger rounded-3 d-flex align-items-center justify-content-between my-4"
@@ -131,7 +138,7 @@ export default function HomePage() {
             </div>
           )}
 
-          {/* Main Content */}
+          {/* Feed articles display layout: skeleton loading, hero spotlight, and responsive grid */}
           {isLoading ? (
             <NewsSkeleton
               skeletonCount={6}
@@ -186,17 +193,6 @@ export default function HomePage() {
                 </>
               )}
             </section>
-          )}
-
-          {/* Modal */}
-          {selectedArticleDetail && (
-            <ArticleModal
-              article={selectedArticleDetail}
-              isBookmarked={bookmarkedArticleIds.has(selectedArticleDetail.id)}
-              onToggleBookmark={toggleArticleBookmark}
-              onShare={handleShareArticleLink}
-              onClose={() => setSelectedArticleDetail(null)}
-            />
           )}
         </main>
       </div>

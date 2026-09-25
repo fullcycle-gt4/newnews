@@ -1,0 +1,47 @@
+.login-page {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(69, 139, 255, 0.35),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(0, 98, 255, 0.25),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #071b49 0%,
+            #0a2f73 50%,
+            #071b49 100%
+        );
+}
+
+@media (max-width: 700px) {
+    .login-page {
+        padding: 30px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-page {
+        min-height: 100svh;
+        padding: 24px 12px;
+    }
+}
+
+@media (max-width: 360px) {
+    .login-page {
+        padding: 18px 10px;
+    }
+}

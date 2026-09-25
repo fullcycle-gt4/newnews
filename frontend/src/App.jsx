@@ -4,7 +4,7 @@ import ConfigPage from '@/pages/Config';
 import ErrorBoundary from "@/components/ErrorBoundary";
 import HomePage from "@/pages/Home";
 import NewsPage from "@/pages/NewsPage";
-import RegisterPage from "@/pages/RegistePage";
+import RegisterPage from "@/pages/RegisterPage";
 import LoginPage from "./components/LoginForm";
 import { useUserStore, useNavigationStore } from "@/stores";
 

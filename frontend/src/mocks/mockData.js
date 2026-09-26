@@ -52,14 +52,7 @@ export const MOCK_NOTIFICATIONS = [
   },
 ];
 
-export const MOCK_USER_PROFILE = {
-  id: 101,
-  name: 'Thais Oliveira',
-  firstName: 'Thais',
-  email: 'thais@example.com',
-  avatarInitial: 'T',
-  role: 'Assinante Premium',
-};
+
 
 export const MOCK_NEWS_ARTICLES = [
   {

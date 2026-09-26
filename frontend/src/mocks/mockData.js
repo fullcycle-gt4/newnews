@@ -52,8 +52,6 @@ export const MOCK_NOTIFICATIONS = [
   },
 ];
 
-
-
 export const MOCK_NEWS_ARTICLES = [
   {
     id: 1,

@@ -20,3 +20,4 @@ export const userService = {
     return { success: true, data: res.data ?? res };
   },
 };
+

@@ -1,23 +1,89 @@
 import { APP_CONFIG } from '@/utils';
 
 export const NAVIGATION_ITEMS = [
-  { icon: '🏠', label: 'Início', id: 'inicio', category: null },
-  { icon: '⚽', label: 'Futebol', id: 'futebol', category: 'Futebol' },
-  { icon: '🏅', label: 'Esportes', id: 'esportes', category: 'Esportes' },
-  { icon: '💻', label: 'Tecnologia', id: 'tecnologia', category: 'Tecnologia' },
-  { icon: '🎮', label: 'Games', id: 'games', category: 'Games' },
-  { icon: '🍔', label: 'Comida', id: 'comida', category: 'Comida' },
+  {
+    icon: '🏠',
+    label: 'Início',
+    id: 'inicio',
+    category: null,
+  },
+
+  {
+    icon: '⚽',
+    label: 'Futebol',
+    id: 'futebol',
+    category: 'Futebol',
+  },
+
+  {
+    icon: '🏅',
+    label: 'Esportes',
+    id: 'esportes',
+    category: 'Esportes',
+  },
+
+  {
+    icon: '💻',
+    label: 'Tecnologia',
+    id: 'tecnologia',
+    category: 'Tecnologia',
+  },
+
+  {
+    icon: '🎮',
+    label: 'Games',
+    id: 'games',
+    category: 'Games',
+  },
+
+  {
+    icon: '🍔',
+    label: 'Comida',
+    id: 'comida',
+    category: 'Comida',
+  },
+
   {
     icon: '🎬',
     label: 'Entretenimento',
     id: 'entretenimento',
     category: 'Entretenimento',
   },
-  { icon: '🎵', label: 'Música', id: 'musica', category: 'Música' },
-  { icon: '🏛️', label: 'Política', id: 'politica', category: 'Política' },
-  { icon: '📈', label: 'Economia', id: 'economia', category: 'Economia' },
-  { icon: '🇧🇷', label: 'Brasil', id: 'brasil', category: 'Brasil' },
-  { icon: '🌍', label: 'Mundo', id: 'mundo', category: 'Mundo' },
+
+  {
+    icon: '🎵',
+    label: 'Música',
+    id: 'musica',
+    category: 'Música',
+  },
+
+  {
+    icon: '🏛️',
+    label: 'Política',
+    id: 'politica',
+    category: 'Política',
+  },
+
+  {
+    icon: '📈',
+    label: 'Economia',
+    id: 'economia',
+    category: 'Economia',
+  },
+
+  {
+    icon: '🇧🇷',
+    label: 'Brasil',
+    id: 'brasil',
+    category: 'Brasil',
+  },
+
+  {
+    icon: '🌍',
+    label: 'Mundo',
+    id: 'mundo',
+    category: 'Mundo',
+  },
 ];
 
 export const NEWS_CATEGORIES = [
@@ -38,12 +104,14 @@ export const MOCK_NOTIFICATIONS = [
     timeAgo: '12m atrás',
     category: 'Futebol',
   },
+
   {
     id: 2,
     title: 'Nova IA com capacidade de raciocínio avançado',
     timeAgo: '1h atrás',
     category: 'Tecnologia',
   },
+
   {
     id: 3,
     title: 'Bolsa de valores encerra o dia em alta',
@@ -52,13 +120,20 @@ export const MOCK_NOTIFICATIONS = [
   },
 ];
 
+/*
+ * PERFIL DO USUÁRIO DE TESTE
+ *
+ * Este usuário continua existindo.
+ * Ele poderá ser utilizado pelo login de teste.
+ *
+ * Porém, ele NÃO será carregado automaticamente
+ * quando o visitante abrir o site.
+ */
 export const MOCK_USER_PROFILE = {
-  id: 101,
-  name: 'Thais Oliveira',
-  firstName: 'Thais',
-  email: 'thais@example.com',
-  avatarInitial: 'T',
-  role: 'Assinante Premium',
+  id: 1,
+  name: 'Usuário Teste',
+  email: 'usuario@teste.com',
+  avatar: null,
 };
 
 export const MOCK_NEWS_ARTICLES = [
@@ -79,6 +154,7 @@ export const MOCK_NEWS_ARTICLES = [
     readTime: '4 min de leitura',
     isHero: true,
   },
+
   {
     id: 2,
     category: 'Tecnologia',
@@ -94,6 +170,7 @@ export const MOCK_NEWS_ARTICLES = [
     source: 'Tech Trends',
     readTime: '3 min de leitura',
   },
+
   {
     id: 3,
     category: 'Política',
@@ -109,6 +186,7 @@ export const MOCK_NEWS_ARTICLES = [
     source: 'New News Brasília',
     readTime: '5 min de leitura',
   },
+
   {
     id: 4,
     category: 'Comida',
@@ -124,6 +202,7 @@ export const MOCK_NEWS_ARTICLES = [
     source: 'Sabores da Cidade',
     readTime: '6 min de leitura',
   },
+
   {
     id: 5,
     category: 'Games',
@@ -139,6 +218,7 @@ export const MOCK_NEWS_ARTICLES = [
     source: 'Game World',
     readTime: '4 min de leitura',
   },
+
   {
     id: 6,
     category: 'Entretenimento',
@@ -155,6 +235,7 @@ export const MOCK_NEWS_ARTICLES = [
     source: 'Cine Journal',
     readTime: '3 min de leitura',
   },
+
   {
     id: 7,
     category: 'Economia',
@@ -170,6 +251,7 @@ export const MOCK_NEWS_ARTICLES = [
     source: 'Valor Hoje',
     readTime: '4 min de leitura',
   },
+
   {
     id: 8,
     category: 'Música',
@@ -186,6 +268,7 @@ export const MOCK_NEWS_ARTICLES = [
     source: 'Beat Magazine',
     readTime: '3 min de leitura',
   },
+
   {
     id: 9,
     category: 'Brasil',
@@ -201,6 +284,7 @@ export const MOCK_NEWS_ARTICLES = [
     source: 'Portal New News',
     readTime: '5 min de leitura',
   },
+
   {
     id: 10,
     category: 'Mundo',
@@ -217,6 +301,7 @@ export const MOCK_NEWS_ARTICLES = [
     source: 'Global News',
     readTime: '4 min de leitura',
   },
+
   {
     id: 11,
     category: 'Esportes',
@@ -233,6 +318,7 @@ export const MOCK_NEWS_ARTICLES = [
     source: 'Portal New News',
     readTime: '3 min de leitura',
   },
+
   {
     id: 12,
     category: 'Futebol',
@@ -351,9 +437,12 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const ARTICLES = MOCK_NEWS_ARTICLES.map((article) => ({
   ...article,
+
   content: [
     `${article.summary}`,
+
     'De acordo com especialistas da área, os recentes acontecimentos representam um marco importante e abrem espaço para novas discussões no setor.',
+
     'As partes envolvidas continuam monitorando o cenário de perto para implementar os ajustes necessários de maneira ágil e eficiente.',
   ],
 }));
@@ -365,16 +454,21 @@ export const mockAdapter = {
     page = 1,
     limit = APP_CONFIG.DEFAULT_PAGE_LIMIT,
   } = {}) {
-    if (APP_CONFIG.MOCK_DELAY_MS > 0) await delay(APP_CONFIG.MOCK_DELAY_MS);
+    if (APP_CONFIG.MOCK_DELAY_MS > 0) {
+      await delay(APP_CONFIG.MOCK_DELAY_MS);
+    }
 
     let filtered = ARTICLES;
+
     if (category && category !== 'Todos') {
       filtered = filtered.filter(
         (a) => a.category.toLowerCase() === category.toLowerCase(),
       );
     }
+
     if (query?.trim()) {
       const q = query.trim().toLowerCase();
+
       filtered = filtered.filter(
         (a) =>
           a.title.toLowerCase().includes(q) ||
@@ -382,22 +476,42 @@ export const mockAdapter = {
           a.category.toLowerCase().includes(q),
       );
     }
+
     const total = filtered.length;
+
     const totalPages = Math.ceil(total / limit) || 1;
+
     const items = filtered.slice((page - 1) * limit, page * limit);
 
     return {
       success: true,
       data: items,
-      meta: { total, page, limit, totalPages, hasMore: page < totalPages },
+
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages,
+        hasMore: page < totalPages,
+      },
     };
   },
 
   async getNewsById(id) {
-    if (APP_CONFIG.MOCK_DELAY_MS > 0) await delay(APP_CONFIG.MOCK_DELAY_MS);
+    if (APP_CONFIG.MOCK_DELAY_MS > 0) {
+      await delay(APP_CONFIG.MOCK_DELAY_MS);
+    }
+
     const article = ARTICLES.find((a) => Number(a.id) === Number(id));
-    if (!article) throw new Error(`Notícia id ${id} não encontrada`);
-    return { success: true, data: article };
+
+    if (!article) {
+      throw new Error(`Notícia id ${id} não encontrada`);
+    }
+
+    return {
+      success: true,
+      data: article,
+    };
   },
 
   /**
@@ -475,24 +589,56 @@ export const mockAdapter = {
   },
 
   async getCategories() {
-    if (APP_CONFIG.MOCK_DELAY_MS > 0) await delay(APP_CONFIG.MOCK_DELAY_MS);
-    return { success: true, data: NEWS_CATEGORIES, navItems: NAVIGATION_ITEMS };
+    if (APP_CONFIG.MOCK_DELAY_MS > 0) {
+      await delay(APP_CONFIG.MOCK_DELAY_MS);
+    }
+
+    return {
+      success: true,
+      data: NEWS_CATEGORIES,
+      navItems: NAVIGATION_ITEMS,
+    };
   },
 
   async getTrending() {
-    if (APP_CONFIG.MOCK_DELAY_MS > 0) await delay(APP_CONFIG.MOCK_DELAY_MS);
+    if (APP_CONFIG.MOCK_DELAY_MS > 0) {
+      await delay(APP_CONFIG.MOCK_DELAY_MS);
+    }
+
     const hero = ARTICLES.find((a) => a.isHero) || ARTICLES[0];
-    return { success: true, data: hero };
+
+    return {
+      success: true,
+      data: hero,
+    };
   },
 
+  // ==========================================
+  // USUÁRIO
+  // ==========================================
+
   async getUserProfile() {
-    if (APP_CONFIG.MOCK_DELAY_MS > 0) await delay(APP_CONFIG.MOCK_DELAY_MS);
-    return { success: true, data: MOCK_USER_PROFILE };
+    if (APP_CONFIG.MOCK_DELAY_MS > 0) {
+      await delay(APP_CONFIG.MOCK_DELAY_MS);
+    }
+
+    // ALTERADO:
+    // O visitante começa sem usuário logado.
+    return {
+      success: false,
+      data: null,
+    };
   },
 
   async getUserNotifications() {
-    if (APP_CONFIG.MOCK_DELAY_MS > 0) await delay(APP_CONFIG.MOCK_DELAY_MS);
-    return { success: true, data: MOCK_NOTIFICATIONS };
+    if (APP_CONFIG.MOCK_DELAY_MS > 0) {
+      await delay(APP_CONFIG.MOCK_DELAY_MS);
+    }
+
+    return {
+      success: true,
+      data: MOCK_NOTIFICATIONS,
+    };
   },
 };
 

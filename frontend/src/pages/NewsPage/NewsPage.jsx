@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import Navbar from '@/components/Navbar';
-import ToastContainer from '@/components/ToastContainer';
+import { Navbar } from '@/components/Navbar';
+import { ToastContainer } from '@/components/ToastContainer';
 import { newsService } from '@/services/newsService';
 import { useToastStore, useBookmarksStore } from '@/stores';
 import {
@@ -19,7 +19,7 @@ import './NewsPage.css';
  * automatically registers read status in bookmarks store, and fetches contextual related
  * articles scored by category proximity and keyword similarity.
  */
-export default function NewsPage() {
+export function NewsPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const articleId = searchParams.get('id');

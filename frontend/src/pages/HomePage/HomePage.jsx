@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '@/components/Navbar';
-import Sidebar, { SidebarOffcanvas } from '@/components/Sidebar';
-import ToastContainer from '@/components/ToastContainer';
-import NewsCard, { HeroCard, NewsSkeleton } from '@/components/NewsCard';
-import EmptyState from '@/components/EmptyState';
+import { Navbar } from '@/components/Navbar';
+import { Sidebar, SidebarOffcanvas } from '@/components/Sidebar';
+import { ToastContainer } from '@/components/ToastContainer';
+import { NewsCard, HeroCard, NewsSkeleton } from '@/components/NewsCard';
+import { EmptyState } from '@/components/EmptyState';
 import { useNewsFeed } from '@/hooks';
 import {
   useUserStore,
@@ -21,7 +21,7 @@ import './HomePage.css';
  * Synchronizes selected category and debounced search query from navigation stores
  * to present featured hero spotlight articles alongside paginated news card grids.
  */
-export default function HomePage() {
+export function HomePage() {
   const navigate = useNavigate();
   const user = useUserStore((state) => state.user);
   const navSelectedCategory = useNavigationStore(selectNavCategory);

@@ -12,7 +12,7 @@ import "./RegistrationForm.css";
 
 
 
-function RegistrationForm({ onSubmit }) {
+export function RegistrationForm({ onSubmit }) {
     const [formData, setFormData] = useState({
         fullName: "",
         email: "",
@@ -256,4 +256,3 @@ function RegistrationForm({ onSubmit }) {
     );
 }
 
-export default RegistrationForm;

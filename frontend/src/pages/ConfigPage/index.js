@@ -1,1 +1,1 @@
-export { default } from './ConfigPage.jsx';
+export * from './ConfigPage.jsx';

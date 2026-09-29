@@ -12,9 +12,9 @@ import {
 	IconSun,
 	IconUser,
 } from '@tabler/icons-react';
-import Navbar from '@/components/Navbar';
-import NewsCard from '@/components/NewsCard';
-import ToastContainer from '@/components/ToastContainer';
+import { Navbar } from '@/components/Navbar';
+import { NewsCard } from '@/components/NewsCard';
+import { ToastContainer } from '@/components/ToastContainer';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useNewsFeed } from '@/hooks';
 import '@/components/Sidebar/Sidebar.css';
@@ -117,7 +117,7 @@ function ConfigurationNavItems({ activeSection, onSelect, isOffcanvas = false })
  * Handles user profile display, bookmarked articles, preferred news categories, and display preferences.
  * Preferences are automatically synchronized with localStorage for persistent client state across sessions.
  */
-export default function ConfigPage() {
+export function ConfigPage() {
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
 	const user = useUserStore((state) => state.user);

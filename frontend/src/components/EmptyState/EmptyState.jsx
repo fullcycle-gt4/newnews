@@ -1,4 +1,4 @@
-export default function EmptyState({
+export function EmptyState({
   searchQuery,
   isSavedTabActive,
   category,

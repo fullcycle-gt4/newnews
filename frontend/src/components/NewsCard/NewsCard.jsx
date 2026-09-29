@@ -11,7 +11,7 @@ import { useUserStore } from '@/stores';
 
 import './NewsCard.css';
 
-export default function NewsCard({
+export function NewsCard({
   article,
   isRead,
   isBookmarked,

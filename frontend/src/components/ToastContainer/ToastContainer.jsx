@@ -1,7 +1,7 @@
 import { useToastStore } from '@/stores';
 import './ToastContainer.css';
 
-export default function ToastContainer({
+export function ToastContainer({
   toastNotifications: propsNotifications,
   onDismissToast: propsDismiss,
 }) {

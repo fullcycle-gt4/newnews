@@ -1,7 +1,7 @@
-import LoginForm from "@/components/LoginForm";
+import { LoginForm } from "@/components/LoginForm";
 import "./LoginPage.css";
 
-export default function LoginPage() {
+export function LoginPage() {
     return (
         <div className="login-page">
             <div className="login-globe">

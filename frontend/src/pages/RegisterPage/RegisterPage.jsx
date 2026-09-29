@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import RegistrationForm from "@/components/RegistrationForm";
+import { RegistrationForm } from "@/components/RegistrationForm";
 import "./RegisterPage.css";
 
 
-const RegisterPage = () => {
+export const RegisterPage = () => {
     const navigate = useNavigate();
 
     const handleRegister = async (formData) => {
@@ -35,4 +35,3 @@ const RegisterPage = () => {
     );
 };
 
-export default RegisterPage;

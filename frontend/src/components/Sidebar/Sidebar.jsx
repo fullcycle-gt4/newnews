@@ -61,7 +61,7 @@ function SidebarNavItems({
   ));
 }
 
-export default function Sidebar({
+export function Sidebar({
   navigationItems: propsNavItems,
   activeNavId: propsActiveNavId,
   onSelectNavItem: propsOnSelectNavItem,

@@ -21,9 +21,9 @@ import {
 import { TOAST_MESSAGES } from '@/utils';
 import './Navbar.css';
 import { useNavigate } from 'react-router-dom';
-import LoginForm from '@/components/LoginForm';
+import { LoginForm } from '@/components/LoginForm';
 
-export default function Navbar({ onToggleMobileSidebar }) {
+export function Navbar({ onToggleMobileSidebar }) {
   const navigate = useNavigate();
   const user = useUserStore((state) => state.user);
   const clearUser = useUserStore((state) => state.clearUser);

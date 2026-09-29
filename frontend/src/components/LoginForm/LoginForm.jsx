@@ -9,7 +9,7 @@ import {
     IconArrowLeft,
 } from "@tabler/icons-react";
 
-export default function LoginForm({ titleId, onRegister, showBackLink = false }) {
+export function LoginForm({ titleId, onRegister, showBackLink = false }) {
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
     const [formData, setFormData] = useState({ email: '', password: '' });

@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import ConfigPage from '@/pages/ConfigPage';
-import ErrorBoundary from "@/components/ErrorBoundary";
-import HomePage from "@/pages/HomePage";
-import NewsPage from "@/pages/NewsPage";
-import RegisterPage from "@/pages/RegisterPage";
-import LoginPage from "@/pages/LoginPage";
+import { ConfigPage } from '@/pages/ConfigPage';
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { HomePage } from "@/pages/HomePage";
+import { NewsPage } from "@/pages/NewsPage";
+import { RegisterPage } from "@/pages/RegisterPage";
+import { LoginPage } from "@/pages/LoginPage";
 import { useUserStore, useNavigationStore } from "@/stores";
 
 /**
@@ -13,7 +13,7 @@ import { useUserStore, useNavigationStore } from "@/stores";
  * Bootstraps global application state (user profile and navigation items)
  * and establishes client-side page routing.
  */
-export default function App() {
+export function App() {
   const loadUserData = useUserStore((state) => state.loadUserData);
   const loadNavigation = useNavigationStore((state) => state.loadNavigation);
 

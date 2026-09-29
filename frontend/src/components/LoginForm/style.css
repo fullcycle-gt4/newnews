@@ -513,3 +513,17 @@
         font-size: 12px;
     }
 }
+/* Estilo para o botão quando estiver desabilitado (invalido) */
+.login-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none; /* Impede cliques no botão desabilitado */
+}
+
+/* Mensagem de erro abaixo dos campos */
+.login-error-message {
+  color: #ff4d4d;
+  font-size: 0.85rem;
+  margin-top: 4px;
+  display: block;
+}

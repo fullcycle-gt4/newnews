@@ -23,8 +23,17 @@ import './Navbar.css';
 import { useNavigate } from 'react-router-dom';
 import { LoginForm } from '@/components/LoginForm';
 
+/**
+ * Main application navigation bar.
+ * Provides access to the sidebar toggle, global search, theme switcher,
+ * user notifications, profile dropdown, and a login modal.
+ * 
+ * @param {Object} props
+ * @param {Function} props.onToggleMobileSidebar - Callback to open/close the mobile sidebar offcanvas
+ */
 export function Navbar({ onToggleMobileSidebar }) {
   const navigate = useNavigate();
+  // Global state mapping
   const user = useUserStore((state) => state.user);
   const clearUser = useUserStore((state) => state.clearUser);
   const notifications = useUserStore((state) => state.notifications);
@@ -36,14 +45,19 @@ export function Navbar({ onToggleMobileSidebar }) {
     (state) => state.showToastNotification,
   );
 
+  // Local UI state
   const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] =
     useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
+  // Refs for click-outside detection
   const notificationContainerRef = useRef(null);
   const userContainerRef = useRef(null);
 
+  /**
+   * Effect to handle clicking outside dropdowns to close them
+   */
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -63,6 +77,10 @@ export function Navbar({ onToggleMobileSidebar }) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  /**
+   * Effect to trap focus/prevent scrolling when the login modal is open,
+   * and handle the Escape key to close it.
+   */
   useEffect(() => {
     if (!isLoginModalOpen) return undefined;
 
@@ -79,6 +97,9 @@ export function Navbar({ onToggleMobileSidebar }) {
     };
   }, [isLoginModalOpen]);
 
+  /**
+   * Toggles the global dark/light theme and shows a confirmation toast
+   */
   const handleToggleTheme = () => {
     const nextMode = !isDarkMode;
     toggleDarkMode();
@@ -377,6 +398,7 @@ export function Navbar({ onToggleMobileSidebar }) {
         </div>
       </div>
 
+      {/* Login Modal Overlay */}
       {isLoginModalOpen && (
         <div
           className="login-modal-backdrop"

@@ -9,11 +9,25 @@ import {
     IconArrowLeft,
 } from "@tabler/icons-react";
 
+/**
+ * Reusable Login Form component.
+ * Can be rendered standalone in a page or within a modal dialog.
+ * Handles state for email, password, and the "remember me" option.
+ * 
+ * @param {Object} props
+ * @param {string} [props.titleId] - Accessibility ID for the heading
+ * @param {Function} [props.onRegister] - Callback when the register link is clicked (e.g. to close a modal)
+ * @param {boolean} [props.showBackLink=false] - Whether to show the "Back to home" link
+ */
 export function LoginForm({ titleId, onRegister, showBackLink = false }) {
+    // Form and UI state
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
     const [formData, setFormData] = useState({ email: '', password: '' });
 
+    /**
+     * Updates form data on input change
+     */
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData((previous) => ({ ...previous, [name]: value }));
@@ -23,13 +37,17 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
         setShowPassword((prevState) => !prevState);
     };
 
+    /**
+     * Handles authentication form submission
+     */
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Login logic here
+        // Authentication logic will be implemented here
     };
 
     return (
         <div className="login-content">
+            {/* Brand Logo Section */}
             <div className="login-logo">
                 <div className="login-logo-box">NN</div>
                 <div>
@@ -39,6 +57,7 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
             </div>
 
             <div className="login-body">
+                {/* Conditional Back Link (used in full-page layout) */}
                 {showBackLink && (
                     <a href="/" className="login-back-home">
                         <IconArrowLeft size={20} />
@@ -52,6 +71,7 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
                 </div>
 
                 <form onSubmit={handleSubmit}>
+                    {/* Email Input Field */}
                     <div className="login-input-group">
                         <label className="login-label" htmlFor="login-email">
                             <IconMail className="login-icon" size={20} />
@@ -74,6 +94,7 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
                         </div>
                     </div>
 
+                    {/* Password Input Field with Visibility Toggle */}
                     <div className="login-input-group">
                         <label className="login-label" htmlFor="login-password">
                             <IconLock className="login-icon" size={20} />
@@ -108,6 +129,7 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
                         </div>
                     </div>
 
+                    {/* Additional Options: Remember Me & Forgot Password */}
                     <div className="login-options">
                         <label className="login-remember">
                             <input
@@ -120,6 +142,7 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
                         <a href="#forgot-password">Esqueceu a senha?</a>
                     </div>
 
+                    {/* Login Submit Button */}
                     <button type="submit" className="login-button">
                         <span>Entrar</span>
                         <IconArrowRight size={23} />
@@ -131,6 +154,7 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
                         <span></span>
                     </div>
 
+                    {/* Link to Registration Page */}
                     <p className="login-register-link">
                         Não tem uma conta?{" "}
                         <a href="/register" onClick={onRegister}>Cadastre-se</a>

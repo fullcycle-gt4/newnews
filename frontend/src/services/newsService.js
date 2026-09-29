@@ -5,8 +5,8 @@ import { mockAdapter } from '@/mocks';
 /**
  * News Data Service layer.
  * Encapsulates HTTP communication with news endpoints.
- * Automatically toggles between local mock adapter data and remote REST API endpoints
- * based on application configuration.
+ * Automatically toggles between the local mock adapter and real REST API endpoints
+ * based on the IS_MOCK_MODE application configuration flag.
  */
 const api = axios.create({
   baseURL: APP_CONFIG.API_BASE_URL,
@@ -14,6 +14,10 @@ const api = axios.create({
 });
 
 export const newsService = {
+  /**
+   * Fetches a paginated list of news articles, optionally filtered by category or search query.
+   * @param {Object} [params] - Query parameters (category, query, page, limit)
+   */
   async getNews(params = {}) {
     if (APP_CONFIG.IS_MOCK_MODE) return mockAdapter.getNews(params);
 
@@ -25,18 +29,28 @@ export const newsService = {
     };
   },
 
+  /**
+   * Fetches a single news article by its ID.
+   * @param {string|number} id - The article ID
+   */
   async getNewsById(id) {
     if (APP_CONFIG.IS_MOCK_MODE) return mockAdapter.getNewsById(id);
     const { data: res } = await api.get(`/news/${id}`);
     return { success: true, data: res.data ?? res };
   },
 
+  /**
+   * Fetches available news categories and the dynamic navigation items.
+   */
   async getCategories() {
     if (APP_CONFIG.IS_MOCK_MODE) return mockAdapter.getCategories();
     const { data: res } = await api.get('/categories');
     return { success: true, data: res.data ?? res };
   },
 
+  /**
+   * Fetches the current trending/featured article for the hero spotlight.
+   */
   async getTrending() {
     if (APP_CONFIG.IS_MOCK_MODE) return mockAdapter.getTrending();
     const { data: res } = await api.get('/news/trending');
@@ -44,9 +58,12 @@ export const newsService = {
   },
 
   /**
-   * Fetches contextually related articles for a specified article ID.
-   * Leverages dedicated `/news/:id/related` REST endpoint with a fallback mechanism
-   * that queries category-filtered articles if the backend endpoint is unavailable.
+   * Fetches contextually related articles for a given article ID.
+   * Uses the `/news/:id/related` endpoint, with a fallback that queries
+   * articles from the same category if the dedicated endpoint is unavailable.
+   * 
+   * @param {string|number} id - The source article ID
+   * @param {Object} [params] - Additional query parameters (e.g. limit)
    */
   async getRelatedNews(id, params = {}) {
     if (APP_CONFIG.IS_MOCK_MODE) return mockAdapter.getRelatedNews(id, params);
@@ -58,7 +75,7 @@ export const newsService = {
       });
       return { success: true, data: res.data ?? res };
     } catch {
-      // Fallback strategy for REST backends without explicit /related route support
+      // Fallback: fetch articles from the same category if /related endpoint is not available
       const { data: articleRes } = await api.get(`/news/${id}`);
       const article = articleRes.data ?? articleRes;
       const { data: newsRes } = await api.get('/news', {
@@ -72,4 +89,3 @@ export const newsService = {
     }
   },
 };
-

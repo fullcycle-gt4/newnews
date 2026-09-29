@@ -1,5 +1,9 @@
 import { APP_CONFIG } from '@/utils';
 
+/**
+ * Static navigation items used to populate the sidebar menu.
+ * Each item links to a news category filter.
+ */
 export const NAVIGATION_ITEMS = [
   {
     icon: '🏠',
@@ -86,6 +90,7 @@ export const NAVIGATION_ITEMS = [
   },
 ];
 
+/** All available news category filter labels */
 export const NEWS_CATEGORIES = [
   'Todos',
   'Futebol',
@@ -97,6 +102,7 @@ export const NEWS_CATEGORIES = [
   'Entretenimento',
 ];
 
+/** Mock in-app notification data displayed in the navbar dropdown */
 export const MOCK_NOTIFICATIONS = [
   {
     id: 1,
@@ -120,14 +126,10 @@ export const MOCK_NOTIFICATIONS = [
   },
 ];
 
-/*
- * PERFIL DO USUÁRIO DE TESTE
- *
- * Este usuário continua existindo.
- * Ele poderá ser utilizado pelo login de teste.
- *
- * Porém, ele NÃO será carregado automaticamente
- * quando o visitante abrir o site.
+/**
+ * Mock user profile for the test/demo account.
+ * This user is NOT loaded automatically on page load.
+ * It is available for login-based testing flows.
  */
 export const MOCK_USER_PROFILE = {
   id: 1,
@@ -136,6 +138,7 @@ export const MOCK_USER_PROFILE = {
   avatar: null,
 };
 
+/** Full list of mock news articles with realistic content */
 export const MOCK_NEWS_ARTICLES = [
   {
     id: 1,
@@ -447,6 +450,10 @@ const ARTICLES = MOCK_NEWS_ARTICLES.map((article) => ({
   ],
 }));
 
+/**
+ * The local mock adapter that simulates the backend API.
+ * Used when IS_MOCK_MODE is true to allow frontend-only development.
+ */
 export const mockAdapter = {
   async getNews({
     category = 'Todos',
@@ -613,23 +620,25 @@ export const mockAdapter = {
     };
   },
 
-  // ==========================================
-  // USUÁRIO
-  // ==========================================
-
+  /**
+   * Returns a mock unauthenticated user response.
+   * Visitors start with no logged-in user by default.
+   */
   async getUserProfile() {
     if (APP_CONFIG.MOCK_DELAY_MS > 0) {
       await delay(APP_CONFIG.MOCK_DELAY_MS);
     }
 
-    // ALTERADO:
-    // O visitante começa sem usuário logado.
+    // Visitor starts as a guest — no auto-login
     return {
       success: false,
       data: null,
     };
   },
 
+  /**
+   * Returns the mock notification list for the authenticated user
+   */
   async getUserNotifications() {
     if (APP_CONFIG.MOCK_DELAY_MS > 0) {
       await delay(APP_CONFIG.MOCK_DELAY_MS);

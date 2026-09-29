@@ -55,6 +55,10 @@ const categoryColors = {
 	Entretenimento: '#20c997',
 };
 
+/**
+ * Loads user preferences from local storage or falls back to defaults.
+ * @returns {Object} User preferences object
+ */
 function readPreferences() {
 	try {
 		return {
@@ -66,6 +70,10 @@ function readPreferences() {
 	}
 }
 
+/**
+ * Reusable component for a single configuration setting row.
+ * Displays an icon, title, description, and accepts form controls as children.
+ */
 function SettingRow({ icon, title, description, children }) {
 	return (
 		<div className="d-flex align-items-center gap-3 py-3 border-bottom">
@@ -165,10 +173,16 @@ export function ConfigPage() {
 		}
 	}, [requestedSection]);
 
+	/**
+	 * Updates a specific user preference setting
+	 */
 	const updatePreference = (key, value) => {
 		setPreferences((current) => ({ ...current, [key]: value }));
 	};
 
+	/**
+	 * Toggles selection of preferred news categories
+	 */
 	const toggleCategory = (category) => {
 		const selected = preferences.preferredCategories.includes(category);
 		updatePreference(
@@ -179,12 +193,18 @@ export function ConfigPage() {
 		);
 	};
 
+	/**
+	 * Clears local preferences and resets to defaults
+	 */
 	const handleResetPreferences = () => {
 		localStorage.removeItem(preferenceKey);
 		setPreferences({ ...defaultPreferences });
 		showToastNotification('Preferências restauradas.', 'info', '↺');
 	};
 
+	/**
+	 * Handles opening an article, tracking it as read, and navigating to its page
+	 */
 	const handleOpenArticle = (article) => {
 		setSelectedArticle(article);
 		markArticleAsRead(article.id);

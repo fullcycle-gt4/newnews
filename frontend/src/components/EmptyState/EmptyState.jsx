@@ -1,3 +1,15 @@
+/**
+ * Generic Empty State component.
+ * Renders a fallback UI when lists (like the news feed or favorites) are empty,
+ * adapting its message and icon based on current search, category, or tab context.
+ * 
+ * @param {Object} props
+ * @param {string} [props.searchQuery] - The current active search term
+ * @param {boolean} [props.isSavedTabActive] - Whether the user is viewing the "Saved" tab
+ * @param {string} [props.category] - The current active news category
+ * @param {Function} [props.onClearSearch] - Callback to reset the search input
+ * @param {Function} [props.onResetCategory] - Callback to reset the category filter
+ */
 export function EmptyState({
   searchQuery,
   isSavedTabActive,
@@ -6,6 +18,7 @@ export function EmptyState({
   onResetCategory,
 }) {
   const hasActiveSearch = Boolean(searchQuery);
+
   return (
     <div className="text-center py-5 px-3">
       <div className="d-inline-flex align-items-center justify-content-center p-3 rounded-circle bg-secondary bg-opacity-10 text-secondary mb-3">

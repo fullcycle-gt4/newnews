@@ -5,6 +5,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { App } from './App.jsx';
 import './index.css';
 
+// Mount the React application into the root DOM element
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />

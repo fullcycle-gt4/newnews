@@ -7,6 +7,15 @@ import {
 
 import './Sidebar.css';
 
+/**
+ * Renders a list of navigation items as interactive buttons for the sidebar.
+ * 
+ * @param {Object} props
+ * @param {Array} props.items - List of navigation items with id, icon, label, and badge
+ * @param {string} props.activeNavId - ID of the currently selected item
+ * @param {Function} props.onSelectNavItem - Callback when an item is selected
+ * @param {boolean} [props.isOffcanvas=false] - Whether this is rendered inside a mobile offcanvas
+ */
 function SidebarNavItems({
   items,
   activeNavId,
@@ -39,6 +48,7 @@ function SidebarNavItems({
         {item.label}
       </span>
 
+      {/* Badge counter shown for items like bookmarks */}
       {item.badge > 0 && (
         <span
           className={`badge ms-auto ${
@@ -52,6 +62,7 @@ function SidebarNavItems({
         </span>
       )}
 
+      {/* Active indicator dot shown in desktop sidebar when no badge is present */}
       {!isOffcanvas &&
         activeNavId === item.id &&
         !item.badge && (
@@ -61,81 +72,58 @@ function SidebarNavItems({
   ));
 }
 
+/**
+ * Desktop Sidebar component.
+ * Displays the main navigation and user-specific links on larger screens.
+ * Falls back to global store values when props are not provided.
+ * 
+ * @param {Object} props
+ * @param {Array} [props.navigationItems] - Optional override for nav items
+ * @param {string} [props.activeNavId] - Optional override for active nav item ID
+ * @param {Function} [props.onSelectNavItem] - Optional override for selection handler
+ * @param {number} [props.bookmarkedArticlesCount] - Optional override for bookmark count
+ */
 export function Sidebar({
   navigationItems: propsNavItems,
   activeNavId: propsActiveNavId,
   onSelectNavItem: propsOnSelectNavItem,
   bookmarkedArticlesCount: propsBookmarkedCount,
 }) {
-  // ================================
-  // NAVEGAÇÃO
-  // ================================
-
+  // Global navigation state from store
   const storeNavigationItems = useNavigationStore(
     (state) => state.navigationItems,
   );
-
   const storeActiveNavId = useNavigationStore(
     (state) => state.activeNavId,
   );
-
   const storeSetActiveNavId = useNavigationStore(
     (state) => state.setActiveNavId,
   );
 
-  // ================================
-  // FAVORITOS
-  // ================================
-
+  // Bookmark count from store (used for the "Saved" badge)
   const storeBookmarkedCount = useBookmarksStore(
     (state) => state.bookmarkedArticleIds.size,
   );
 
-  // ================================
-  // USUÁRIO LOGADO
-  // ================================
-
+  // Authenticated user from store (controls bottom section visibility)
   const user = useUserStore(
     (state) => state.user,
   );
 
-  // ================================
-  // VALORES FINAIS
-  // ================================
+  // Resolved values: prefer passed props, fall back to store values
+  const navigationItems = propsNavItems ?? storeNavigationItems ?? [];
+  const activeNavId = propsActiveNavId ?? storeActiveNavId ?? 'inicio';
+  const onSelectNavItem = propsOnSelectNavItem ?? storeSetActiveNavId;
+  const bookmarkedArticlesCount = propsBookmarkedCount ?? storeBookmarkedCount ?? 0;
 
-  const navigationItems =
-    propsNavItems ?? storeNavigationItems ?? [];
-
-  const activeNavId =
-    propsActiveNavId ?? storeActiveNavId ?? 'inicio';
-
-  const onSelectNavItem =
-    propsOnSelectNavItem ?? storeSetActiveNavId;
-
-  const bookmarkedArticlesCount =
-    propsBookmarkedCount ?? storeBookmarkedCount ?? 0;
-
-  // ================================
-  // MENU PRINCIPAL
-  // ================================
-
+  // Filter out user-specific items from the main nav list
   const mainNavItems = navigationItems.filter(
     (item) =>
       item.id !== 'salvos' &&
       item.id !== 'favoritos',
   );
 
-  // ================================
-  // MENU INFERIOR
-  // ================================
-  //
-  // Se tiver usuário:
-  // mostra "Meus favoritos".
-  //
-  // Se NÃO tiver usuário:
-  // não mostra nada.
-  //
-
+  // Bottom section items shown only when the user is authenticated
   const bottomNavItems = user
     ? [
         {
@@ -171,10 +159,7 @@ export function Sidebar({
         />
       </nav>
 
-      {/* 
-        Só cria essa parte quando o usuário
-        estiver logado.
-      */}
+      {/* Bottom section rendered only when the user is logged in */}
       {bottomNavItems.length > 0 && (
         <div className="sidebar-bottom-section px-2 mt-auto flex-shrink-0">
           <div className="sidebar-divider mx-2 my-2" />
@@ -190,74 +175,59 @@ export function Sidebar({
   );
 }
 
+/**
+ * Mobile Offcanvas Sidebar component.
+ * Displays navigation links and user-specific actions on smaller screens
+ * via a slide-out Bootstrap offcanvas drawer.
+ * 
+ * @param {Object} props
+ * @param {Array} [props.navigationItems] - Optional override for nav items
+ * @param {string} [props.activeNavId] - Optional override for active nav item ID
+ * @param {Function} [props.onSelectNavItem] - Optional override for selection handler
+ * @param {number} [props.bookmarkedArticlesCount] - Optional override for bookmark count
+ */
 export function SidebarOffcanvas({
   navigationItems: propsNavItems,
   activeNavId: propsActiveNavId,
   onSelectNavItem: propsOnSelectNavItem,
   bookmarkedArticlesCount: propsBookmarkedCount,
 }) {
-  // ================================
-  // NAVEGAÇÃO
-  // ================================
-
+  // Global navigation state from store
   const storeNavigationItems = useNavigationStore(
     (state) => state.navigationItems,
   );
-
   const storeActiveNavId = useNavigationStore(
     (state) => state.activeNavId,
   );
-
   const storeSetActiveNavId = useNavigationStore(
     (state) => state.setActiveNavId,
   );
 
-  // ================================
-  // FAVORITOS
-  // ================================
-
+  // Bookmark count from store (used for the "Saved" badge)
   const storeBookmarkedCount = useBookmarksStore(
     (state) => state.bookmarkedArticleIds.size,
   );
 
-  // ================================
-  // USUÁRIO LOGADO
-  // ================================
-
+  // Authenticated user from store (controls bottom section visibility)
   const user = useUserStore(
     (state) => state.user,
   );
 
-  // ================================
-  // VALORES FINAIS
-  // ================================
+  // Resolved values: prefer passed props, fall back to store values
+  const navigationItems = propsNavItems ?? storeNavigationItems ?? [];
+  const activeNavId = propsActiveNavId ?? storeActiveNavId ?? 'inicio';
+  const onSelectNavItem = propsOnSelectNavItem ?? storeSetActiveNavId;
+  const bookmarkedArticlesCount = propsBookmarkedCount ?? storeBookmarkedCount ?? 0;
 
-  const navigationItems =
-    propsNavItems ?? storeNavigationItems ?? [];
-
-  const activeNavId =
-    propsActiveNavId ?? storeActiveNavId ?? 'inicio';
-
-  const onSelectNavItem =
-    propsOnSelectNavItem ?? storeSetActiveNavId;
-
-  const bookmarkedArticlesCount =
-    propsBookmarkedCount ?? storeBookmarkedCount ?? 0;
-
-  // ================================
-  // MENU PRINCIPAL
-  // ================================
-
+  // Filter out user-specific items from the main nav list
   const mainNavItems = navigationItems.filter(
     (item) =>
       item.id !== 'salvos' &&
       item.id !== 'favoritos',
   );
 
-  // ================================
-  // MENU INFERIOR
-  // ================================
-
+  // Bottom section items shown only when the user is authenticated
+  // Includes favorites, profile, and settings shortcuts
   const bottomNavItems = user
     ? [
         {
@@ -287,10 +257,7 @@ export function SidebarOffcanvas({
       aria-labelledby="sidebarOffcanvasLabel"
       style={{ width: 240 }}
     >
-      {/* ================================
-          CABEÇALHO
-      ================================= */}
-
+      {/* Brand header with logo and close button */}
       <div
         className="offcanvas-header border-bottom py-2"
         style={{
@@ -346,10 +313,7 @@ export function SidebarOffcanvas({
         />
       </div>
 
-      {/* ================================
-          CORPO DO MENU
-      ================================= */}
-
+      {/* Offcanvas body with nav items */}
       <div className="offcanvas-body p-2 d-flex flex-column h-100 overflow-hidden">
         <p
           className="text-uppercase text-secondary fw-semibold px-2 pt-1 pb-1 mb-1"
@@ -370,9 +334,7 @@ export function SidebarOffcanvas({
           />
         </nav>
 
-        {/* 
-          Só aparece se o usuário estiver logado.
-        */}
+        {/* Bottom section rendered only when the user is logged in */}
         {bottomNavItems.length > 0 && (
           <div className="sidebar-bottom-section flex-shrink-0">
             <div className="sidebar-divider mx-2 my-2" />

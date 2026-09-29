@@ -12,6 +12,13 @@ import "./RegistrationForm.css";
 
 
 
+/**
+ * Registration form component with built-in client-side validation.
+ * Handles user input for full name, email, and password, displaying inline errors.
+ * 
+ * @param {Object} props
+ * @param {Function} props.onSubmit - Callback triggered when the form is successfully validated and submitted
+ */
 export function RegistrationForm({ onSubmit }) {
     const [formData, setFormData] = useState({
         fullName: "",
@@ -19,10 +26,14 @@ export function RegistrationForm({ onSubmit }) {
         password: "",
     });
 
+    // Form state management
     const [showPassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState({});
     const [submitting, setSubmitting] = useState(false);
 
+    /**
+     * Updates form data and clears the error for the field being modified
+     */
     const handleChange = (e) => {
         const { name, value } = e.target;
 
@@ -37,6 +48,10 @@ export function RegistrationForm({ onSubmit }) {
         }));
     };
 
+    /**
+     * Validates all form fields before submission.
+     * @returns {boolean} True if the form is valid, false otherwise.
+     */
     const validate = () => {
         const newErrors = {};
 
@@ -60,6 +75,9 @@ export function RegistrationForm({ onSubmit }) {
         return Object.keys(newErrors).length === 0;
     };
 
+    /**
+     * Handles the form submission process, including validation and loading state
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -78,7 +96,7 @@ export function RegistrationForm({ onSubmit }) {
 
     return (
         <div className="registration-container">
-
+            {/* Decorative Globe Background Animations */}
             <div className="globo globo-one">
                 <div className="globo-line line-one"></div>
                 <div className="globo-line line-two"></div>
@@ -92,7 +110,7 @@ export function RegistrationForm({ onSubmit }) {
             </div>
 
             <div className="registration-content">
-
+                {/* Brand Logo Section */}
                 <div className="news-logo">
                     <div className="logo-box">
                         NN
@@ -125,7 +143,7 @@ export function RegistrationForm({ onSubmit }) {
                         a usar o New News.
                     </p>
 
-
+                    {/* Full Name Input Field */}
                     <div className="form-group">
                         <label htmlFor="fullName">
                             <IconUser size={21} />
@@ -221,7 +239,7 @@ export function RegistrationForm({ onSubmit }) {
                         )}
                     </div>
 
-
+                    {/* Submit Button */}
                     <button
                         type="submit"
                         className="register-button"
@@ -238,7 +256,7 @@ export function RegistrationForm({ onSubmit }) {
                         )}
                     </button>
 
-
+                    {/* Alternative Actions (Login) */}
                     <div className="divider">
                         <span></span>
                         <p>ou</p>

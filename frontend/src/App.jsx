@@ -17,6 +17,7 @@ export function App() {
   const loadUserData = useUserStore((state) => state.loadUserData);
   const loadNavigation = useNavigationStore((state) => state.loadNavigation);
 
+  // Bootstrap global state on app mount: load user session and navigation items
   useEffect(() => {
     loadUserData();
     loadNavigation();

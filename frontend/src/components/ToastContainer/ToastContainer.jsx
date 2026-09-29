@@ -1,6 +1,15 @@
 import { useToastStore } from '@/stores';
 import './ToastContainer.css';
 
+/**
+ * Global Toast Notification Container.
+ * Renders a stack of temporary toast notifications at the bottom of the screen.
+ * Connects to the global toast store or accepts props directly.
+ * 
+ * @param {Object} props
+ * @param {Array} [props.toastNotifications] - Optional array of toast objects to render
+ * @param {Function} [props.onDismissToast] - Optional callback to dismiss a specific toast
+ */
 export function ToastContainer({
   toastNotifications: propsNotifications,
   onDismissToast: propsDismiss,

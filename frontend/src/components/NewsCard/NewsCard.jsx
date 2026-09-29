@@ -11,6 +11,18 @@ import { useUserStore } from '@/stores';
 
 import './NewsCard.css';
 
+/**
+ * Standard news article card component.
+ * Displays article thumbnail, title, summary, metadata (category, time),
+ * and handles bookmark interactions if the user is authenticated.
+ * 
+ * @param {Object} props
+ * @param {Object} props.article - The article data object
+ * @param {boolean} [props.isRead=false] - Whether the user has already read this article
+ * @param {boolean} [props.isBookmarked=false] - Whether the user has bookmarked this article
+ * @param {Function} [props.onSelectArticle] - Callback triggered when the article is clicked
+ * @param {Function} [props.onToggleBookmark] - Callback triggered when the bookmark icon is clicked
+ */
 export function NewsCard({
   article,
   isRead,
@@ -20,11 +32,14 @@ export function NewsCard({
 }) {
   const [imageError, setImageError] = useState(false);
 
-  // Pega o usuário que está logado
+  // Global state for user context (to show/hide bookmark button)
   const user = useUserStore((state) => state.user);
 
   if (!article) return null;
 
+  /**
+   * Prevents event bubbling so clicking the bookmark button doesn't open the article
+   */
   const handleBookmark = (e) => {
     e.stopPropagation();
     onToggleBookmark?.(article.id);
@@ -123,6 +138,14 @@ export function NewsCard({
   );
 }
 
+/**
+ * Featured 'Hero' news card component.
+ * Displays a large, full-bleed image with overlay text for top-tier articles.
+ * 
+ * @param {Object} props
+ * @param {Object} props.article - The featured article data object
+ * @param {Function} [props.onSelectArticle] - Callback triggered when the article is clicked
+ */
 export function HeroCard({ article, onSelectArticle }) {
   const [imageError, setImageError] = useState(false);
 
@@ -186,6 +209,14 @@ export function HeroCard({ article, onSelectArticle }) {
   );
 }
 
+/**
+ * Loading skeleton component for the news feed.
+ * Displays placeholder animations while articles are being fetched.
+ * 
+ * @param {Object} props
+ * @param {number} [props.skeletonCount=6] - Number of standard card skeletons to render
+ * @param {boolean} [props.shouldShowHero=false] - Whether to render a large hero card skeleton at the top
+ */
 export function NewsSkeleton({
   skeletonCount = 6,
   shouldShowHero = false,

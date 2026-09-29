@@ -119,6 +119,7 @@
   border-radius: 24px;
   background: #071b49;
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
+  border: none;
 }
 
 .login-modal-close {

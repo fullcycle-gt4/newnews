@@ -31,7 +31,7 @@ body {
   --bs-tertiary-bg: #1e293b;
 }
 
-/* Scrollbar global */
+/* Global scrollbar */
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -53,13 +53,13 @@ body {
    Acessibilidade & Resiliência
    ============================================================ */
 
-/* Anel de foco acessível global */
+/* Global accessible focus ring */
 :focus-visible {
   outline: 2px solid var(--bs-primary) !important;
   outline-offset: 2px !important;
 }
 
-/* Resiliência contra estouro de texto em layout flex/grid */
+/* Resilience against text overflow in flex/grid layouts */
 .text-break-word {
   word-break: break-word;
   overflow-wrap: anywhere;
@@ -69,7 +69,7 @@ body {
   min-width: 0;
 }
 
-/* Suporte a preferência de movimento reduzido (WCAG 2.1 - 2.3.3) */
+/* Reduced motion preference support (WCAG 2.1 - 2.3.3) */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

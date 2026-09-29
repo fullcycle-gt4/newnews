@@ -1,1 +1,1 @@
-export { default } from './EmptyState.jsx';
+export * from './EmptyState.jsx';

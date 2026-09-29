@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ConfigPage } from '@/pages/ConfigPage';
-import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { HomePage } from "@/pages/HomePage";
-import { NewsPage } from "@/pages/NewsPage";
-import { RegisterPage } from "@/pages/RegisterPage";
-import { LoginPage } from "@/pages/LoginPage";
-import { useUserStore, useNavigationStore } from "@/stores";
+import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { HomePage } from '@/pages/HomePage';
+import { NewsPage } from '@/pages/NewsPage';
+import { RegisterPage } from '@/pages/RegisterPage';
+import { LoginPage } from '@/pages/LoginPage';
+import { useUserStore, useNavigationStore } from '@/stores';
 
 /**
  * Root application component.
@@ -21,7 +21,7 @@ export function App() {
   useEffect(() => {
     loadUserData();
     loadNavigation();
-  }, []);
+  }, [loadUserData, loadNavigation]);
 
   return (
     <ErrorBoundary>
@@ -31,7 +31,7 @@ export function App() {
           <Route path="/news" element={<NewsPage />} />
           <Route path="/config" element={<ConfigPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/login" element={<LoginPage/>}/>
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>

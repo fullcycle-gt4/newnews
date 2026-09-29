@@ -6,12 +6,12 @@ import { APP_CONFIG } from '@/utils';
  * Custom hook for fetching and managing the news feed state.
  * Handles initial loading, pagination (load more), category filtering,
  * search queries, and the hero article for the default feed view.
- * 
+ *
  * @param {Object} params
  * @param {string|null} params.navSelectedCategory - The currently selected nav category ID
  * @param {string} params.searchQuery - The debounced search query string
  * @param {Set} params.bookmarkedArticleIds - Set of bookmarked article IDs for filtering the saved tab
- * 
+ *
  * @returns {Object} Feed state and action handlers
  */
 export function useNewsFeed({
@@ -78,7 +78,7 @@ export function useNewsFeed({
    * Fetches a page of articles from the API.
    * Supports both initial loads and "load more" pagination.
    * Uses AbortController signals to cancel in-flight requests on re-renders.
-   * 
+   *
    * @param {number} targetPage - The page number to fetch
    * @param {boolean} [isLoadMore=false] - Whether to append to the existing list
    * @param {AbortSignal} [signal] - AbortController signal for cancellation

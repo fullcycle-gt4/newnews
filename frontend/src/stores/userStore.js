@@ -5,7 +5,7 @@ import { userService } from '@/services';
 /**
  * Global user store (Zustand).
  * Manages authentication state, user profile data, and notifications.
- * 
+ *
  * State:
  * - user: null means guest visitor; object means authenticated user
  * - isLoadingUser: true while the profile fetch is in progress

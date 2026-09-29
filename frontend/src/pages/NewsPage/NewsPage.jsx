@@ -52,7 +52,9 @@ export function NewsPage() {
 
         // Fetch contextual related articles scored by category, topic, and keyword relevance
         try {
-          const relatedRes = await newsService.getRelatedNews(articleId, { limit: 3 });
+          const relatedRes = await newsService.getRelatedNews(articleId, {
+            limit: 3,
+          });
           setRelatedNews(relatedRes.data || []);
         } catch {
           // Graceful fallback strategy: fetch top category articles if related endpoint fails
@@ -65,7 +67,7 @@ export function NewsPage() {
             .slice(0, 3);
           setRelatedNews(filtered);
         }
-      } catch (err) {
+      } catch {
         setError('Não foi possível carregar os detalhes desta notícia.');
       } finally {
         setIsLoading(false);
@@ -90,7 +92,9 @@ export function NewsPage() {
     }
   };
 
-  const isBookmarked = article ? bookmarkedArticleIds.has(Number(article.id)) : false;
+  const isBookmarked = article
+    ? bookmarkedArticleIds.has(Number(article.id))
+    : false;
 
   return (
     <div className="min-vh-100 d-flex flex-column bg-body">
@@ -109,9 +113,9 @@ export function NewsPage() {
         {/* Async content loading indicator state */}
         {isLoading && (
           <div className="text-center py-5">
-            <div className="spinner-border text-primary" role="status">
+            <output className="spinner-border text-primary">
               <span className="visually-hidden">Carregando notícia...</span>
-            </div>
+            </output>
           </div>
         )}
 
@@ -171,7 +175,9 @@ export function NewsPage() {
                     <button
                       onClick={() => toggleArticleBookmark(article.id)}
                       className={`btn btn-sm ${isBookmarked ? 'btn-primary' : 'btn-outline-secondary'} rounded-pill d-inline-flex align-items-center gap-1`}
-                      title={isBookmarked ? 'Remover dos salvos' : 'Salvar notícia'}
+                      title={
+                        isBookmarked ? 'Remover dos salvos' : 'Salvar notícia'
+                      }
                     >
                       <IconBookmark
                         size={16}
@@ -214,10 +220,14 @@ export function NewsPage() {
 
                 <div className="d-flex flex-column gap-3">
                   {relatedNews.map((item) => (
-                    <article
+                    <a
                       key={item.id}
-                      onClick={() => navigate(`/news?id=${item.id}`)}
-                      className="card border-0 shadow-sm rounded-3 overflow-hidden related-card cursor-pointer"
+                      href={`/news?id=${item.id}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate(`/news?id=${item.id}`);
+                      }}
+                      className="card border-0 shadow-sm rounded-3 overflow-hidden related-card text-decoration-none d-block"
                     >
                       <div className="card-body p-3 d-flex gap-3 align-items-center">
                         <img
@@ -240,7 +250,7 @@ export function NewsPage() {
                           </span>
                         </div>
                       </div>
-                    </article>
+                    </a>
                   ))}
                 </div>
               </div>

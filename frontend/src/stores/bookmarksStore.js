@@ -7,7 +7,7 @@ import { TOAST_MESSAGES } from '@/utils';
  * Persists read article IDs and bookmarked article IDs to localStorage,
  * so the state survives page reloads.
  */
-export const useBookmarksStore = create((set, get) => {
+export const useBookmarksStore = create((set) => {
   /**
    * Reads a Set of IDs from localStorage by key.
    * Returns an empty Set on error or if the key is missing.
@@ -38,7 +38,10 @@ export const useBookmarksStore = create((set, get) => {
       set((state) => {
         const nextSet = new Set([...state.readArticleIds, articleId]);
         try {
-          localStorage.setItem('nn_read_ids', JSON.stringify(Array.from(nextSet)));
+          localStorage.setItem(
+            'nn_read_ids',
+            JSON.stringify(Array.from(nextSet)),
+          );
         } catch {}
         return { readArticleIds: nextSet };
       }),
@@ -60,7 +63,10 @@ export const useBookmarksStore = create((set, get) => {
           nextSet.add(articleId);
         }
         try {
-          localStorage.setItem('nn_bookmark_ids', JSON.stringify(Array.from(nextSet)));
+          localStorage.setItem(
+            'nn_bookmark_ids',
+            JSON.stringify(Array.from(nextSet)),
+          );
         } catch {}
         return { bookmarkedArticleIds: nextSet };
       });
@@ -71,7 +77,11 @@ export const useBookmarksStore = create((set, get) => {
         : TOAST_MESSAGES.BOOKMARK_ADDED;
       useToastStore
         .getState()
-        .showToastNotification(toastConfig.message, toastConfig.type, toastConfig.icon);
+        .showToastNotification(
+          toastConfig.message,
+          toastConfig.type,
+          toastConfig.icon,
+        );
     },
   };
 });

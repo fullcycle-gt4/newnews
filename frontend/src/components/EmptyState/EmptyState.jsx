@@ -2,7 +2,7 @@
  * Generic Empty State component.
  * Renders a fallback UI when lists (like the news feed or favorites) are empty,
  * adapting its message and icon based on current search, category, or tab context.
- * 
+ *
  * @param {Object} props
  * @param {string} [props.searchQuery] - The current active search term
  * @param {boolean} [props.isSavedTabActive] - Whether the user is viewing the "Saved" tab

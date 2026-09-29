@@ -15,7 +15,9 @@ export const useThemeStore = create((set) => {
     try {
       const savedTheme = localStorage.getItem('nn_theme');
       if (savedTheme !== null) return savedTheme === 'dark';
-      return window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
+      return (
+        window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false
+      );
     } catch {
       return false;
     }

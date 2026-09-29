@@ -27,10 +27,26 @@ export const APP_CONFIG = {
  * Each entry contains a user-facing message, a visual type, and an icon.
  */
 export const TOAST_MESSAGES = {
-  DARK_MODE_ON:     { message: 'Modo escuro ativado',              type: 'info',    icon: '🌙' },
-  DARK_MODE_OFF:    { message: 'Modo claro ativado',               type: 'info',    icon: '☀️' },
-  BOOKMARK_ADDED:   { message: 'Notícia salva nos seus favoritos!', type: 'success', icon: '🔖' },
-  BOOKMARK_REMOVED: { message: 'Notícia removida dos salvos',       type: 'info',    icon: '🗑️' },
-  LINK_COPIED:      { message: 'Link da notícia copiado!',          type: 'success', icon: '🔗' },
-  SESSION_ENDED:    { message: 'Sessão encerrada com sucesso',       type: 'info',    icon: '👋' },
+  DARK_MODE_ON: { message: 'Modo escuro ativado', type: 'info', icon: '🌙' },
+  DARK_MODE_OFF: { message: 'Modo claro ativado', type: 'info', icon: '☀️' },
+  BOOKMARK_ADDED: {
+    message: 'Notícia salva nos seus favoritos!',
+    type: 'success',
+    icon: '🔖',
+  },
+  BOOKMARK_REMOVED: {
+    message: 'Notícia removida dos salvos',
+    type: 'info',
+    icon: '🗑️',
+  },
+  LINK_COPIED: {
+    message: 'Link da notícia copiado!',
+    type: 'success',
+    icon: '🔗',
+  },
+  SESSION_ENDED: {
+    message: 'Sessão encerrada com sucesso',
+    type: 'info',
+    icon: '👋',
+  },
 };

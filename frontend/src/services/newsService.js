@@ -61,7 +61,7 @@ export const newsService = {
    * Fetches contextually related articles for a given article ID.
    * Uses the `/news/:id/related` endpoint, with a fallback that queries
    * articles from the same category if the dedicated endpoint is unavailable.
-   * 
+   *
    * @param {string|number} id - The source article ID
    * @param {Object} [params] - Additional query parameters (e.g. limit)
    */

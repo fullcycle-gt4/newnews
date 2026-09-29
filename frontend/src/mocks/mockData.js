@@ -534,9 +534,33 @@ export const mockAdapter = {
     if (!target) throw new Error(`Notícia id ${id} não encontrada`);
 
     const stopWords = new Set([
-      'para', 'como', 'mais', 'sobre', 'este', 'esta', 'com', 'dos', 'das',
-      'uma', 'seu', 'sua', 'onde', 'quais', 'pelo', 'pela', 'entre', 'após',
-      'novos', 'nova', 'novo', 'novas', 'com', 'sem', 'que', 'ante', 'para'
+      'para',
+      'como',
+      'mais',
+      'sobre',
+      'este',
+      'esta',
+      'com',
+      'dos',
+      'das',
+      'uma',
+      'seu',
+      'sua',
+      'onde',
+      'quais',
+      'pelo',
+      'pela',
+      'entre',
+      'após',
+      'novos',
+      'nova',
+      'novo',
+      'novas',
+      'com',
+      'sem',
+      'que',
+      'ante',
+      'para',
     ]);
 
     const targetWords = (target.title + ' ' + target.summary)
@@ -561,34 +585,35 @@ export const mockAdapter = {
     const targetCat = target.category.toLowerCase();
     const closeCats = relatedMap[targetCat] || [];
 
-    const candidates = ARTICLES.filter(
-      (a) => Number(a.id) !== Number(id),
-    ).map((article) => {
-      let score = 0;
-      const cat = article.category.toLowerCase();
+    const candidates = ARTICLES.filter((a) => Number(a.id) !== Number(id)).map(
+      (article) => {
+        let score = 0;
+        const cat = article.category.toLowerCase();
 
-      if (cat === targetCat) {
-        score += 100;
-      } else if (closeCats.includes(cat)) {
-        score += 40;
-      }
-
-      const text = (article.title + ' ' + article.summary).toLowerCase();
-      targetWords.forEach((word) => {
-        if (text.includes(word)) {
-          score += 15;
+        if (cat === targetCat) {
+          score += 100;
+        } else if (closeCats.includes(cat)) {
+          score += 40;
         }
-      });
 
-      if (article.author === target.author) {
-        score += 5;
-      }
+        const text = (article.title + ' ' + article.summary).toLowerCase();
+        targetWords.forEach((word) => {
+          if (text.includes(word)) {
+            score += 15;
+          }
+        });
 
-      return { article, score };
-    });
+        if (article.author === target.author) {
+          score += 5;
+        }
+
+        return { article, score };
+      },
+    );
 
     candidates.sort(
-      (a, b) => b.score - a.score || Number(b.article.id) - Number(a.article.id),
+      (a, b) =>
+        b.score - a.score || Number(b.article.id) - Number(a.article.id),
     );
 
     const result = candidates.slice(0, limit).map((c) => c.article);
@@ -650,4 +675,3 @@ export const mockAdapter = {
     };
   },
 };
-

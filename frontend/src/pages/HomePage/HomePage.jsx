@@ -1,4 +1,4 @@
-import { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { Sidebar, SidebarOffcanvas } from '@/components/Sidebar';
@@ -39,14 +39,9 @@ export function HomePage() {
   const toggleArticleBookmark = useBookmarksStore(
     (state) => state.toggleArticleBookmark,
   );
-  const showToastNotification = useToastStore(
-    (state) => state.showToastNotification,
-  );
 
-  const [selectedArticleDetail, setSelectedArticleDetail] = useState(null);
 
   const {
-    categories,
     gridArticles,
     heroArticle,
     isLoading,
@@ -67,19 +62,8 @@ export function HomePage() {
   });
 
   const handleOpenArticleModal = (article) => {
-    setSelectedArticleDetail(article);
     markArticleAsRead(article.id);
     navigate(`/news?id=${article.id}`);
-  };
-
-  const handleShareArticleLink = (article) => {
-    const shareUrl = article.url || window.location.href;
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(shareUrl);
-      showToastNotification('Link da notícia copiado!', 'success', '🔗');
-    } else {
-      showToastNotification(`Compartilhando: ${article.title}`, 'info', '📢');
-    }
   };
 
   const searchQuery = debouncedSearchQuery;
@@ -98,7 +82,7 @@ export function HomePage() {
           {/* Personalized greeting header based on client system time */}
           <header className="mb-4">
             <h1 className="fw-bold mb-1 fs-4">
-              {getTimeBasedGreeting()} {user?.firstName || ''}! 
+              {getTimeBasedGreeting()} {user?.firstName || ''}!
             </h1>
             <p className="text-secondary mb-0 small">
               {formatCurrentDateTime()} • Confira o que está acontecendo hoje

@@ -27,7 +27,7 @@ import { LoginForm } from '@/components/LoginForm';
  * Main application navigation bar.
  * Provides access to the sidebar toggle, global search, theme switcher,
  * user notifications, profile dropdown, and a login modal.
- * 
+ *
  * @param {Object} props
  * @param {Function} props.onToggleMobileSidebar - Callback to open/close the mobile sidebar offcanvas
  */
@@ -203,187 +203,187 @@ export function Navbar({ onToggleMobileSidebar }) {
 
           {/* Notifications Dropdown */}
           {user && (
-          <div className="position-relative" ref={notificationContainerRef}>
-            <button
-              type="button"
-              className="btn btn-light rounded-circle p-2 position-relative d-flex align-items-center justify-content-center"
-              style={{ width: 38, height: 38 }}
-              aria-label="Notificações"
-              aria-expanded={isNotificationDropdownOpen}
-              onClick={() => setIsNotificationDropdownOpen((prev) => !prev)}
-            >
-              <IconBell size={18} />
-              {unreadCount > 0 && (
-                <span className="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-2 border-white rounded-circle">
-                  <span className="visually-hidden">
-                    Notificações não lidas
-                  </span>
-                </span>
-              )}
-            </button>
-
-            {isNotificationDropdownOpen && (
-              <div
-                className="dropdown-menu dropdown-menu-end show shadow-lg rounded-3 border-0 mt-2 p-0"
-                style={{
-                  width: 'min(320px, calc(100vw - 2rem))',
-                  right: 0,
-                }}
+            <div className="position-relative" ref={notificationContainerRef}>
+              <button
+                type="button"
+                className="btn btn-light rounded-circle p-2 position-relative d-flex align-items-center justify-content-center"
+                style={{ width: 38, height: 38 }}
+                aria-label="Notificações"
+                aria-expanded={isNotificationDropdownOpen}
+                onClick={() => setIsNotificationDropdownOpen((prev) => !prev)}
               >
-                <div className="p-3 border-bottom d-flex align-items-center justify-content-between bg-body-tertiary">
-                  <span className="fw-semibold small">
-                    Últimas Notificações
+                <IconBell size={18} />
+                {unreadCount > 0 && (
+                  <span className="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-2 border-white rounded-circle">
+                    <span className="visually-hidden">
+                      Notificações não lidas
+                    </span>
                   </span>
-                  <span className="badge text-bg-primary rounded-pill">
-                    {unreadCount} nova{unreadCount !== 1 ? 's' : ''}
-                  </span>
-                </div>
+                )}
+              </button>
+
+              {isNotificationDropdownOpen && (
                 <div
-                  className="list-group list-group-flush"
-                  style={{ maxHeight: 280, overflowY: 'auto' }}
+                  className="dropdown-menu dropdown-menu-end show shadow-lg rounded-3 border-0 mt-2 p-0"
+                  style={{
+                    width: 'min(320px, calc(100vw - 2rem))',
+                    right: 0,
+                  }}
                 >
-                  {notifications.length === 0 ? (
-                    <div className="p-3 text-center text-muted small">
-                      Nenhuma notificação recente
-                    </div>
-                  ) : (
-                    notifications.map((notif) => (
-                      <div
-                        key={notif.id}
-                        className="list-group-item list-group-item-action p-3 border-bottom"
-                      >
-                        <div className="d-flex align-items-center justify-content-between mb-1">
-                          <span
-                            className="badge bg-primary-subtle text-primary border border-primary-subtle"
-                            style={{ fontSize: '0.65rem' }}
-                          >
-                            {notif.category}
-                          </span>
-                          <small
-                            className="text-muted"
-                            style={{ fontSize: '0.75rem' }}
-                          >
-                            {notif.timeAgo}
-                          </small>
-                        </div>
-                        <p className="mb-0 small fw-medium text-truncate">
-                          {notif.title}
-                        </p>
+                  <div className="p-3 border-bottom d-flex align-items-center justify-content-between bg-body-tertiary">
+                    <span className="fw-semibold small">
+                      Últimas Notificações
+                    </span>
+                    <span className="badge text-bg-primary rounded-pill">
+                      {unreadCount} nova{unreadCount !== 1 ? 's' : ''}
+                    </span>
+                  </div>
+                  <div
+                    className="list-group list-group-flush"
+                    style={{ maxHeight: 280, overflowY: 'auto' }}
+                  >
+                    {notifications.length === 0 ? (
+                      <div className="p-3 text-center text-muted small">
+                        Nenhuma notificação recente
                       </div>
-                    ))
-                  )}
+                    ) : (
+                      notifications.map((notif) => (
+                        <div
+                          key={notif.id}
+                          className="list-group-item list-group-item-action p-3 border-bottom"
+                        >
+                          <div className="d-flex align-items-center justify-content-between mb-1">
+                            <span
+                              className="badge bg-primary-subtle text-primary border border-primary-subtle"
+                              style={{ fontSize: '0.65rem' }}
+                            >
+                              {notif.category}
+                            </span>
+                            <small
+                              className="text-muted"
+                              style={{ fontSize: '0.75rem' }}
+                            >
+                              {notif.timeAgo}
+                            </small>
+                          </div>
+                          <p className="mb-0 small fw-medium text-truncate">
+                            {notif.title}
+                          </p>
+                        </div>
+                      ))
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
           )}
 
           {/* User Profile Dropdown */}
           {user ? (
-          <div
-            className="position-relative navbar-user-dropdown-wrapper"
-            ref={userContainerRef}
-          >
-            <button
-              id="btn-user-dropdown"
-              type="button"
-              className="btn btn-link text-decoration-none d-flex align-items-center gap-2 p-1 text-reset border-0 shadow-none"
-              aria-expanded={isUserDropdownOpen}
-              aria-label="Menu do usuário"
-              onClick={() => setIsUserDropdownOpen((prev) => !prev)}
+            <div
+              className="position-relative navbar-user-dropdown-wrapper"
+              ref={userContainerRef}
             >
-              <div
-                className="rounded-circle bg-secondary-subtle text-emphasis-secondary d-flex align-items-center justify-content-center fw-semibold fs-6 shadow-sm"
-                style={{ width: 38, height: 38, flexShrink: 0 }}
+              <button
+                id="btn-user-dropdown"
+                type="button"
+                className="btn btn-link text-decoration-none d-flex align-items-center gap-2 p-1 text-reset border-0 shadow-none"
+                aria-expanded={isUserDropdownOpen}
+                aria-label="Menu do usuário"
+                onClick={() => setIsUserDropdownOpen((prev) => !prev)}
               >
-                {user?.avatarInitial || 'U'}
-              </div>
+                <div
+                  className="rounded-circle bg-secondary-subtle text-emphasis-secondary d-flex align-items-center justify-content-center fw-semibold fs-6 shadow-sm"
+                  style={{ width: 38, height: 38, flexShrink: 0 }}
+                >
+                  {user?.avatarInitial || 'U'}
+                </div>
 
-              <span className="fw-semibold small text-body d-none d-sm-inline">
-                {user?.firstName || 'Usuário'}
-              </span>
+                <span className="fw-semibold small text-body d-none d-sm-inline">
+                  {user?.firstName || 'Usuário'}
+                </span>
 
-              <IconChevronDown
-                size={14}
-                className="text-secondary ms-1"
-                style={{
-                  transition: 'transform 0.2s ease-in-out',
-                  transform: isUserDropdownOpen
-                    ? 'rotate(180deg)'
-                    : 'rotate(0deg)',
-                }}
-              />
-            </button>
+                <IconChevronDown
+                  size={14}
+                  className="text-secondary ms-1"
+                  style={{
+                    transition: 'transform 0.2s ease-in-out',
+                    transform: isUserDropdownOpen
+                      ? 'rotate(180deg)'
+                      : 'rotate(0deg)',
+                  }}
+                />
+              </button>
 
-            {isUserDropdownOpen && (
-              <ul
-                className="dropdown-menu dropdown-menu-end show shadow-lg rounded-3 border-0 mt-2 py-2"
-                style={{
-                  width: 220,
-                  right: 0,
-                }}
-              >
-                <li className="px-3 py-2 border-bottom mb-1 bg-body-tertiary">
-                  <div className="fw-bold text-body small">
-                    {user?.name || 'Usuário'}
-                  </div>
-                  <div
-                    className="text-muted text-truncate"
-                    style={{ fontSize: '0.75rem' }}
-                  >
-                    {user?.email || 'usuario@exemplo.com'}
-                  </div>
-                </li>
+              {isUserDropdownOpen && (
+                <ul
+                  className="dropdown-menu dropdown-menu-end show shadow-lg rounded-3 border-0 mt-2 py-2"
+                  style={{
+                    width: 220,
+                    right: 0,
+                  }}
+                >
+                  <li className="px-3 py-2 border-bottom mb-1 bg-body-tertiary">
+                    <div className="fw-bold text-body small">
+                      {user?.name || 'Usuário'}
+                    </div>
+                    <div
+                      className="text-muted text-truncate"
+                      style={{ fontSize: '0.75rem' }}
+                    >
+                      {user?.email || 'usuario@exemplo.com'}
+                    </div>
+                  </li>
 
-                <li>
-                  <button
-                    type="button"
-                    className="dropdown-item d-flex align-items-center gap-2 py-2 small"
-                    onClick={() => {
-                      setIsUserDropdownOpen(false);
-                      navigate('/config?section=profile');
-                    }}
-                  >
-                    <IconUser size={16} /> Meu Perfil
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    className="dropdown-item d-flex align-items-center gap-2 py-2 small"
-                    onClick={() => {
-                      setIsUserDropdownOpen(false);
-                      navigate('/config?section=settings');
-                    }}
-                  >
-                    <IconSettings size={16} /> Configurações
-                  </button>
-                </li>
-                <li>
-                  <hr className="dropdown-divider my-1" />
-                </li>
+                  <li>
+                    <button
+                      type="button"
+                      className="dropdown-item d-flex align-items-center gap-2 py-2 small"
+                      onClick={() => {
+                        setIsUserDropdownOpen(false);
+                        navigate('/config?section=profile');
+                      }}
+                    >
+                      <IconUser size={16} /> Meu Perfil
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      className="dropdown-item d-flex align-items-center gap-2 py-2 small"
+                      onClick={() => {
+                        setIsUserDropdownOpen(false);
+                        navigate('/config?section=settings');
+                      }}
+                    >
+                      <IconSettings size={16} /> Configurações
+                    </button>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider my-1" />
+                  </li>
 
-                <li>
-                  <button
-                    type="button"
-                    className="dropdown-item text-danger d-flex align-items-center gap-2 py-2 small"
-                    onClick={() => {
-                      setIsUserDropdownOpen(false);
-                      const toast = TOAST_MESSAGES.SESSION_ENDED;
-                      showToastNotification(
-                        toast.message,
-                        toast.type,
-                        toast.icon,
-                      );
-                      clearUser();
-                    }}
-                  >
-                    <IconDoorExit size={16} /> Sair
-                  </button>
-                </li>
-              </ul>
-            )}
-          </div>
+                  <li>
+                    <button
+                      type="button"
+                      className="dropdown-item text-danger d-flex align-items-center gap-2 py-2 small"
+                      onClick={() => {
+                        setIsUserDropdownOpen(false);
+                        const toast = TOAST_MESSAGES.SESSION_ENDED;
+                        showToastNotification(
+                          toast.message,
+                          toast.type,
+                          toast.icon,
+                        );
+                        clearUser();
+                      }}
+                    >
+                      <IconDoorExit size={16} /> Sair
+                    </button>
+                  </li>
+                </ul>
+              )}
+            </div>
           ) : (
             <div className="d-flex align-items-center gap-2">
               <button
@@ -409,11 +409,11 @@ export function Navbar({ onToggleMobileSidebar }) {
             }
           }}
         >
-          <div
+          <dialog
             className="login-modal"
-            role="dialog"
             aria-modal="true"
             aria-labelledby="login-modal-title"
+            open
           >
             <button
               type="button"
@@ -429,7 +429,7 @@ export function Navbar({ onToggleMobileSidebar }) {
                 setIsLoginModalOpen(false);
               }}
             />
-          </div>
+          </dialog>
         </div>
       )}
     </nav>

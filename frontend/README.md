@@ -62,10 +62,10 @@ Crie um arquivo `.env` na raiz de `frontend/` se precisar sobrescrever os padrõ
 ```text
 src/
 ├── assets/       # Arquivos estáticos (imagens, fontes, ícones)
-├── components/   # Componentes reutilizáveis entre páginas
+├── components/   # Componentes (um diretório por componente com seu CSS e index.js)
 ├── hooks/        # Custom hooks (lógica reutilizável com estado)
 ├── mocks/        # Dados e adaptador mock para desenvolvimento sem API
-├── pages/        # Uma pasta por rota; cada página é um componente
+├── pages/        # Uma pasta por rota contendo o componente da página e seu CSS
 ├── services/     # Chamadas HTTP organizadas por domínio (facade pattern)
 ├── stores/       # Estado global com Zustand, um arquivo por domínio
 ├── utils/        # Funções utilitárias puras (config, datas)
@@ -87,19 +87,20 @@ Use sempre o alias `@/` no lugar de caminhos relativos. Para importações **ent
 ```js
 // ✅ correto — cross-module via barrel
 import { useNavigationStore } from '@/stores';
-import Navbar from '@/components/Navbar';
+import { Navbar } from '@/components/Navbar';
 
 // ✅ correto — intra-módulo (dentro da mesma pasta)
 import { useToastStore } from './toastStore.js';
 
 // ❌ evitar — cross-module sem barrel
 import { useNavigationStore } from '@/stores/navigationStore.js';
-import Navbar from '@/components/Navbar/Navbar.jsx';
+import { Navbar } from '@/components/Navbar/Navbar.jsx';
 ```
 
 ### Nomenclatura
 
-- Componentes → `PascalCase`, um por arquivo (ex: `NewsCard.jsx`)
+- Componentes e Páginas → `PascalCase`, armazenados em pastas próprias com um `index.js` (ex: `components/NewsCard/NewsCard.jsx`)
+- Exportação de Componentes → Use sempre exportações nomeadas (`export function`), evite `export default`
 - Hooks → prefixo `use` (ex: `useNewsFeed.js`)
 - Stores → sufixo `Store` (ex: `stores/bookmarksStore.js`)
 - Serviços → sufixo `Service` (ex: `services/newsService.js`)

@@ -1,23 +1,41 @@
 import { Component } from 'react';
 
-export default class ErrorBoundary extends Component {
+/**
+ * ErrorBoundary component.
+ * Catches JavaScript errors anywhere in their child component tree,
+ * logs those errors, and displays a fallback UI instead of crashing the whole app.
+ */
+export class ErrorBoundary extends Component {
   constructor(props) {
     super(props);
+    // Initialize state to keep track of caught errors
     this.state = { hasError: false, error: null };
   }
 
+  /**
+   * Update state so the next render will show the fallback UI.
+   * @param {Error} error - The error that was thrown
+   */
   static getDerivedStateFromError(error) {
     return { hasError: true, error };
   }
 
+  /**
+   * Logs the error to an error reporting service or console
+   * @param {Error} error - The error that was thrown
+   * @param {React.ErrorInfo} errorInfo - Component stack trace
+   */
   componentDidCatch(error, errorInfo) {
     console.error(
-      'ErrorBoundary capturou um erro não tratado:',
+      'ErrorBoundary caught an unhandled exception:',
       error,
       errorInfo,
     );
   }
 
+  /**
+   * Reloads the application to try and recover from the error state
+   */
   handleReload = () => {
     window.location.reload();
   };

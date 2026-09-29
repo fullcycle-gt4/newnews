@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import LoginForm from "@/components/LoginForm";
-import "./style.css";
+import "./LoginPage.css";
 
 export default function LoginPage(){
     return (

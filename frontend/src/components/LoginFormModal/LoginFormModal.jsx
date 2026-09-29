@@ -6,7 +6,7 @@ import {
   IconLock,
   IconMail,
 } from '@tabler/icons-react';
-import './style.css';
+import './LoginFormModal.css';
 
 export default function LoginFormModal({ titleId, onRegister }) {
   const [showPassword, setShowPassword] = useState(false);

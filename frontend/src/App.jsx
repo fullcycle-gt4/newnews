@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import ConfigPage from '@/pages/Config';
+import ConfigPage from '@/pages/ConfigPage';
 import ErrorBoundary from "@/components/ErrorBoundary";
-import HomePage from "@/pages/Home";
+import HomePage from "@/pages/HomePage";
 import NewsPage from "@/pages/NewsPage";
 import RegisterPage from "@/pages/RegisterPage";
-import LoginPage from "./components/LoginForm";
+import LoginPage from "@/pages/LoginPage";
 import { useUserStore, useNavigationStore } from "@/stores";
 
 /**

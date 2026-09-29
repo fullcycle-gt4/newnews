@@ -1,5 +1,5 @@
 import { useToastStore } from '@/stores';
-import './Toast.css';
+import './ToastContainer.css';
 
 export default function ToastContainer({
   toastNotifications: propsNotifications,

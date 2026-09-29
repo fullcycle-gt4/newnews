@@ -8,7 +8,7 @@ import {
     IconArrowRight,
     IconArrowLeft,
 } from "@tabler/icons-react";
-import "./style.css";
+import "./RegistrationForm.css";
 
 
 

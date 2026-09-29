@@ -1,7 +1,16 @@
 import { useToastStore } from '@/stores';
-import './Toast.css';
+import './ToastContainer.css';
 
-export default function ToastContainer({
+/**
+ * Global Toast Notification Container.
+ * Renders a stack of temporary toast notifications at the bottom of the screen.
+ * Connects to the global toast store or accepts props directly.
+ *
+ * @param {Object} props
+ * @param {Array} [props.toastNotifications] - Optional array of toast objects to render
+ * @param {Function} [props.onDismissToast] - Optional callback to dismiss a specific toast
+ */
+export function ToastContainer({
   toastNotifications: propsNotifications,
   onDismissToast: propsDismiss,
 }) {
@@ -19,10 +28,9 @@ export default function ToastContainer({
   return (
     <div className="nn-toast-container" aria-live="polite" aria-atomic="true">
       {toastNotifications.map((toast) => (
-        <div
+        <output
           key={toast.id}
           className={`nn-toast nn-toast--${toast.type || 'info'}`}
-          role="status"
         >
           <span className="nn-toast__icon" style={{ fontSize: '1.1rem' }}>
             {toast.icon || (toast.type === 'success' ? '✓' : 'ℹ️')}
@@ -37,7 +45,7 @@ export default function ToastContainer({
             onClick={() => onDismissToast?.(toast.id)}
             aria-label="Fechar notificação"
           />
-        </div>
+        </output>
       ))}
     </div>
   );

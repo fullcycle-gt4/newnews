@@ -1,12 +1,16 @@
-
-import {
-  useNavigationStore,
-  useBookmarksStore,
-  useUserStore,
-} from '@/stores';
+import { useNavigationStore, useBookmarksStore, useUserStore } from '@/stores';
 
 import './Sidebar.css';
 
+/**
+ * Renders a list of navigation items as interactive buttons for the sidebar.
+ *
+ * @param {Object} props
+ * @param {Array} props.items - List of navigation items with id, icon, label, and badge
+ * @param {string} props.activeNavId - ID of the currently selected item
+ * @param {Function} props.onSelectNavItem - Callback when an item is selected
+ * @param {boolean} [props.isOffcanvas=false] - Whether this is rendered inside a mobile offcanvas
+ */
 function SidebarNavItems({
   items,
   activeNavId,
@@ -35,16 +39,13 @@ function SidebarNavItems({
         {item.icon}
       </span>
 
-      <span style={{ fontSize: '0.875rem' }}>
-        {item.label}
-      </span>
+      <span style={{ fontSize: '0.875rem' }}>{item.label}</span>
 
+      {/* Badge counter shown for items like bookmarks */}
       {item.badge > 0 && (
         <span
           className={`badge ms-auto ${
-            activeNavId === item.id
-              ? 'text-bg-light'
-              : 'text-bg-primary'
+            activeNavId === item.id ? 'text-bg-light' : 'text-bg-primary'
           }`}
           style={{ fontSize: '0.7rem' }}
         >
@@ -52,90 +53,61 @@ function SidebarNavItems({
         </span>
       )}
 
-      {!isOffcanvas &&
-        activeNavId === item.id &&
-        !item.badge && (
-          <span className="ms-auto sidebar-indicator rounded-pill bg-white opacity-75" />
-        )}
+      {/* Active indicator dot shown in desktop sidebar when no badge is present */}
+      {!isOffcanvas && activeNavId === item.id && !item.badge && (
+        <span className="ms-auto sidebar-indicator rounded-pill bg-white opacity-75" />
+      )}
     </button>
   ));
 }
 
-export default function Sidebar({
+/**
+ * Desktop Sidebar component.
+ * Displays the main navigation and user-specific links on larger screens.
+ * Falls back to global store values when props are not provided.
+ *
+ * @param {Object} props
+ * @param {Array} [props.navigationItems] - Optional override for nav items
+ * @param {string} [props.activeNavId] - Optional override for active nav item ID
+ * @param {Function} [props.onSelectNavItem] - Optional override for selection handler
+ * @param {number} [props.bookmarkedArticlesCount] - Optional override for bookmark count
+ */
+export function Sidebar({
   navigationItems: propsNavItems,
   activeNavId: propsActiveNavId,
   onSelectNavItem: propsOnSelectNavItem,
   bookmarkedArticlesCount: propsBookmarkedCount,
 }) {
-  // ================================
-  // NAVEGAÇÃO
-  // ================================
-
+  // Global navigation state from store
   const storeNavigationItems = useNavigationStore(
     (state) => state.navigationItems,
   );
-
-  const storeActiveNavId = useNavigationStore(
-    (state) => state.activeNavId,
-  );
-
+  const storeActiveNavId = useNavigationStore((state) => state.activeNavId);
   const storeSetActiveNavId = useNavigationStore(
     (state) => state.setActiveNavId,
   );
 
-  // ================================
-  // FAVORITOS
-  // ================================
-
+  // Bookmark count from store (used for the "Saved" badge)
   const storeBookmarkedCount = useBookmarksStore(
     (state) => state.bookmarkedArticleIds.size,
   );
 
-  // ================================
-  // USUÁRIO LOGADO
-  // ================================
+  // Authenticated user from store (controls bottom section visibility)
+  const user = useUserStore((state) => state.user);
 
-  const user = useUserStore(
-    (state) => state.user,
-  );
-
-  // ================================
-  // VALORES FINAIS
-  // ================================
-
-  const navigationItems =
-    propsNavItems ?? storeNavigationItems ?? [];
-
-  const activeNavId =
-    propsActiveNavId ?? storeActiveNavId ?? 'inicio';
-
-  const onSelectNavItem =
-    propsOnSelectNavItem ?? storeSetActiveNavId;
-
+  // Resolved values: prefer passed props, fall back to store values
+  const navigationItems = propsNavItems ?? storeNavigationItems ?? [];
+  const activeNavId = propsActiveNavId ?? storeActiveNavId ?? 'inicio';
+  const onSelectNavItem = propsOnSelectNavItem ?? storeSetActiveNavId;
   const bookmarkedArticlesCount =
     propsBookmarkedCount ?? storeBookmarkedCount ?? 0;
 
-  // ================================
-  // MENU PRINCIPAL
-  // ================================
-
+  // Filter out user-specific items from the main nav list
   const mainNavItems = navigationItems.filter(
-    (item) =>
-      item.id !== 'salvos' &&
-      item.id !== 'favoritos',
+    (item) => item.id !== 'salvos' && item.id !== 'favoritos',
   );
 
-  // ================================
-  // MENU INFERIOR
-  // ================================
-  //
-  // Se tiver usuário:
-  // mostra "Meus favoritos".
-  //
-  // Se NÃO tiver usuário:
-  // não mostra nada.
-  //
-
+  // Bottom section items shown only when the user is authenticated
   const bottomNavItems = user
     ? [
         {
@@ -171,10 +143,7 @@ export default function Sidebar({
         />
       </nav>
 
-      {/* 
-        Só cria essa parte quando o usuário
-        estiver logado.
-      */}
+      {/* Bottom section rendered only when the user is logged in */}
       {bottomNavItems.length > 0 && (
         <div className="sidebar-bottom-section px-2 mt-auto flex-shrink-0">
           <div className="sidebar-divider mx-2 my-2" />
@@ -190,74 +159,54 @@ export default function Sidebar({
   );
 }
 
+/**
+ * Mobile Offcanvas Sidebar component.
+ * Displays navigation links and user-specific actions on smaller screens
+ * via a slide-out Bootstrap offcanvas drawer.
+ *
+ * @param {Object} props
+ * @param {Array} [props.navigationItems] - Optional override for nav items
+ * @param {string} [props.activeNavId] - Optional override for active nav item ID
+ * @param {Function} [props.onSelectNavItem] - Optional override for selection handler
+ * @param {number} [props.bookmarkedArticlesCount] - Optional override for bookmark count
+ */
 export function SidebarOffcanvas({
   navigationItems: propsNavItems,
   activeNavId: propsActiveNavId,
   onSelectNavItem: propsOnSelectNavItem,
   bookmarkedArticlesCount: propsBookmarkedCount,
 }) {
-  // ================================
-  // NAVEGAÇÃO
-  // ================================
-
+  // Global navigation state from store
   const storeNavigationItems = useNavigationStore(
     (state) => state.navigationItems,
   );
-
-  const storeActiveNavId = useNavigationStore(
-    (state) => state.activeNavId,
-  );
-
+  const storeActiveNavId = useNavigationStore((state) => state.activeNavId);
   const storeSetActiveNavId = useNavigationStore(
     (state) => state.setActiveNavId,
   );
 
-  // ================================
-  // FAVORITOS
-  // ================================
-
+  // Bookmark count from store (used for the "Saved" badge)
   const storeBookmarkedCount = useBookmarksStore(
     (state) => state.bookmarkedArticleIds.size,
   );
 
-  // ================================
-  // USUÁRIO LOGADO
-  // ================================
+  // Authenticated user from store (controls bottom section visibility)
+  const user = useUserStore((state) => state.user);
 
-  const user = useUserStore(
-    (state) => state.user,
-  );
-
-  // ================================
-  // VALORES FINAIS
-  // ================================
-
-  const navigationItems =
-    propsNavItems ?? storeNavigationItems ?? [];
-
-  const activeNavId =
-    propsActiveNavId ?? storeActiveNavId ?? 'inicio';
-
-  const onSelectNavItem =
-    propsOnSelectNavItem ?? storeSetActiveNavId;
-
+  // Resolved values: prefer passed props, fall back to store values
+  const navigationItems = propsNavItems ?? storeNavigationItems ?? [];
+  const activeNavId = propsActiveNavId ?? storeActiveNavId ?? 'inicio';
+  const onSelectNavItem = propsOnSelectNavItem ?? storeSetActiveNavId;
   const bookmarkedArticlesCount =
     propsBookmarkedCount ?? storeBookmarkedCount ?? 0;
 
-  // ================================
-  // MENU PRINCIPAL
-  // ================================
-
+  // Filter out user-specific items from the main nav list
   const mainNavItems = navigationItems.filter(
-    (item) =>
-      item.id !== 'salvos' &&
-      item.id !== 'favoritos',
+    (item) => item.id !== 'salvos' && item.id !== 'favoritos',
   );
 
-  // ================================
-  // MENU INFERIOR
-  // ================================
-
+  // Bottom section items shown only when the user is authenticated
+  // Includes favorites, profile, and settings shortcuts
   const bottomNavItems = user
     ? [
         {
@@ -287,10 +236,7 @@ export function SidebarOffcanvas({
       aria-labelledby="sidebarOffcanvasLabel"
       style={{ width: 240 }}
     >
-      {/* ================================
-          CABEÇALHO
-      ================================= */}
-
+      {/* Brand header with logo and close button */}
       <div
         className="offcanvas-header border-bottom py-2"
         style={{
@@ -305,21 +251,14 @@ export function SidebarOffcanvas({
               height: 28,
             }}
           >
-            <svg
-              width="16"
-              height="16"
-              fill="white"
-              viewBox="0 0 20 20"
-            >
+            <svg width="16" height="16" fill="white" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
                 d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z"
                 clipRule="evenodd"
               />
 
-              <path
-                d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"
-              />
+              <path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z" />
             </svg>
           </div>
 
@@ -331,10 +270,7 @@ export function SidebarOffcanvas({
               letterSpacing: '-0.3px',
             }}
           >
-            NEW{' '}
-            <span className="text-primary">
-              NEWS
-            </span>
+            NEW <span className="text-primary">NEWS</span>
           </span>
         </div>
 
@@ -346,10 +282,7 @@ export function SidebarOffcanvas({
         />
       </div>
 
-      {/* ================================
-          CORPO DO MENU
-      ================================= */}
-
+      {/* Offcanvas body with nav items */}
       <div className="offcanvas-body p-2 d-flex flex-column h-100 overflow-hidden">
         <p
           className="text-uppercase text-secondary fw-semibold px-2 pt-1 pb-1 mb-1"
@@ -370,9 +303,7 @@ export function SidebarOffcanvas({
           />
         </nav>
 
-        {/* 
-          Só aparece se o usuário estiver logado.
-        */}
+        {/* Bottom section rendered only when the user is logged in */}
         {bottomNavItems.length > 0 && (
           <div className="sidebar-bottom-section flex-shrink-0">
             <div className="sidebar-divider mx-2 my-2" />

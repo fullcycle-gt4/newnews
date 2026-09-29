@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { schemaLogin } from '../Validation/';
 import './LoginForm.css';
 import {
   IconMail,
@@ -15,23 +18,24 @@ import {
  * Handles state for email, password, and the "remember me" option.
  *
  * @param {Object} props
- * @param {string} [props.titleId] - Accessibility ID for the heading
- * @param {Function} [props.onRegister] - Callback when the register link is clicked (e.g. to close a modal)
- * @param {boolean} [props.showBackLink=false] - Whether to show the "Back to home" link
+ * @param {string} [props.titleId] Accessibility ID for the heading
+ * @param {Function} [props.onRegister] Callback when the register link is clicked (e.g. to close a modal)
+ * @param {boolean} [props.showBackLink=false] Whether to show the "Back to home" link
  */
 export function LoginForm({ titleId, onRegister, showBackLink = false }) {
   // Form and UI state
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [formData, setFormData] = useState({ email: '', password: '' });
 
-  /**
-   * Updates form data on input change
-   */
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((previous) => ({ ...previous, [name]: value }));
-  };
+  // React Hook Form integration with Zod validation
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({
+    resolver: zodResolver(schemaLogin),
+    mode: 'all', // Valida em tempo real (onBlur + onChange) para garantir estado do botão
+  });
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -40,9 +44,9 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
   /**
    * Handles authentication form submission
    */
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleFormSubmit = (data) => {
     // Authentication logic will be implemented here
+    console.log('Dados do formulário válidos:', { ...data, rememberMe });
   };
 
   return (
@@ -70,7 +74,7 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
           <p>Faça login para continuar</p>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(handleFormSubmit)}>
           {/* Email Input Field */}
           <div className="login-input-group">
             <label className="login-label" htmlFor="login-email">
@@ -82,16 +86,17 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
               <IconMail size={21} />
               <input
                 id="login-email"
-                name="email"
                 type="email"
                 className="login-input"
                 placeholder="seunome@exemplo.com"
-                value={formData.email}
-                onChange={handleChange}
                 autoComplete="email"
-                required
+                {...register('email')}
               />
             </div>
+            {/* Mensagem de erro do e-mail */}
+            {errors.email && (
+              <span className="login-error-message">{errors.email.message}</span>
+            )}
           </div>
 
           {/* Password Input Field with Visibility Toggle */}
@@ -105,14 +110,11 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
               <IconLock className="login-password-icon" size={21} />
               <input
                 id="login-password"
-                name="password"
                 type={showPassword ? 'text' : 'password'}
                 className="login-input"
                 placeholder="Digite sua senha"
-                value={formData.password}
-                onChange={handleChange}
                 autoComplete="current-password"
-                required
+                {...register('senha')}
               />
               <button
                 type="button"
@@ -127,6 +129,10 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
                 )}
               </button>
             </div>
+            {/* Mensagem de erro da senha */}
+            {errors.senha && (
+              <span className="login-error-message">{errors.senha.message}</span>
+            )}
           </div>
 
           {/* Additional Options: Remember Me & Forgot Password */}
@@ -142,8 +148,8 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
             <a href="#forgot-password">Esqueceu a senha?</a>
           </div>
 
-          {/* Login Submit Button */}
-          <button type="submit" className="login-button">
+          {/* Login Submit Button (Desabilitado quando inválido) */}
+          <button type="submit" className="login-button" disabled={!isValid}>
             <span>Entrar</span>
             <IconArrowRight size={23} />
           </button>

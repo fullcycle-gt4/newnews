@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { schemaRegistro } from '../Validation/'; // Schema do Zod
 import {
   IconUser,
   IconMail,
@@ -11,81 +14,35 @@ import {
 import './RegistrationForm.css';
 
 /**
- * Registration form component with built-in client-side validation.
+ * Registration form component with built-in client-side validation using Zod.
  * Handles user input for full name, email, and password, displaying inline errors.
  *
  * @param {Object} props
- * @param {Function} props.onSubmit - Callback triggered when the form is successfully validated and submitted
+ * @param {Function} props.onSubmit triggered when the form is successfully validated and submitted
  */
 export function RegistrationForm({ onSubmit }) {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-  });
-
   // Form state management
   const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
 
-  /**
-   * Updates form data and clears the error for the field being modified
-   */
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-
-    setErrors((prev) => ({
-      ...prev,
-      [name]: '',
-    }));
-  };
-
-  /**
-   * Validates all form fields before submission.
-   * @returns {boolean} True if the form is valid, false otherwise.
-   */
-  const validate = () => {
-    const newErrors = {};
-
-    if (!formData.fullName.trim()) {
-      newErrors.fullName = 'Digite seu nome completo.';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Digite seu e-mail.';
-    }
-
-    if (!formData.password) {
-      newErrors.password = 'Digite uma senha.';
-    } else if (formData.password.length < 8) {
-      newErrors.password = 'A senha deve ter no mínimo 8 caracteres.';
-    }
-
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
-  };
+  // React Hook Form integration with Zod validation
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({
+    resolver: zodResolver(schemaRegistro),
+    mode: 'onChange', // Valida em tempo real para habilitar/desabilitar o botão
+  });
 
   /**
    * Handles the form submission process, including validation and loading state
    */
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!validate()) {
-      return;
-    }
-
+  const handleFormSubmit = async (data) => {
     setSubmitting(true);
 
     try {
-      await onSubmit(formData);
+      await onSubmit(data);
     } finally {
       setSubmitting(false);
     }
@@ -117,7 +74,7 @@ export function RegistrationForm({ onSubmit }) {
           </div>
         </div>
 
-        <form className="registration-form" onSubmit={handleSubmit}>
+        <form className="registration-form" onSubmit={handleSubmit(handleFormSubmit)}>
           <a href="/" className="registration-back-home">
             <IconArrowLeft size={20} />
             <span>Voltar para a home</span>
@@ -141,18 +98,17 @@ export function RegistrationForm({ onSubmit }) {
               <input
                 type="text"
                 id="fullName"
-                name="fullName"
                 placeholder="João Maria da Silva"
-                value={formData.fullName}
-                onChange={handleChange}
+                {...register('nome')}
               />
             </div>
 
-            {errors.fullName && (
-              <span className="error">{errors.fullName}</span>
+            {errors.nome && (
+              <span className="error">{errors.nome.message}</span>
             )}
           </div>
 
+          {/* Email Input Field */}
           <div className="form-group">
             <label htmlFor="email">
               <IconMail size={21} />
@@ -163,16 +119,15 @@ export function RegistrationForm({ onSubmit }) {
               <input
                 type="email"
                 id="email"
-                name="email"
                 placeholder="joaomaria@exemplo.com"
-                value={formData.email}
-                onChange={handleChange}
+                {...register('email')}
               />
             </div>
 
-            {errors.email && <span className="error">{errors.email}</span>}
+            {errors.email && <span className="error">{errors.email.message}</span>}
           </div>
 
+          {/* Password Input Field with Visibility Toggle */}
           <div className="form-group">
             <label htmlFor="password">
               <IconLock size={21} />
@@ -183,10 +138,8 @@ export function RegistrationForm({ onSubmit }) {
               <input
                 type={showPassword ? 'text' : 'password'}
                 id="password"
-                name="password"
                 placeholder="xxxxxxxx"
-                value={formData.password}
-                onChange={handleChange}
+                {...register('senha')}
               />
 
               <button
@@ -202,16 +155,16 @@ export function RegistrationForm({ onSubmit }) {
               </button>
             </div>
 
-            {errors.password && (
-              <span className="error">{errors.password}</span>
+            {errors.senha && (
+              <span className="error">{errors.senha.message}</span>
             )}
           </div>
 
-          {/* Submit Button */}
+          {/* Submit Button (Desabilitado até o formulário ser válido ou durante envio) */}
           <button
             type="submit"
             className="register-button"
-            disabled={submitting}
+            disabled={!isValid || submitting}
           >
             <span>{submitting ? 'Criando...' : 'Criar conta'}</span>
 

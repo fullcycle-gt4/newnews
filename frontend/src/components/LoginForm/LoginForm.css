@@ -393,3 +393,17 @@
     font-size: 12px;
   }
 }
+/* Mensagem de erro em vermelho */
+.login-error-message {
+  color: #dc2626;
+  font-size: 0.85rem;
+  margin-top: 0.35rem;
+  display: block;
+}
+
+/* Estilo do botão quando estiver desabilitado */
+.login-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}

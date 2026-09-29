@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { schemaLogin } from '../Validantion/'; // Schema do Zod
+import { schemaLogin } from '../Validation/';
 import './LoginForm.css';
 import {
   IconMail,
@@ -34,7 +34,7 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
     formState: { errors, isValid },
   } = useForm({
     resolver: zodResolver(schemaLogin),
-    mode: 'onChange', // Valida a cada alteração para ativar/desativar o botão
+    mode: 'all', // Valida em tempo real (onBlur + onChange) para garantir estado do botão
   });
 
   const togglePasswordVisibility = () => {

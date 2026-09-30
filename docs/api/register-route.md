@@ -1,4 +1,4 @@
-### **Parâmetros da rota POST /api/user/register**
+### **Parâmetros da rota POST /api/auth/register**
 
 ---
 
@@ -19,24 +19,32 @@
 **Exemplo de request:**
 
 ```http
-POST /api/user/register HTTP/1.1
+header
+POST /api/auth/register HTTP/1.1
 Content-Type: application/json
 ```
 
-
 ```json
+json
 {
-
   "name": "User test",
-
   "email": "user_test@test.com",
-
   "password": "Test_123456"
-
 }
 
 ```
 
+**Exemplo de chamada com `curl`:**
+
+```bash
+curl -X POST http://localhost:3000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "User test",
+    "email": "user_test@test.com",
+    "password": "Test_123456"
+  }'
+```
 
 
 **Resposta de sucesso:**

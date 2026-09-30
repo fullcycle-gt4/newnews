@@ -425,3 +425,8 @@
     font-size: 12px;
   }
 }
+.register-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}

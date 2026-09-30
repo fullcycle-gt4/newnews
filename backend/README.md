@@ -70,7 +70,7 @@ Este documento descreve as rotas da API que o frontend do New News precisa consu
 
 **Respostas de erro:**
 
-- `500 Internal Server Error`: falha no servidor
+<!-- - `500 Internal Server Error`: falha no servidor -->
 
 
 
@@ -168,7 +168,7 @@ GET /api/news?category=Tecnologia&query=ia&page=1&limit=12
 
 - `400 Bad Request`: parâmetros inválidos
 
-- `500 Internal Server Error`: erro ao consultar notícias
+<!-- - `500 Internal Server Error`: erro ao consultar notícias -->
 
 
 
@@ -232,9 +232,9 @@ GET /api/news?category=Tecnologia&query=ia&page=1&limit=12
 
 **Respostas de erro:**
 
-- `404 Not Found`: sem notícia em destaque
+<!-- - `404 Not Found`: sem notícia em destaque -->
 
-- `500 Internal Server Error`: falha interna
+<!-- - `500 Internal Server Error`: falha interna -->
 
 
 
@@ -314,7 +314,7 @@ GET /api/news/42
 
 - `404 Not Found`: notícia não encontrada
 
-- `500 Internal Server Error`: erro ao buscar notícia
+- `400 Bad Request`: erro ao buscar notícia
 
 
 
@@ -390,9 +390,9 @@ GET /api/news/42/related?limit=3
 
 **Respostas de erro:**
 
-- `404 Not Found`: notícia principal não existe
+<!-- - `404 Not Found`: notícia principal não existe -->
 
-- `500 Internal Server Error`: falha na busca de relacionados
+<!-- - `500 Internal Server Error`: falha na busca de relacionados -->
 
 
 
@@ -474,7 +474,7 @@ GET /api/news/42/related?limit=3
 
 - `409 Conflict`: e-mail já cadastrado
 
-- `500 Internal Server Error`: falha no cadastro
+<!-- - `500 Internal Server Error`: falha no cadastro -->
 
 
 
@@ -530,9 +530,9 @@ GET /api/news/42/related?limit=3
 
 - `401 Unauthorized`: token ausente ou inválido
 
-- `404 Not Found`: usuário não encontrado
+- `404 Not Found`: informações inválidas
 
-- `500 Internal Server Error`: erro interno
+<!-- - `500 Internal Server Error`: erro interno -->
 
 
 
@@ -592,7 +592,7 @@ GET /api/news/42/related?limit=3
 
 - `401 Unauthorized`: usuário não autenticado
 
-- `500 Internal Server Error`: falha na recuperação das notificações
+<!-- - `500 Internal Server Error`: falha na recuperação das notificações -->
 
 
 
@@ -664,7 +664,7 @@ flowchart LR
 
 Se quiser, este documento pode ser transformado posteriormente em um formato compatível com Swagger/OpenAPI, pronto para uso em um arquivo `.yaml` ou `.json`.
 
-## 3. Rotas futuras ou desejadas
+## 3. Rotas obrigatórias
 
 
 

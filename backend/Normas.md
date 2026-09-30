@@ -1,6 +1,4 @@
 
-# Backend — New News
-
 Este documento define as orientações para projetar a API do backend e documentar seus endpoints em Markdown.
 
 ## 1. Mapeamento de Requisitos e Fluxos da Tela

@@ -1,6 +1,6 @@
-### POST /api/user/register
+### **Parâmetros da rota POST /api/user/register**
 
-
+---
 
 **Resumo:** cria uma nova conta de usuário.
 
@@ -18,17 +18,20 @@
 
 **Exemplo de request:**
 
+```http
+POST /api/user/register HTTP/1.1
+Content-Type: application/json
+```
 
 
 ```json
-
 {
 
-  "name": "João Silva",
+  "name": "User test",
 
-  "email": "joao@teste.com",
+  "email": "user_test@test.com",
 
-  "password": "123456"
+  "password": "Test_123456"
 
 }
 
@@ -50,13 +53,19 @@
 
   "data": {
 
-    "id": 2,
+    "user": {
 
-    "name": "João Silva",
+      "id": 2,
 
-    "email": "joao@teste.com",
+      "name": "User Test",
 
-    "avatar": null
+      "email": "user_test@test.com",
+
+      "avatar": null
+
+    },
+
+    "token": "jwt-token"
 
   }
 
@@ -72,10 +81,13 @@
 
 - `409 Conflict`: e-mail já cadastrado
 
-<!-- - `500 Internal Server Error`: falha no cadastro -->
 
 
 
+
+### **Fluxograma da rota `api/auth/register`:**
 ---
+**Resumo:** diagrama de fluxo da rota register
 
+<img src="diagrams/register-route.svg" height="1000">
 

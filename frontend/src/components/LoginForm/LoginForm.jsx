@@ -51,6 +51,7 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
     // Authentication logic will be implemented here
     console.log('Dados do formulário válidos:', { ...data, rememberMe });
     login(MOCK_USER_PROFILE);
+    onRegister?.();
   };
 
   return (

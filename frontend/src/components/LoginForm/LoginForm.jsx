@@ -11,6 +11,8 @@ import {
   IconArrowRight,
   IconArrowLeft,
 } from '@tabler/icons-react';
+import { useUserStore } from '@/stores';
+import { MOCK_USER_PROFILE } from '@/mocks';
 
 /**
  * Reusable Login Form component.
@@ -26,6 +28,7 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
   // Form and UI state
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const login = useUserStore((state) => state.login);
 
   // React Hook Form integration with Zod validation
   const {
@@ -47,6 +50,8 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
   const handleFormSubmit = (data) => {
     // Authentication logic will be implemented here
     console.log('Dados do formulário válidos:', { ...data, rememberMe });
+    login(MOCK_USER_PROFILE);
+    onRegister?.();
   };
 
   return (
@@ -95,7 +100,9 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
             </div>
             {/* Mensagem de erro do e-mail */}
             {errors.email && (
-              <span className="login-error-message">{errors.email.message}</span>
+              <span className="login-error-message">
+                {errors.email.message}
+              </span>
             )}
           </div>
 
@@ -131,7 +138,9 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
             </div>
             {/* Mensagem de erro da senha */}
             {errors.senha && (
-              <span className="login-error-message">{errors.senha.message}</span>
+              <span className="login-error-message">
+                {errors.senha.message}
+              </span>
             )}
           </div>
 
@@ -149,7 +158,12 @@ export function LoginForm({ titleId, onRegister, showBackLink = false }) {
           </div>
 
           {/* Login Submit Button (Desabilitado quando inválido) */}
-          <button type="submit" className="login-button" disabled={!isValid}>
+          <button
+            type="submit"
+            onClick={handleFormSubmit}
+            className="login-button"
+            disabled={!isValid}
+          >
             <span>Entrar</span>
             <IconArrowRight size={23} />
           </button>

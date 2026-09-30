@@ -82,7 +82,7 @@ export function HomePage() {
           {/* Personalized greeting header based on client system time */}
           <header className="mb-4">
             <h1 className="fw-bold mb-1 fs-4">
-              {getTimeBasedGreeting()} {user?.firstName || ''}!
+              {getTimeBasedGreeting()} {user?.name || ''}!
             </h1>
             <p className="text-secondary mb-0 small">
               {formatCurrentDateTime()} • Confira o que está acontecendo hoje

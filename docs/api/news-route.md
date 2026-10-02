@@ -61,7 +61,6 @@ curl "http://localhost:3000/api/news?query=artificial%20intelligence"
 **Respostas de erro:**
 
 - `400 Bad Request`: parâmetros inválidos ou malformados.
-- `500 Internal Server Error`: erro inesperado durante o processamento da requisição.
 
 Uma consulta válida sem resultados retorna `200 OK` com uma lista vazia.
 
@@ -110,7 +109,6 @@ curl "http://localhost:3000/api/news/1"
 
 - `400 Bad Request`: ID inválido ou malformado.
 - `404 Not Found`: notícia inexistente.
-- `500 Internal Server Error`: erro inesperado durante o processamento da requisição.
 
 ---
 
@@ -159,7 +157,6 @@ curl "http://localhost:3000/api/news/1/related"
 
 - `400 Bad Request`: ID inválido ou malformado.
 - `404 Not Found`: artigo de referência inexistente.
-- `500 Internal Server Error`: erro inesperado durante o processamento da requisição.
 
 Se o artigo de referência existir, mas nenhuma notícia relacionada for encontrada, a API retorna `200 OK` com uma lista vazia.
 

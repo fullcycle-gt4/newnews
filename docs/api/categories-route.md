@@ -1,4 +1,4 @@
-### **Parâmetros da rota GET /api/news?category=...**
+### **Parâmetros da rota GET /api/categories=...**
 
 ---
 
@@ -11,14 +11,14 @@
 **Exemplo de request:**
 
 ```http
-GET /api/news?category=tecnologia HTTP/1.1
+GET /api/categories=tecnologia HTTP/1.1
 Content-Type: application/json
 ```
 
 **Exemplo de chamada com `curl`:**
 
 ```bash
-curl -X GET "http://localhost:3000/api/news?category=tecnologia" \
+curl -X GET "http://localhost:3000/api/categories=tecnologia" \
   -H "Content-Type: application/json"
 ```
 

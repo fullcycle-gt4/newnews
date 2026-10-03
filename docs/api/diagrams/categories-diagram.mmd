@@ -1,7 +1,7 @@
 flowchart TD
     Sidebar["Sidebar<br>User clicks 'Technology', 'Sports', etc."] --> Client["Client (Frontend React)"]
     
-    Client -->|GET /api/categories=...| API["NewNews API"]
+    Client -->|GET /api/categories| API["NewNews API"]
     
     API --> Validation{"Request valid and safe?"}
     Validation -->|No| Invalid["400 Bad Request"]

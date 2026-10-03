@@ -57,5 +57,5 @@
 ---
 **Resumo:** diagrama de fluxo da rota Login
 
-<img src="diagrams/Login-Route.svg" height="1000">
+<img src="diagrams/login-route.svg" height="1000">
 

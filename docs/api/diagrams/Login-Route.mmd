@@ -1,0 +1,20 @@
+flowchart TB
+    A["Client"] -- GET /api/user/profile --> B("NewNews API")
+    B --> C{"Valid Bearer Token<br>Present ?"}
+    C -- NO --> D@{ label: "<span style=\"color:\">401 Unauthorized</span>" }
+    C -- Yes --> E@{ label: "<span style=\"color:\">Extract User ID from Token</span>" }
+    D --> n1(["END"])
+    E --> n2@{ label: "<span style=\"color:\">Query Database by User ID</span>" }
+    n2 --> C2@{ label: "<span style=\"color:\">User found in Database?</span>" }
+    C2 -- NO --> n3@{ label: "<span style=\"color:\">Return 404 Not Found</span>" }
+    C2 -- YES --> n4@{ label: "<span style=\"color:\">Return 200 OK</span>" }
+    n3 --> n5(["END"])
+    n4 --> n6(["END"])
+
+    D@{ shape: rect}
+    E@{ shape: rect}
+    n2@{ shape: rect}
+    C2@{ shape: diamond}
+    n3@{ shape: rect}
+    n4@{ shape: rect}
+    style n3 color:transparent

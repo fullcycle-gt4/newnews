@@ -53,7 +53,7 @@ curl -X GET "http://localhost:3000/api/categories" \
 
 **Respostas de erro:**
 
-- `500 Internal Server Error`: falha ao buscar os dados no servidor ou banco de dados.
+- `400 Bad Request`: parâmetro de categoria inválido ou malformado
 
 *(Nota: Se não houver categorias cadastradas, a rota retorna `200 OK` com uma lista vazia)*
 

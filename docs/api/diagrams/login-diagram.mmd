@@ -1,0 +1,34 @@
+flowchart TD
+    Client["Client"] -->|POST /api/auth/login| API["NewNews API"]
+    API --> Validate{"Valid request?"}
+
+    Validate -->|No| ValidationError["400 Bad Request"]
+    Validate -->|Yes| Search["Search user by email"]
+    
+    Search --> DB[("User database")]
+    DB --> Exists{"User exists?"}
+
+    Exists -->|No| NotFound["404 Not Found (or 401)"]
+    Exists -->|Yes| Compare["Compare password hash"]
+    
+    Compare --> Match{"Password match?"}
+    
+    Match -->|No| IncorrectInfo["401 Incorrect Information"]
+    Match -->|Yes| Token["Generate JWT access token"]
+    
+    Token --> Success["200 OK: user + JWT"]
+
+    classDef client fill:#eef2ff,stroke:#818cf8;
+    classDef process fill:#f0fdfa,stroke:#2dd4bf;
+    classDef decision fill:#f5f3ff,stroke:#a78bfa;
+    classDef data fill:#ecfeff,stroke:#22d3ee;
+    classDef success fill:#f0fdf4,stroke:#4ade80;
+    classDef error fill:#fef2f2,stroke:#f87171;
+
+    class Client client;
+    class API,Search,Compare,Token process;
+    class Validate,Exists,Match decision;
+    class DB data;
+    class Success success;
+    class ValidationError,NotFound,IncorrectInfo error;
+    

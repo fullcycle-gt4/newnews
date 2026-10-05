@@ -1,0 +1,41 @@
+flowchart TD
+    Sidebar["Sidebar<br>User clicks 'Technology', 'Sports', etc."] --> Client["Client (Frontend React)"]
+    
+    Client -->|GET /api/categories| API["NewNews API"]
+    
+    API --> Validation{"Request valid and safe?"}
+    Validation -->|No| Invalid["400 Bad Request"]
+
+    Validation -->|Yes| CategoryRoute["Process Category Filter"]
+    
+    CategoryRoute --> Cache[("Cache layer")]
+    Cache --> CategoryCache{"Category cache hit?"}
+
+    CategoryCache -->|No| NewsDB[("News database")]
+    NewsDB --> CacheUpdate["Store query results in cache"]
+    CacheUpdate --> CategoryCheck{"Any results found?"}
+    
+    CategoryCache -->|Yes| CategoryCheck
+    
+    CategoryCheck -->|Yes| Personalization["Personalization + Re-ranking"]
+    Personalization --> ListSuccess["200 OK: Filtered news feed"]
+    
+    CategoryCheck -->|No| CategoryEmpty["200 OK: Empty category results"]
+
+    classDef ui fill:#f8fafc,stroke:#cbd5e1;
+    classDef client fill:#eef2ff,stroke:#818cf8;
+    classDef process fill:#f0fdfa,stroke:#2dd4bf;
+    classDef decision fill:#f5f3ff,stroke:#a78bfa;
+    classDef data fill:#ecfeff,stroke:#22d3ee;
+    classDef success fill:#f0fdf4,stroke:#4ade80;
+    classDef error fill:#fef2f2,stroke:#f87171;
+    classDef empty fill:#fffbeb,stroke:#fbbf24;
+
+    class Sidebar ui;
+    class Client client;
+    class API,CategoryRoute,CacheUpdate,Personalization process;
+    class Validation,CategoryCache,CategoryCheck decision;
+    class Cache,NewsDB data;
+    class ListSuccess success;
+    class Invalid error;
+    class CategoryEmpty empty;

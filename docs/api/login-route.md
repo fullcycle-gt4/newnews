@@ -11,47 +11,47 @@
 
 **Exemplo de request:**
 
-    ```http
-    POST /api/auth/login HTTP/1.1
-    Content-Type: application/json
-    ```
+```http
+POST /api/auth/login HTTP/1.1
+Content-Type: application/json
+```
 
-    ```json
-    {
-      "email": "user_test@test.com",
-      "password": "Test_123456"
-    }
-    ```
+```json
+{
+    "email": "user_test@test.com",
+    "password": "Test_123456"
+}
+```
 
 **Exemplo de chamada com `curl`:**
 
-    ```bash
+```bash
     curl -X POST http://localhost:3000/api/auth/login \
-      -H "Content-Type: application/json" \
-      -d '{
-        "email": "user_test@test.com",
-        "password": "Test_123456"
-      }'
-    ```
+    -H "Content-Type: application/json" \
+    -d '{
+    "email": "user_test@test.com",
+    "password": "Test_123456"
+    }'
+```
 
 **Resposta de sucesso:**
 
 - Código: `200 OK`
 
-    ```json
-    {
-      "success": true,
-      "data": {
-        "user": {
-          "id": 2,
-          "name": "User Test",
-          "email": "user_test@test.com",
-          "avatar": null
-        },
-        "token": "jwt-token"
-      }
+```json
+{
+    "success": true,
+    "data": {
+    "user": {
+    "id": 2,
+    "name": "User Test",
+    "email": "user_test@test.com",
+    "avatar": null
+},
+    "token": "jwt-token"
     }
-    ```
+}
+```
 
 **Respostas de erro:**
 
@@ -64,4 +64,4 @@
 
 **Resumo:** diagrama de fluxo da rota login.
 
-<img src="diagrams/login-route.svg" height="1000">
+<img src="diagrams/login-diagram.svg" height="1000">

@@ -55,7 +55,7 @@
 
 ### **Fluxograma da rota `/api/user/profile`:**
 ---
-**Resumo:** diagrama de fluxo da rota Login
+**Resumo:** diagrama de fluxo da rota Profile
 
 <img src="diagrams/profile-Route.svg" height="1000">
 

@@ -168,4 +168,4 @@ Se o artigo de referência existir, mas nenhuma notícia relacionada for encontr
 
 **Resumo:** diagrama de fluxo das rotas de notícias, incluindo validação inicial da requisição, consulta ao cache, acesso ao banco de dados em caso de ausência no cache, verificação dos resultados, personalização e reordenação do feed, tratamento de erros e registro de interações para atualizar as preferências do usuário.
 
-<img src="diagrams/news-route.svg" height="1000"> 
+<img src="diagrams/news-diagram.svg" height="1000"> 

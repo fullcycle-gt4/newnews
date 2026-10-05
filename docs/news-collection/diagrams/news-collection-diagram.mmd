@@ -1,0 +1,14 @@
+flowchart TD
+    A[News API] --> B[News Queue]
+
+    subgraph PROCESSING[News Processing]
+        C[Normalizer]
+        D[Validator]
+        E[Deduplicator]
+
+        C --> D
+        D --> E
+    end
+
+    B --> C
+    E --> F[(News Database)]

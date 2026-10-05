@@ -98,4 +98,3 @@ curl -X POST http://localhost:3000/api/auth/register \
 **Resumo:** diagrama de fluxo da rota register
 
 <img src="diagrams/register-route.svg" height="1000">
-

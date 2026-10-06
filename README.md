@@ -30,6 +30,7 @@ docker compose up --build
 | Serviço  | URL                   |
 | -------- | --------------------- |
 | Frontend | http://localhost:8080 |
+| Backend  | http://localhost:3000 |
 
 ---
 

@@ -57,5 +57,5 @@
 ---
 **Resumo:** diagrama de fluxo da rota Profile
 
-<img src="diagrams/profile-Route.svg" height="1000">
+<img src="diagrams/profile-diagram.svg" height="1000">
 

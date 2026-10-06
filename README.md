@@ -43,5 +43,7 @@ Para trabalhar em um módulo isoladamente, **abra a pasta do módulo diretamente
 | Frontend | `frontend/`    | `frontend/README.md`     |
 | Backend  | `backend/`     | `backend/README.md`      |
 
-## Pagina do docs:
-|https://docs.google.com/document/d/1-0K-qaXTFu43OHJtoilZSyhXMLw4D0_nlzMqYHbiTyc/edit?tab=t.0#heading=h.3p5oamrtqr5v|
+## 📝 Documentação do Projeto
+
+Acesse as diretrizes e informações detalhadas na [Página de Documentação do Google Docs](https://docs.google.com/document/d/1Od0Jk2iCSWuPcndsC8CK17pVPt1Q0ZtWUYIziVNl43c/edit?usp=drivesdk).
+

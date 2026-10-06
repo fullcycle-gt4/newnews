@@ -35,6 +35,18 @@ O banco SQLite será criado em `backend/dev.db`.
 
 ## Executando a API
 
+### Docker Compose
+
+A partir da raiz do repositório, inicie o backend com os demais serviços:
+
+```bash
+docker compose up --build backend
+```
+
+A pasta `backend/` é montada no container em `/app`, e `node_modules` permanece
+em um volume anônimo para não ser sobrescrito pelo bind mount. A API ficará
+disponível em `http://localhost:3000`.
+
 ### Desenvolvimento
 
 ```bash

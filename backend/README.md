@@ -1,14 +1,10 @@
-# NewNews API
+# Backend — New News
 
-API backend do NewNews construída com Node.js, Express, TypeScript, Prisma,
-SQLite e Zod.
+API backend do New News, construída com **Node.js + Express + TypeScript + Prisma + SQLite + Zod**.
 
-## Requisitos
+---
 
-- Node.js 20 ou superior
-- npm
-
-## Instalação
+## 🚀 Primeiros Passos
 
 Na pasta `backend/`, instale as dependências:
 
@@ -16,20 +12,14 @@ Na pasta `backend/`, instale as dependências:
 npm install
 ```
 
-Para executar os comandos `npm` diretamente no terminal, fora do Dockerfile e do
-Docker Compose, crie o arquivo `.env` na pasta `backend/` com base no
-`.env.example`. Esse arquivo fornece as variáveis de ambiente usadas pelo
-Prisma e pela aplicação:
+Crie o arquivo `.env` com base no `.env.example`:
 
 ```env
 DATABASE_URL="file:./dev.db"
 PORT=3000
 ```
 
-Sem o `.env`, comandos como `npm run db:migrate`, `npm run db:seed` e
-`npm run dev` não terão acesso à configuração do banco de dados.
-
-Gere o Prisma Client e aplique as migrations:
+Gere o Prisma Client, aplique as migrations e execute o seed:
 
 ```bash
 npm run db:generate
@@ -37,62 +27,74 @@ npm run db:migrate
 npm run db:seed
 ```
 
-O banco SQLite será criado em `backend/dev.db`.
-
-## Executando a API
-
-### Docker Compose
-
-A partir da raiz do repositório, inicie o backend com os demais serviços:
-
-```bash
-docker compose up --build backend
-```
-
-A pasta `backend/` é montada no container em `/app`, e `node_modules` permanece
-em um volume anônimo para não ser sobrescrito pelo bind mount. A API ficará
-disponível em `http://localhost:3000`.
-
-### Desenvolvimento
+Inicie o servidor:
 
 ```bash
 npm run dev
 ```
 
-A API ficará disponível em:
+A API estará disponível em:
 
 ```text
 http://localhost:3000
 ```
 
-### Produção
+> **Banco de dados:** o SQLite será criado em `dev.db`.
 
-Compile o projeto e execute o JavaScript gerado:
+---
 
-```bash
-npm run build
-npm start
-```
+## 🧰 Scripts
 
-## Rotas
+| Script                | O que faz                                   |
+| --------------------- | ------------------------------------------- |
+| `npm run dev`         | Inicia o servidor de desenvolvimento        |
+| `npm run build`       | Compila o projeto para produção             |
+| `npm start`           | Executa o projeto compilado                 |
+| `npm run db:generate` | Gera o Prisma Client                        |
+| `npm run db:migrate`  | Cria e aplica migrations                    |
+| `npm run db:seed`     | Popula o banco com dados de desenvolvimento |
+| `npm run db:studio`   | Abre o Prisma Studio                        |
 
-Todas as rotas da API usam o prefixo `/api`.
+---
 
-### Health check
+## 🛠️ Stack
 
-Verifica se a API está ativa.
+| Responsabilidade | Tecnologia  |
+| ---------------- | ----------- |
+| Runtime          | Node.js 20+ |
+| Framework HTTP   | Express     |
+| Linguagem        | TypeScript  |
+| ORM              | Prisma      |
+| Banco de dados   | SQLite      |
+| Validação        | Zod         |
+| Containerização  | Docker      |
+
+---
+
+## ⚙️ Variáveis de Ambiente
+
+| Variável       | Exemplo         | Descrição                         |
+| -------------- | --------------- | --------------------------------- |
+| `DATABASE_URL` | `file:./dev.db` | URL de conexão com o banco SQLite |
+| `PORT`         | `3000`          | Porta utilizada pela API          |
+
+> O arquivo `.env` é necessário para executar comandos locais que dependem dessas variáveis, como `db:migrate`, `db:seed` e `dev`.
+
+---
+
+## 🔌 API
+
+Todas as rotas utilizam o prefixo `/api`.
+
+### Health Check
 
 ```http
 GET /api/health
 ```
 
-Exemplo:
+Verifica se a API está ativa.
 
-```bash
-curl http://localhost:3000/api/health
-```
-
-Resposta:
+**Resposta `200 OK`:**
 
 ```json
 {
@@ -102,52 +104,21 @@ Resposta:
 }
 ```
 
-### Listar usuários
+### Usuários
 
-Retorna todos os usuários cadastrados, ordenados do mais recente para o mais
-antigo.
+| Método | Rota         | Descrição         |
+| ------ | ------------ | ----------------- |
+| `GET`  | `/api/users` | Lista os usuários |
+| `POST` | `/api/users` | Cria um usuário   |
 
-```http
-GET /api/users
-```
+#### `POST /api/users`
 
-Exemplo:
+**Body:**
 
-```bash
-curl http://localhost:3000/api/users
-```
-
-Resposta:
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "email": "user@example.com",
-      "name": "User",
-      "createdAt": "2026-10-06T13:00:00.000Z",
-      "updatedAt": "2026-10-06T13:00:00.000Z"
-    }
-  ]
-}
-```
-
-### Criar usuário
-
-Cria um novo usuário.
-
-```http
-POST /api/users
-Content-Type: application/json
-```
-
-Corpo obrigatório:
-
-| Campo | Tipo | Regras |
-| --- | --- | --- |
-| `email` | `string` | Deve ser um e-mail válido e único |
-| `name` | `string` | Entre 1 e 120 caracteres |
+| Campo   | Tipo     | Regras                |
+| ------- | -------- | --------------------- |
+| `email` | `string` | E-mail válido e único |
+| `name`  | `string` | 1–120 caracteres      |
 
 Exemplo:
 
@@ -157,41 +128,24 @@ curl -X POST http://localhost:3000/api/users \
   -d '{"email":"user@example.com","name":"User"}'
 ```
 
-Resposta de sucesso (`201 Created`):
+---
 
-```json
-{
-  "data": {
-    "id": 1,
-    "email": "user@example.com",
-    "name": "User",
-    "createdAt": "2026-10-06T13:00:00.000Z",
-    "updatedAt": "2026-10-06T13:00:00.000Z"
-  }
-}
-```
+## ⚠️ Respostas de Erro
 
-Resposta para dados inválidos (`400 Bad Request`):
+### `400 Bad Request`
+
+Dados enviados na requisição são inválidos.
 
 ```json
 {
   "error": "Invalid request body",
-  "issues": [
-    {
-      "code": "invalid_format",
-      "format": "email",
-      "path": ["email"],
-      "message": "Invalid email address"
-    }
-  ]
+  "issues": []
 }
 ```
 
-## Respostas de erro
+### `404 Not Found`
 
-### Rota inexistente
-
-Qualquer rota não implementada retorna `404 Not Found`:
+A rota ou recurso solicitado não existe.
 
 ```json
 {
@@ -199,9 +153,9 @@ Qualquer rota não implementada retorna `404 Not Found`:
 }
 ```
 
-### Erro interno
+### `500 Internal Server Error`
 
-Falhas não esperadas retornam `500 Internal Server Error`:
+Ocorreu um erro interno inesperado.
 
 ```json
 {
@@ -209,46 +163,77 @@ Falhas não esperadas retornam `500 Internal Server Error`:
 }
 ```
 
-## Banco de dados
+---
 
-O schema Prisma está em [`prisma/schema.prisma`](./prisma/schema.prisma).
+## 🗄️ Banco de Dados
 
-Comandos úteis:
+O schema do Prisma está em:
 
-```bash
-# Gerar ou atualizar o Prisma Client
-npm run db:generate
-
-# Criar e aplicar uma migration
-npm run db:migrate -- --name nome_da_migration
-
-# Abrir o Prisma Studio
-npm run db:studio
-
-# Popular ou atualizar os usuários de desenvolvimento
-npm run db:seed
+```text
+prisma/schema.prisma
 ```
 
-## Estrutura do projeto
+Criar uma nova migration:
+
+```bash
+npm run db:migrate -- --name nome_da_migration
+```
+
+Abrir o Prisma Studio:
+
+```bash
+npm run db:studio
+```
+
+---
+
+## 📂 Estrutura de Pastas
 
 ```text
 backend/
 ├── prisma/
-│   ├── migrations/
-│   ├── schema.prisma
-│   └── seed.ts
+│   ├── migrations/     # Migrations do banco
+│   ├── schema.prisma  # Schema do Prisma
+│   └── seed.ts        # Dados iniciais
+│
 ├── src/
-│   ├── config/
-│   │   └── env.ts
-│   ├── lib/
-│   │   └── prisma.ts
-│   ├── routes/
-│   │   ├── health.ts
-│   │   └── users.ts
-│   ├── app.ts
-│   └── server.ts
+│   ├── config/         # Configurações da aplicação
+│   ├── lib/            # Dependências compartilhadas
+│   ├── routes/         # Rotas da API
+│   ├── app.ts          # Configuração do Express
+│   └── server.ts       # Inicialização do servidor
+│
 ├── .env.example
 ├── package.json
 ├── prisma.config.ts
 └── tsconfig.json
 ```
+
+---
+
+## 📐 Convenções
+
+### Organização
+
+* **`routes/`** → define os endpoints e recebe as requisições HTTP.
+* **`config/`** → concentra configurações e variáveis de ambiente.
+* **`lib/`** → concentra instâncias e dependências compartilhadas.
+* **`prisma/`** → contém schema, migrations e seed do banco.
+* **`app.ts`** → configura a aplicação Express.
+* **`server.ts`** → inicializa o servidor HTTP.
+
+### Nomenclatura
+
+* Arquivos → `camelCase` quando representarem módulos simples.
+* Rotas → nomes no plural para recursos (`users`, `news`).
+* Variáveis e funções → `camelCase`.
+* Tipos e interfaces → `PascalCase`.
+* Constantes → `UPPER_SNAKE_CASE` quando forem constantes globais.
+
+### Validação
+
+A validação de entradas deve ser feita com **Zod** antes que os dados sejam processados pela aplicação ou enviados ao banco.
+
+### Banco de dados
+
+Alterações no schema devem ser realizadas através de **migrations do Prisma**, evitando alterações manuais no banco de desenvolvimento.

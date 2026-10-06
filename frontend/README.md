@@ -40,6 +40,7 @@ npm run dev   # inicia o servidor em http://localhost:5173
 | Ícones           | Tabler Icons React |
 | Linter           | Oxlint             |
 | Formatador       | Prettier           |
+| Containerização  | Docker             |
 
 ---
 

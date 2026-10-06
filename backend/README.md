@@ -16,12 +16,18 @@ Na pasta `backend/`, instale as dependências:
 npm install
 ```
 
-Crie o arquivo `.env` com base no `.env.example`:
+Para executar os comandos `npm` diretamente no terminal, fora do Dockerfile e do
+Docker Compose, crie o arquivo `.env` na pasta `backend/` com base no
+`.env.example`. Esse arquivo fornece as variáveis de ambiente usadas pelo
+Prisma e pela aplicação:
 
 ```env
 DATABASE_URL="file:./dev.db"
 PORT=3000
 ```
+
+Sem o `.env`, comandos como `npm run db:migrate`, `npm run db:seed` e
+`npm run dev` não terão acesso à configuração do banco de dados.
 
 Gere o Prisma Client e aplique as migrations:
 

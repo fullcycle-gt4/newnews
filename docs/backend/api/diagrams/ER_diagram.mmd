@@ -1,0 +1,74 @@
+erDiagram
+    %% CATEGORY ||--o{ NEWS : "classifies"
+    %% USER ||--o{ NOTIFICATION : "receives"
+    %% NEWS ||--o{ NOTIFICATION : "triggers"
+    %% USER ||--o{ BOOKMARK : "saves"
+    %% NEWS ||--o{ BOOKMARK : "is saved"
+    %% USER ||--o{ READ_ARTICLE : "reads"
+    %% NEWS ||--o{ READ_ARTICLE : "is read"
+    %% USER ||--|| USER_PREFERENCE : "has"
+    %% USER ||--o{ USER_CATEGORY : "follows"
+    %% CATEGORY ||--o{ USER_CATEGORY : "is followed"
+
+    CATEGORY {
+        uuid id PK
+        varchar_80 label
+        varchar_16 icon
+    }
+
+    NEWS {
+        uuid id PK
+        uuid category_id FK
+        varchar_20 badgeBg
+        varchar_255 title
+        text summary
+        text content
+        varchar_2048 image_url
+        datetime publishedAt
+        varchar_120 author
+        varchar_120 source
+        boolean isHero
+    }
+
+    USER {
+        uuid id PK
+        varchar_120 name
+        varchar_254 email UK
+        varchar_2048 avatar_url
+    }
+
+    USER_PREFERENCE {
+        uuid user_id PK, FK
+        boolean email_notifications
+        boolean breaking_news
+        boolean compact_view
+        boolean show_read_articles
+        varchar_10 theme
+        datetime updated_at
+    }
+
+    USER_CATEGORY {
+        uuid user_id PK, FK
+        uuid category_id PK, FK
+        datetime created_at
+    }
+
+    NOTIFICATION {
+        uuid id PK
+        uuid user_id FK
+        uuid news_id FK
+        datetime created_at
+        datetime read_at
+    }
+
+    BOOKMARK {
+        uuid user_id PK, FK
+        uuid news_id PK, FK
+        datetime created_at
+    }
+
+    READ_ARTICLE {
+        uuid user_id PK, FK
+        uuid news_id PK, FK
+        datetime read_at
+    }

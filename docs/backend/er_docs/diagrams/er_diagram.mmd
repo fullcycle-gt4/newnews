@@ -1,14 +1,14 @@
 erDiagram
-    %% CATEGORY ||--o{ NEWS : "classifies"
-    %% USER ||--o{ NOTIFICATION : "receives"
-    %% NEWS ||--o{ NOTIFICATION : "triggers"
-    %% USER ||--o{ BOOKMARK : "saves"
-    %% NEWS ||--o{ BOOKMARK : "is saved"
-    %% USER ||--o{ READ_ARTICLE : "reads"
-    %% NEWS ||--o{ READ_ARTICLE : "is read"
-    %% USER ||--|| USER_PREFERENCE : "has"
-    %% USER ||--o{ USER_CATEGORY : "follows"
-    %% CATEGORY ||--o{ USER_CATEGORY : "is followed"
+    CATEGORY ||--o{ NEWS : "classifies"
+    USER ||--o{ NOTIFICATION : "receives"
+    NEWS ||--o{ NOTIFICATION : "triggers"
+    USER ||--o{ BOOKMARK : "saves"
+    NEWS ||--o{ BOOKMARK : "is saved"
+    USER ||--o{ READ_ARTICLE : "reads"
+    NEWS ||--o{ READ_ARTICLE : "is read"
+    USER ||--|| USER_PREFERENCE : "has"
+    USER ||--o{ USER_CATEGORY : "follows"
+    CATEGORY ||--o{ USER_CATEGORY : "is followed"
 
     CATEGORY {
         uuid id PK

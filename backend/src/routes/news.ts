@@ -3,4 +3,4 @@ import { newsController } from "../controllers/newsController.js";
 
 export const newsRouter = Router();
 
-newsRouter.get("/:slug/:id", newsController.getNewsById);
+newsRouter.get("/:id", newsController.getNewsById);

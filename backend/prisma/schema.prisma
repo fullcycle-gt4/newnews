@@ -16,16 +16,16 @@ model User {
 }
 
 model News {
-	id          String   @id @default(uuid())
-	category_id String
-	badgeBg     String
-	title       String
-	summary     String
-	content     String
-	image_url   String
-	publishedAt DateTime
-	author      String
-	source      String
+	id           String   @id @default(uuid())
+	category_id  String
+	badge_bg     String
+	title        String
+	summary      String
+	content      String
+	image_url    String
+	published_at DateTime
+	author       String
+	source       String
 
 	// Uncomment when Category model/table is created:
 	// category    Category @relation(fields: [category_id], references: [id])

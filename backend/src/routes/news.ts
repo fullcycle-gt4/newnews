@@ -10,7 +10,7 @@ export class NewsRouter {
   }
 
   private initRoutes(): void {
-    this.router.get('/search', (req, res, next) => this.newsController.searchNews(req, res, next));
+    this.router.get('/', (req, res, next) => this.newsController.searchNews(req, res, next));
     this.router.get('/:id', (req, res, next) => this.newsController.getNewsById(req, res, next));
     this.router.get('/:id/related', (req, res, next) => this.newsController.getRelatedNews(req, res, next));
   }

@@ -1,10 +1,17 @@
 import { Router } from 'express';
-import { newsController } from '../controllers/newsController.js';
+import { NewsController } from '../controllers/newsController.js';
 
-export const newsRouter = Router();
+export class NewsRouter {
+  public router: Router;
 
-newsRouter.get('/', newsController.searchNews);
+  constructor(private readonly newsController: NewsController) {
+    this.router = Router();
+    this.initRoutes();
+  }
 
-newsRouter.get('/:id', newsController.getNewsById);
-
-newsRouter.get('/:id/related', newsController.getRelatedNews);
+  private initRoutes(): void {
+    this.router.get('/search', (req, res, next) => this.newsController.searchNews(req, res, next));
+    this.router.get('/:id', (req, res, next) => this.newsController.getNewsById(req, res, next));
+    this.router.get('/:id/related', (req, res, next) => this.newsController.getRelatedNews(req, res, next));
+  }
+}

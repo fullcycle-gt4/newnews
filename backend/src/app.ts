@@ -7,12 +7,17 @@ import express, {
 } from 'express';
 import type { Server } from 'http';
 import { ZodError } from 'zod';
-import indexRouter from './routes/index.js';
+
+import { indexRouter } from './routes/index.js';
 import { healthRouter } from './routes/health.js';
-import { usersRouter } from './routes/users.js';
+import { UsersRouter } from './routes/users.js';
 import { newsRouter } from './routes/news.js';
+
+import { UserController } from './controllers/userController.js';
+
 import { PrismaService } from './lib/prisma.js';
 import { RedisService } from './lib/redis.js';
+
 import { NewsIngestionPipeline } from './services/newsIngestion/NewsIngestionPipeline.js';
 
 const INGESTION_INTERVAL_MS = 60 * 60 * 1000; // 1 hora
@@ -28,6 +33,7 @@ export class App {
     ) {
         this.instance = express();
         this.pipeline = new NewsIngestionPipeline(prisma, cache);
+
         this.setupMiddlewares();
         this.setupRoutes();
         this.setupErrorHandling();
@@ -39,8 +45,11 @@ export class App {
     }
 
     private setupRoutes(): void {
+        const userController = new UserController(this.prisma);
+        const usersRouter = new UsersRouter(userController);
+
         this.instance.use('/', indexRouter);
-        this.instance.use('/api/users', usersRouter);
+        this.instance.use('/api/users', usersRouter.router);
         this.instance.use('/api/health', healthRouter);
         this.instance.use('/api/news', newsRouter);
     }

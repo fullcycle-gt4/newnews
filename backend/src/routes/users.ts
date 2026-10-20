@@ -1,8 +1,17 @@
+
 import { Router } from 'express';
-import { userController } from '../controllers/userController.js';
+import { UserController } from '../controllers/userController.js';
 
-export const usersRouter = Router();
+export class UsersRouter {
+    public readonly router: Router;
 
-usersRouter.get('/', userController.getUsers);
+    constructor(private readonly userController: UserController) {
+        this.router = Router();
+        this.setupRoutes();
+    }
 
-usersRouter.post('/', userController.createUser);
+    private setupRoutes(): void {
+        this.router.get('/', (req, res, next) => this.userController.getUsers(req, res, next));
+        this.router.post('/', (req, res, next) => this.userController.createUser(req, res, next));
+    }
+}

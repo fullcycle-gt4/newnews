@@ -7,8 +7,8 @@ import express, {
 } from 'express';
 import type { Server } from 'http';
 import { ZodError } from 'zod';
-import { IndexRouter } from './routes/index.js';
-import { HealthRouter } from './routes/health.js';
+import { IndexRouter } from './routes/IndexRouter.js';
+import { HealthRouter } from './routes/HealthRouter.js';
 import { usersRouter } from './routes/users.js';
 import { newsRouter } from './routes/news.js';
 import { PrismaService } from './lib/prisma.js';

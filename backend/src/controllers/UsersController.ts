@@ -1,20 +1,23 @@
 import { NextFunction, Request, Response } from 'express';
 import { z } from 'zod';
-import { prisma } from '../container.js';
+import { Prisma } from '../../generated/prisma/client.js';
+import { PrismaService } from '../lib/prisma.js';
 
 const createUserSchema = z.object({
     email: z.string().trim().email(),
     name: z.string().trim().min(1).max(120),
 });
 
-export class UserController {
+export class UsersController {
+    constructor(private readonly prisma: PrismaService) {}
+
     async getUsers(
         _request: Request,
         response: Response,
         next: NextFunction
     ): Promise<void> {
         try {
-            const users = await prisma.user.findMany({
+            const users = await this.prisma.user.findMany({
                 orderBy: { createdAt: 'desc' },
             });
 
@@ -40,12 +43,16 @@ export class UserController {
         }
 
         try {
-            const user = await prisma.user.create({
+            const user = await this.prisma.user.create({
                 data: result.data,
             });
 
             response.status(201).json({ data: user });
         } catch (error) {
+            if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+                response.status(409).json({ error: 'Email já cadastrado' });
+                return;
+            }
             next(error);
         }
     }

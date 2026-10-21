@@ -8,12 +8,12 @@ import express, {
 import type { Server } from 'http';
 import { ZodError } from 'zod';
 
-import { indexRouter } from './routes/index.js';
+import indexRouter from './routes/index.js';
 import { healthRouter } from './routes/health.js';
-import { UsersRouter } from './routes/users.js';
+import { UsersRouter } from './routes/UsersRouter.js';
 import { newsRouter } from './routes/news.js';
 
-import { UserController } from './controllers/userController.js';
+import { UsersController } from './controllers/UsersController.js';
 
 import { PrismaService } from './lib/prisma.js';
 import { RedisService } from './lib/redis.js';
@@ -45,8 +45,8 @@ export class App {
     }
 
     private setupRoutes(): void {
-        const userController = new UserController(this.prisma);
-        const usersRouter = new UsersRouter(userController);
+        const usersController = new UsersController(this.prisma);
+        const usersRouter = new UsersRouter(usersController);
 
         this.instance.use('/', indexRouter);
         this.instance.use('/api/users', usersRouter.router);

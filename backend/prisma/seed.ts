@@ -14,13 +14,6 @@ const adapter = new PrismaBetterSqlite3({
 });
 const prisma = new PrismaClient({ adapter });
 
-const users = [
-    {
-        email: 'test@newnews.com',
-        name: 'Test News',
-    },
-];
-
 const categories = [
     {
         name: 'general',
@@ -105,14 +98,6 @@ const categories = [
 ];
 
 try {
-    for (const user of users) {
-        await prisma.user.upsert({
-            where: { email: user.email },
-            update: { name: user.name },
-            create: user,
-        });
-    }
-
     for (const category of categories) {
         await prisma.category.upsert({
             where: { name: category.name },
@@ -125,7 +110,7 @@ try {
     }
 
     console.log(
-        `Seed concluído: ${users.length} usuários e ${categories.length} categorias processados.`,
+        `Seed concluído: ${categories.length} categorias processados.`,
     );
 } finally {
     await prisma.$disconnect();

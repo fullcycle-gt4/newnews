@@ -1,39 +1,7 @@
+// backend/src/controllers/newsController.ts
 import { NextFunction, Request, Response } from 'express';
-import { z } from 'zod';
 import { prisma, cache } from '../container.js';
-
-const newsQuerySchema = z
-    .object({
-        query: z.string().trim().max(200).optional(),
-        q: z.string().trim().max(200).optional(),
-        page: z.coerce.number().int().min(1).default(1),
-        limit: z.coerce.number().int().min(1).max(100).default(10),
-    })
-    .transform(({ query, q, ...pagination }) => ({
-        query: query || q,
-        ...pagination,
-    }));
-
-const relatedNewsSchema = z.object({
-    params: z.object({
-        id: z.string().min(1, 'O ID da notícia é obrigatório'),
-    }),
-    query: z.object({
-        limit: z.coerce.number().int().min(1).max(50).default(4),
-    }),
-});
-
-type NewsListPayload = {
-    type: 'search' | 'all';
-    query: string | null;
-    pagination: {
-        page: number;
-        limit: number;
-        totalItems: number;
-        totalPages: number;
-    };
-    data: Awaited<ReturnType<typeof prisma.news.findMany>>;
-};
+import { newsQuerySchema, relatedNewsSchema, NewsListPayload } from '../models/NewsModel.js';
 
 export class NewsController {
     async searchNews(request: Request, response: Response, next: NextFunction): Promise<void> {

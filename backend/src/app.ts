@@ -13,8 +13,6 @@ import { newsRouter } from './routes/news.js';
 import { PrismaService } from './lib/prisma.js';
 import { RedisService } from './lib/redis.js';
 import { NewsIngestionPipeline } from './services/newsIngestion/NewsIngestionPipeline.js';
-import CategoryRouter from './routes/CategoryRouter.js';
-import CategoryController from './controllers/CategoryController.js';
 
 const INGESTION_INTERVAL_MS = 60 * 60 * 1000; // 1 hora
 
@@ -42,12 +40,11 @@ export class App {
     private setupRoutes(): void {
         const healthRouter = new HealthRouter();
         const indexRouter = new IndexRouter();
-        const categoryRouter = new CategoryRouter(new CategoryController(this.prisma, this.cache));
 
-        this.instance.use('/', indexRouter.router);        
+        this.instance.use('/', indexRouter.router);
         this.instance.use('/api/users', usersRouter);
+        this.instance.use('/api/health', healthRouter.router);
         this.instance.use('/api/news', newsRouter);
-        this.instance.use('/api/categories', categoryRouter.router);
     }
 
     private setupErrorHandling(): void {

@@ -5,14 +5,14 @@ import express, {
     type NextFunction,
     type ErrorRequestHandler,
 } from 'express';
-import { NewsRouter } from './routes/news.js';
+import { NewsRouter } from './routes/NewsRouter.js';
 import type { Server } from 'http';
 import { ZodError } from 'zod';
 import indexRouter from './routes/index.js';
 import { healthRouter } from './routes/health.js';
 import { usersRouter } from './routes/users.js';
 import { PrismaService } from './lib/prisma.js';
-import { NewsController } from './controllers/newsController.js';
+import { NewsController } from './controllers/NewsController.js';
 import { RedisService } from './lib/redis.js';
 import { NewsIngestionPipeline } from './services/newsIngestion/NewsIngestionPipeline.js';
 

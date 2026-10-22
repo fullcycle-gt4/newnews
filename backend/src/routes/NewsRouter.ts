@@ -6,10 +6,10 @@ export class NewsRouter {
 
   constructor(private readonly newsController: NewsController) {
     this.router = Router();
-    this.initRoutes();
+    this.setupRoutes();
   }
 
-  private initRoutes(): void {
+  private setupRoutes(): void {
     this.router.get('/', (req, res, next) => this.newsController.searchNews(req, res, next));
     this.router.get('/:id', (req, res, next) => this.newsController.getNewsById(req, res, next));
     this.router.get('/:id/related', (req, res, next) => this.newsController.getRelatedNews(req, res, next));

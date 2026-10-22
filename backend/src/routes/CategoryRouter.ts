@@ -5,13 +5,13 @@ export default class CategoryRouter {
 	public readonly router: Router;
 	private readonly controller: CategoryController;
 
-	public constructor(controller = new CategoryController()) {
+	public constructor(controller: CategoryController) {
 		this.controller = controller;
 		this.router = Router();
-		this.configureRoutes();
+		this.setupRoutes();
 	}
 
-	private configureRoutes(): void {
+	private setupRoutes(): void {
 		this.router.get('/', this.controller.get.bind(this.controller));
 		this.router.get('/:id', this.controller.getById.bind(this.controller));
 	}

@@ -45,8 +45,8 @@ export class App {
         const categoryRouter = new CategoryRouter(new CategoryController(this.prisma, this.cache));
 
         this.instance.use('/', indexRouter.router);        
-        this.instance.use('/api/users', usersRouter);
         this.instance.use('/api/news', newsRouter);
+        this.instance.use('/api/health', healthRouter.router);
         this.instance.use('/api/categories', categoryRouter.router);
     }
 

@@ -7,9 +7,8 @@ import express, {
 } from 'express';
 import type { Server } from 'http';
 import { ZodError } from 'zod';
-import indexRouter from './routes/index.js';
-import { healthRouter } from './routes/health.js';
-import { usersRouter } from './routes/users.js';
+import { IndexRouter } from './routes/IndexRouter.js';
+import { HealthRouter } from './routes/HealthRouter.js';
 import { newsRouter } from './routes/news.js';
 import { PrismaService } from './lib/prisma.js';
 import { RedisService } from './lib/redis.js';
@@ -41,13 +40,14 @@ export class App {
     }
 
     private setupRoutes(): void {
+        const healthRouter = new HealthRouter();
+        const indexRouter = new IndexRouter();
         const categoryRouter = new CategoryRouter(new CategoryController(this.prisma, this.cache));
 
-        this.instance.use('/', indexRouter);
-        this.instance.use('/api/categories', categoryRouter.router);
+        this.instance.use('/', indexRouter.router);        
         this.instance.use('/api/users', usersRouter);
-        this.instance.use('/api/health', healthRouter);
         this.instance.use('/api/news', newsRouter);
+        this.instance.use('/api/categories', categoryRouter.router);
     }
 
     private setupErrorHandling(): void {

@@ -7,8 +7,8 @@ import express, {
 } from 'express';
 import type { Server } from 'http';
 import { ZodError } from 'zod';
-import indexRouter from './routes/index.js';
-import { healthRouter } from './routes/health.js';
+import { IndexRouter } from './routes/IndexRouter.js';
+import { HealthRouter } from './routes/HealthRouter.js';
 import { newsRouter } from './routes/news.js';
 import { PrismaService } from './lib/prisma.js';
 import { RedisService } from './lib/redis.js';
@@ -38,8 +38,12 @@ export class App {
     }
 
     private setupRoutes(): void {
-        this.instance.use('/', indexRouter);
-        this.instance.use('/api/health', healthRouter);
+        const healthRouter = new HealthRouter();
+        const indexRouter = new IndexRouter();
+
+        this.instance.use('/', indexRouter.router);
+        this.instance.use('/api/users', usersRouter);
+        this.instance.use('/api/health', healthRouter.router);
         this.instance.use('/api/news', newsRouter);
     }
 

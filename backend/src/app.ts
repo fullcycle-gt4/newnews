@@ -11,11 +11,11 @@ import { ZodError } from 'zod';
 import indexRouter from './routes/index.js';
 import { healthRouter } from './routes/health.js';
 import { usersRouter } from './routes/users.js';
+import { newsRouter } from './routes/news.js';
 import { PrismaService } from './lib/prisma.js';
 import { NewsController } from './controllers/NewsController.js';
 import { RedisService } from './lib/redis.js';
 import { NewsIngestionPipeline } from './services/newsIngestion/NewsIngestionPipeline.js';
-
 
 const INGESTION_INTERVAL_MS = 60 * 60 * 1000; // 1 hora
 
@@ -41,11 +41,9 @@ export class App {
     }
 
     private setupRoutes(): void {
-
-        const newsController = new NewsController();
+        const newsController = new NewsController(this.prisma, this.cache!);
         const newsRouter = new NewsRouter(newsController);
-        
-        
+
         this.instance.use('/', indexRouter);
         this.instance.use('/api/users', usersRouter);
         this.instance.use('/api/health', healthRouter);

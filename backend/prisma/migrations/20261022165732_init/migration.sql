@@ -1,10 +1,9 @@
 -- CreateTable
-CREATE TABLE "User" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "email" TEXT NOT NULL,
+CREATE TABLE "categories" (
+    "id" TEXT NOT NULL PRIMARY KEY,
     "name" TEXT NOT NULL,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL
+    "label" TEXT NOT NULL,
+    "icon" TEXT NOT NULL
 );
 
 -- CreateTable
@@ -22,4 +21,4 @@ CREATE TABLE "news" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+CREATE UNIQUE INDEX "categories_name_key" ON "categories"("name");

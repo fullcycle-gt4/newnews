@@ -5,17 +5,17 @@ import express, {
     type NextFunction,
     type ErrorRequestHandler,
 } from 'express';
-import { NewsRouter } from './routes/NewsRouter.js';
 import type { Server } from 'http';
 import { ZodError } from 'zod';
-import indexRouter from './routes/index.js';
-import { healthRouter } from './routes/health.js';
-import { usersRouter } from './routes/users.js';
-import { newsRouter } from './routes/news.js';
-import { PrismaService } from './lib/prisma.js';
+import { IndexRouter } from './routes/IndexRouter.js';
+import { HealthRouter } from './routes/HealthRouter.js';
 import { NewsController } from './controllers/NewsController.js';
+import { NewsRouter } from './routes/NewsRouter.js';
+import { PrismaService } from './lib/prisma.js';
 import { RedisService } from './lib/redis.js';
 import { NewsIngestionPipeline } from './services/newsIngestion/NewsIngestionPipeline.js';
+import CategoryRouter from './routes/CategoryRouter.js';
+import CategoryController from './controllers/CategoryController.js';
 
 const INGESTION_INTERVAL_MS = 60 * 60 * 1000; // 1 hora
 
@@ -41,13 +41,16 @@ export class App {
     }
 
     private setupRoutes(): void {
+        const healthRouter = new HealthRouter();
+        const indexRouter = new IndexRouter();
+        const categoryRouter = new CategoryRouter(new CategoryController(this.prisma, this.cache));
         const newsController = new NewsController(this.prisma, this.cache!);
         const newsRouter = new NewsRouter(newsController);
-
-        this.instance.use('/', indexRouter);
-        this.instance.use('/api/users', usersRouter);
-        this.instance.use('/api/health', healthRouter);
+        
         this.instance.use('/api/news', newsRouter.router);
+        this.instance.use('/', indexRouter.router);        
+        this.instance.use('/api/health', healthRouter.router);
+        this.instance.use('/api/categories', categoryRouter.router);
     }
 
     private setupErrorHandling(): void {

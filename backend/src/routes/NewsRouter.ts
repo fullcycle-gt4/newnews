@@ -10,9 +10,9 @@ export class NewsRouter {
   }
 
   private setupRoutes(): void {
-    this.router.get('/', (req, res, next) => this.newsController.searchNews(req, res, next));
-    this.router.get('/search', (req, res, next) => this.newsController.searchNews(req, res, next));
-    this.router.get('/:id', (req, res, next) => this.newsController.getNewsById(req, res, next));
-    this.router.get('/:id/related', (req, res, next) => this.newsController.getRelatedNews(req, res, next));
+    this.router.get('/', this.newsController.searchNews);
+    this.router.get('/search', this.newsController.searchNews);
+    this.router.get('/:id', this.newsController.getNewsById);
+    this.router.get('/:id/related', this.newsController.getRelatedNews);
   }
 }

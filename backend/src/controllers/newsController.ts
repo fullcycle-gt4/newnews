@@ -1,159 +1,131 @@
 import { NextFunction, Request, Response } from 'express';
-import { z } from 'zod';
-import { prisma, cache } from '../container.js';
+import { PrismaService } from '../lib/prisma.js';
+import { RedisService } from '../lib/redis.js';
+import { NewsMapper } from '../mappers/NewsMapper.js';
+import { newsQuerySchema, relatedNewsSchema } from '../schemas/newsValidation.js';
 
-const newsQuerySchema = z
-    .object({
-        query: z.string().trim().max(200).optional(),
-        q: z.string().trim().max(200).optional(),
-        page: z.coerce.number().int().min(1).default(1),
-        limit: z.coerce.number().int().min(1).max(100).default(10),
-    })
-    .transform(({ query, q, ...pagination }) => ({
-        query: query || q,
-        ...pagination,
-    }));
+export class NewsController {
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly cache: RedisService
+  ) {}
 
-// Schema para a rota de notícias relacionadas
-const relatedNewsSchema = z.object({
-    params: z.object({
-        id: z.string().min(1, 'O ID da notícia é obrigatório'),
-    }),
-    query: z.object({
-        limit: z.coerce.number().int().min(1).max(50).default(4),
-    }),
-});
-
-// Define the type for the response payload
-type NewsListPayload = {
-    type: 'search' | 'all';
-    query: string | null;
-    pagination: {
-        page: number;
-        limit: number;
-        totalItems: number;
-        totalPages: number;
-    };
-    data: Awaited<ReturnType<typeof prisma.news.findMany>>;
-};
-
-async function searchNews(request: Request, response: Response, next: NextFunction) {
+  public searchNews = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
     const result = newsQuerySchema.safeParse(request.query);
 
     if (!result.success) {
-        response.status(400).json({
-            error: 'Invalid query parameters',
-            issues: result.error.issues,
-        });
-        return;
+      response.status(400).json({
+        error: 'Invalid query parameters',
+        issues: result.error.issues,
+      });
+      return;
     }
 
     const { query, page, limit } = result.data;
     const where = query
-        ? {
-              OR: [
-                  { title: { contains: query } },
-                  { summary: { contains: query } },
-                  { content: { contains: query } },
-              ],
-          }
-        : undefined;
-    const cacheKey = `news:list:${encodeURIComponent(
-        query?.toLowerCase() || 'all',
-    )}:page:${page}:limit:${limit}`;
+      ? {
+          OR: [
+            { title: { contains: query } },
+            { summary: { contains: query } },
+            { content: { contains: query } },
+          ],
+        }
+      : undefined;
+
+    const cacheKey = `news:list:${encodeURIComponent(query?.toLowerCase() || 'all')}:page:${page}:limit:${limit}`;
 
     try {
-        const cachedData = await cache.get<NewsListPayload>(cacheKey);
-        if (cachedData) {
-            return response.status(200).json({
-                source: 'cache',
-                ...cachedData,
-            });
-        }
-
-        const [news, totalItems] = await Promise.all([
-            prisma.news.findMany({
-                skip: (page - 1) * limit,
-                take: limit,
-                where,
-                orderBy: {
-                    published_at: 'desc',
-                },
-            }),
-            prisma.news.count({ where }),
-        ]);
-
-        const responsePayload: NewsListPayload = {
-            type: query ? 'search' : 'all',
-            query: query || null,
-            pagination: {
-                page,
-                limit,
-                totalItems,
-                totalPages: Math.ceil(totalItems / limit),
-            },
-            data: news,
-        };
-
-        await cache.set(cacheKey, responsePayload, 180);
-
-        return response.status(200).json({
-            source: 'database',
-            ...responsePayload,
+      const cachedData = await this.cache.get<any>(cacheKey);
+      if (cachedData) {
+        response.status(200).json({
+          source: 'cache',
+          ...cachedData,
         });
-    } catch (error) {
-        next(error);
-    }
-}
+        return;
+      }
 
-async function getNewsById(request: Request, response: Response, next: NextFunction) {
+      const [newsRaw, totalItems] = await Promise.all([
+        this.prisma.news.findMany({
+          skip: (page - 1) * limit,
+          take: limit,
+          where,
+          orderBy: { published_at: 'desc' },
+        }),
+        this.prisma.news.count({ where }),
+      ]);
+
+      const newsDomain = NewsMapper.toDomainList(newsRaw);
+
+      const responsePayload = {
+        type: query ? 'search' : 'all',
+        query: query || null,
+        pagination: {
+          page,
+          limit,
+          totalItems,
+          totalPages: Math.ceil(totalItems / limit),
+        },
+        data: newsDomain,
+      };
+
+      await this.cache.set(cacheKey, responsePayload, 180);
+
+      response.status(200).json({
+        source: 'database',
+        ...responsePayload,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getNewsById = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
     const id = Array.isArray(request.params.id) ? request.params.id[0] : request.params.id;
     if (!id) {
-        response.status(400).json({ success: false, error: 'ID inválido' });
-        return;
+      response.status(400).json({ success: false, error: 'ID inválido' });
+      return;
     }
 
     const cacheKey = `news:${id}`;
 
     try {
-        // 1. Check cache (Article cache hit?)
-        const cachedNews = await cache.get(cacheKey);
-        if (cachedNews) {
-            response.setHeader('X-Cache', 'HIT');
-            response.json({ success: true, data: cachedNews });
-            return;
-        }
+      const cachedNews = await this.cache.get(cacheKey);
+      if (cachedNews) {
+        response.setHeader('X-Cache', 'HIT');
+        response.json({ success: true, data: cachedNews });
+        return;
+      }
 
-        // 2. On cache miss, fetch from database
-        const news = await prisma.news.findUnique({ where: { id } });
+      const newsRaw = await this.prisma.news.findUnique({ where: { id } });
 
-        if (!news) {
-            response.status(404).json({ success: false, error: 'Notícia não encontrada' });
-            return;
-        }
+      if (!newsRaw) {
+        response.status(404).json({ success: false, error: 'Notícia não encontrada' });
+        return;
+      }
 
-        // 3. Save to cache with a 5-minute TTL (300s)
-        await cache.set(cacheKey, news, 300);
+      const newsDomain = NewsMapper.toDomain(newsRaw);
 
-        response.setHeader('X-Cache', 'MISS');
-        response.json({ success: true, data: news });
+      await this.cache.set(cacheKey, newsDomain, 300);
+
+      response.setHeader('X-Cache', 'MISS');
+      response.json({ success: true, data: newsDomain });
     } catch (error) {
-        next(error);
+      next(error);
     }
-}
+  };
 
-async function getRelatedNews(request: Request, response: Response, next: NextFunction) {
+  public getRelatedNews = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
     const result = relatedNewsSchema.safeParse({
-        params: request.params,
-        query: request.query,
+      params: request.params,
+      query: request.query,
     });
 
     if (!result.success) {
-        response.status(400).json({
-            error: 'Invalid parameters',
-            issues: result.error.issues,
-        });
-        return;
+      response.status(400).json({
+        error: 'Invalid parameters',
+        issues: result.error.issues,
+      });
+      return;
     }
 
     const { id } = result.data.params;
@@ -162,67 +134,46 @@ async function getRelatedNews(request: Request, response: Response, next: NextFu
     const cacheKey = `news:${id}:related:limit:${limit}`;
 
     try {
-        // 1. Tenta recuperar do Cache Redis
-        const cachedData = await getCache<any>(cacheKey);
-        if (cachedData) {
-            response.setHeader('X-Cache', 'HIT');
-            return response.status(200).json({
-                success: true,
-                data: {
-                    news: cachedData,
-                },
-            });
-        }
-
-        // 2. Busca a notícia principal para pegar a category_id
-        const currentNews = await prisma.news.findUnique({
-            where: { id },
-            select: { id: true, category_id: true },
+      const cachedData = await this.cache.get<any>(cacheKey);
+      if (cachedData) {
+        response.setHeader('X-Cache', 'HIT');
+        response.status(200).json({
+          success: true,
+          data: { news: cachedData },
         });
+        return;
+      }
 
-        if (!currentNews) {
-            return response.status(404).json({
-                success: false,
-                error: 'Notícia não encontrada',
-            });
-        }
+      const currentNews = await this.prisma.news.findUnique({
+        where: { id },
+        select: { id: true, category_id: true },
+      });
 
-        // 3. Busca notícias da mesma categoria excluindo a atual
-        const relatedNews = await prisma.news.findMany({
-            where: {
-                category_id: currentNews.category_id,
-                id: { not: currentNews.id },
-            },
-            take: limit,
-            orderBy: {
-                published_at: 'desc',
-            },
-            select: {
-                id: true,
-                title: true,
-                summary: true,
-                image_url: true,
-                published_at: true,
-            },
-        });
+      if (!currentNews) {
+        response.status(404).json({ success: false, error: 'Notícia não encontrada' });
+        return;
+      }
 
-        // 4. Armazena no Redis (TTL de 5 minutos / 300s)
-        await setCache(cacheKey, relatedNews, 300);
+      const relatedRaw = await this.prisma.news.findMany({
+        where: {
+          category_id: currentNews.category_id,
+          id: { not: currentNews.id },
+        },
+        take: limit,
+        orderBy: { published_at: 'desc' },
+      });
 
-        response.setHeader('X-Cache', 'MISS');
-        return response.status(200).json({
-            success: true,
-            data: {
-                news: relatedNews,
-            },
-        });
+      const relatedDomain = NewsMapper.toDomainList(relatedRaw);
+
+      await this.cache.set(cacheKey, relatedDomain, 300);
+
+      response.setHeader('X-Cache', 'MISS');
+      response.status(200).json({
+        success: true,
+        data: { news: relatedDomain },
+      });
     } catch (error) {
-        next(error);
+      next(error);
     }
+  };
 }
-
-export const newsController = {
-    searchNews,
-    getNewsById,
-    getRelatedNews,
-};

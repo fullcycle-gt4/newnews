@@ -9,7 +9,8 @@ import type { Server } from 'http';
 import { ZodError } from 'zod';
 import { IndexRouter } from './routes/IndexRouter.js';
 import { HealthRouter } from './routes/HealthRouter.js';
-import { newsRouter } from './routes/news.js';
+import { NewsController } from './controllers/NewsController.js';
+import { NewsRouter } from './routes/NewsRouter.js';
 import { PrismaService } from './lib/prisma.js';
 import { RedisService } from './lib/redis.js';
 import { NewsIngestionPipeline } from './services/newsIngestion/NewsIngestionPipeline.js';
@@ -43,9 +44,11 @@ export class App {
         const healthRouter = new HealthRouter();
         const indexRouter = new IndexRouter();
         const categoryRouter = new CategoryRouter(new CategoryController(this.prisma, this.cache));
-
+        const newsController = new NewsController(this.prisma, this.cache!);
+        const newsRouter = new NewsRouter(newsController);
+        
+        this.instance.use('/api/news', newsRouter.router);
         this.instance.use('/', indexRouter.router);        
-        this.instance.use('/api/news', newsRouter);
         this.instance.use('/api/health', healthRouter.router);
         this.instance.use('/api/categories', categoryRouter.router);
     }

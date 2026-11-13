@@ -1,7 +1,11 @@
 import type { Server } from 'http';
 import { App } from './app.js';
 import { env } from './config/env.js';
-import { prisma, cache } from './container.js';
+import { PrismaService } from './services/PrismaService.js';
+import { createCacheProvider } from './services/cache/createCacheProvider.js';
+
+const prisma = PrismaService.getInstance();
+const cache = createCacheProvider();
 
 const app = new App(prisma, cache);
 

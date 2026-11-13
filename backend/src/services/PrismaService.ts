@@ -4,7 +4,7 @@ import { env } from '../config/env.js';
 
 export class PrismaService extends PrismaClient {
 	private static instance: PrismaService | undefined;
-	private constructor(private readonly url: string = env.DATABASE_URL) {
+	constructor(private readonly url: string = env.DATABASE_URL) {
 		super({
 			adapter: new PrismaBetterSqlite3({
 				url: url,

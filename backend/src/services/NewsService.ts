@@ -1,5 +1,4 @@
 import { QueryOptions } from '../queries/QueryOptions.js';
-import { CreateNewsDto } from '../dtos/CreateNewsDto.js';
 import { PrismaService } from './PrismaService.js';
 import type { CacheProvider } from './cache/CacheProvider.js';
 import { createCacheProvider } from './cache/createCacheProvider.js';
@@ -57,21 +56,6 @@ export class NewsService implements INewsService {
 
     await this.cache.set(cacheKey, news, 180);
     return news;
-  }
-
-  public async createNews(input: CreateNewsDto): Promise<News> {
-    const { category_id, ...newsData } = input;
-    const savedNews = await this.prisma.news.create({
-      data: {
-        ...newsData,
-        category: {
-          connect: { id: category_id },
-        },
-      },
-    });
-
-    await this.cache.delByPattern('news:list:*');
-    return NewsMapper.fromPrisma(savedNews);
   }
 
   public async getNewsById(queryOptions: QueryOptions): Promise<News | null> {

@@ -1,5 +1,4 @@
 import type { NextFunction, Request, Response } from 'express';
-import type { CreateNewsDto } from '../dtos/CreateNewsDto.js';
 import { QueryOptions } from '../queries/QueryOptions.js';
 import { NewsService } from '../services/NewsService.js';
 import { INewsService } from '../services/interfaces/INewsService.js';
@@ -15,15 +14,6 @@ export class NewsController implements INewsController {
 				success: true,
 				data: result,
 			});
-		} catch (error) {
-			next(error);
-		}
-	}
-
-	public async createNews(request: Request, response: Response, next: NextFunction): Promise<void> {
-		try {
-			const news = await this.service.createNews(request.body as CreateNewsDto);
-			response.status(201).json({ success: true, data: news });
 		} catch (error) {
 			next(error);
 		}

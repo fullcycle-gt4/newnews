@@ -11,18 +11,13 @@ import { IndexRouter } from './routes/IndexRouter.js';
 import { NewsRouter } from './routes/NewsRouter.js';
 import { HealthRouter } from './routes/HealthRouter.js';
 import { CategoryRouter } from './routes/CategoryRouter.js';
-import { PrismaService } from './services/PrismaService.js';
-import type { CacheProvider } from './services/cache/CacheProvider.js';
 import cors from 'cors';
 
 export class App {
 	public readonly instance: Application;
 	private readonly cors: any;
 
-	constructor(
-		private readonly prisma: PrismaService,
-		private readonly cache: CacheProvider,
-	) {
+	constructor() {
 		this.instance = express();
 		this.cors = cors();
 		this.setupMiddlewares();

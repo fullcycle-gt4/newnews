@@ -1,13 +1,13 @@
 import { createNewsIngestionWorker } from './workers/NewsIngestionWorker.js';
-import { prisma, cache } from './container.js';
+import { PrismaService } from './services/PrismaService.js';
 
-const worker = createNewsIngestionWorker(cache);
+const worker = createNewsIngestionWorker();
 worker.start();
 
 const shutdown = async (signal: 'SIGINT' | 'SIGTERM'): Promise<void> => {
 	console.log(`Received ${signal}, shutting down news ingestion worker...`);
 	worker.stop();
-	await prisma.$disconnect();
+	await PrismaService.getInstance().$disconnect();
 	console.log('News ingestion worker stopped.');
 	process.exit(0);
 };

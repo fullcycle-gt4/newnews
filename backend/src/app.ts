@@ -8,14 +8,8 @@ import express, {
 import type { Server } from 'http';
 import { ZodError } from 'zod';
 import { IndexRouter } from './routes/IndexRouter.js';
-import { HealthRouter } from './routes/HealthRouter.js';
-import { CategoryController } from './controllers/CategoryController.js';
-import { NewsController } from './controllers/NewsController.js';
 import { NewsRouter } from './routes/NewsRouter.js';
-import { PrismaService } from './services/PrismaService.js';
-import type { CacheProvider } from './services/cache/CacheProvider.js';
-import { CategoryService } from './services/CategoryService.js';
-import { NewsService } from './services/NewsService.js';
+import { HealthRouter } from './routes/HealthRouter.js';
 import { CategoryRouter } from './routes/CategoryRouter.js';
 import cors from 'cors';
 
@@ -23,10 +17,7 @@ export class App {
 	public readonly instance: Application;
 	private readonly cors: any;
 
-	constructor(
-		private readonly prisma: PrismaService,
-		private readonly cache: CacheProvider,
-	) {
+	constructor() {
 		this.instance = express();
 		this.cors = cors();
 		this.setupMiddlewares();
@@ -40,16 +31,13 @@ export class App {
 	}
 
 	private setupRoutes(): void {
-		const healthRouter = new HealthRouter();
 		const indexRouter = new IndexRouter();
-		const categoryRouter = new CategoryRouter(
-			new CategoryController(new CategoryService(this.prisma, this.cache)),
-		);
-		const newsController = new NewsController(new NewsService(this.prisma, this.cache));
-		const newsRouter = new NewsRouter(newsController);
+		const newsRouter = new NewsRouter();
+		const healthRouter = new HealthRouter();
+		const categoryRouter = new CategoryRouter();
 
-		this.instance.use('/api/news', newsRouter.router);
 		this.instance.use('/', indexRouter.router);
+		this.instance.use('/api/news', newsRouter.router);
 		this.instance.use('/api/health', healthRouter.router);
 		this.instance.use('/api/categories', categoryRouter.router);
 	}

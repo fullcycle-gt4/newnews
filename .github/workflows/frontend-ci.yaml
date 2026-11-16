@@ -33,5 +33,5 @@ jobs:
         working-directory: ./frontend
 
       - name: Run Tests
-        run: npm test -- --run --if-present
+        run: npx vitest run
         working-directory: ./frontend

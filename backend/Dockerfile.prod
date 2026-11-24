@@ -1,0 +1,17 @@
+FROM node:24-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN apk add --no-cache --virtual .build-deps python3 make g++ \
+	&& npm ci \
+	&& apk del .build-deps
+
+COPY . .
+
+RUN npx prisma generate
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["sh", "-c", "npx prisma migrate deploy && npm run db:seed && npm run start"]

@@ -1,53 +1,32 @@
 name: Deploy to Render
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Frontend CI", "Backend CI"]
+    types:
+      - completed
     branches:
-      - test/ci-cd-deploy
+      - main
+      - develop
+  workflow_dispatch:
 
 jobs:
-  build-and-test:
+  deploy-frontend:
+    name: Deploy Frontend
     runs-on: ubuntu-latest
+    if: |
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.name == 'Frontend CI') ||
+      github.event_name == 'workflow_dispatch'
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: 'npm'
-          cache-dependency-path: backend/package-lock.json
-
-      # --- BACKEND ---
-      - name: Install Backend Dependencies
-        run: npm install
-        working-directory: ./backend
-
-      - name: Generate Prisma Client
-        run: npx prisma generate
-        working-directory: ./backend
-
-      - name: Run Backend Tests
-        run: npx jest
-        working-directory: ./backend
-        env:
-          DATABASE_URL: "file:./dev.db"
-
-      # --- FRONTEND ---
-      - name: Install Frontend Dependencies
-        run: npm install
-        working-directory: ./frontend
-
-      - name: Run Frontend Tests
-        run: npm test
-        working-directory: ./frontend
-
-      # --- DEPLOY NO RENDER ---
       - name: Trigger Render Deploy Frontend
-        run: |
-          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
+        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
 
+  deploy-backend:
+    name: Deploy Backend
+    runs-on: ubuntu-latest
+    if: |
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.name == 'Backend CI') ||
+      github.event_name == 'workflow_dispatch'
+    steps:
       - name: Trigger Render Deploy Backend
-        run: |
-          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL_B }}"
+        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL_B }}"

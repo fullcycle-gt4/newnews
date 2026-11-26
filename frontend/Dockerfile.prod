@@ -1,19 +1,20 @@
-
-FROM node:24-alpine
+# Stage 1: Build static assets with Vite
+FROM node:24-alpine AS builder
 
 WORKDIR /app
 
 COPY package*.json ./
-
-RUN npm install
+RUN npm ci
 
 COPY . .
-
-ARG VITE_API_BASE_URL
-ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
-
 RUN npm run build
 
-EXPOSE 4173
+# Stage 2: Serve static files with lightweight Nginx
+FROM nginx:alpine
 
-CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0"]
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY nginx.conf.template /etc/nginx/templates/default.conf.template
+
+EXPOSE 8080
+
+CMD ["nginx", "-g", "daemon off;"]
